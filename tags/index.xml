@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Marcel Robeer</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Marcel Robeer</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; Marcel Robeer</copyright>
+    <lastBuildDate>Sat, 14 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	    <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Contrastive Explanation</title>
+      <link>/tags/contrastive-explanation/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/contrastive-explanation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Explainable Artificial Intelligence</title>
+      <link>/tags/explainable-artificial-intelligence/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/explainable-artificial-intelligence/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Foil Trees</title>
+      <link>/tags/foil-trees/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/foil-trees/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Human Interpretable Machine Learning</title>
+      <link>/tags/human-interpretable-machine-learning/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/human-interpretable-machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Interpretable Machine Learning</title>
+      <link>/tags/interpretable-machine-learning/</link>
+      <pubDate>Sat, 14 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/interpretable-machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Case Study</title>
+      <link>/tags/case-study/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/case-study/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Conceptual Model Visualization</title>
+      <link>/tags/conceptual-model-visualization/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/conceptual-model-visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Conceptual Modeling</title>
+      <link>/tags/conceptual-modeling/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/conceptual-modeling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Natural Language Processing</title>
+      <link>/tags/natural-language-processing/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/natural-language-processing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Requirements Engineering</title>
+      <link>/tags/requirements-engineering/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/requirements-engineering/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>User Stories</title>
+      <link>/tags/user-stories/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/user-stories/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Visual Narrator</title>
+      <link>/tags/visual-narrator/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/visual-narrator/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
