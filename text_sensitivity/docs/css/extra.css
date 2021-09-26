@@ -49,6 +49,7 @@
     --md-code-hl-function-color: #B388FF;
     --md-code-hl-string-color: #B9F6CA;
     --md-code-hl-number-color: #FF8A80;
+    --md-code-hl-comment-color: #2FD381;
     --md-code-hl-punctuation-color: hsla(200, 18%, 78%, 1) !important;
     --md-code-fg-color: hsla(200, 18%, 78%, 1);
 
