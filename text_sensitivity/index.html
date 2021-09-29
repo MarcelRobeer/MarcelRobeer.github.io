@@ -305,6 +305,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    Citation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#maintenance" class="md-nav__link">
     Maintenance
   </a>
@@ -640,6 +647,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    Citation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#maintenance" class="md-nav__link">
     Maintenance
   </a>
@@ -719,6 +733,20 @@
 <h2 id="releases">Releases</h2>
 <p><code>text_explainability</code> is officially released through <a href="https://pypi.org/project/text-sensitivity/">PyPI</a>.</p>
 <p>See <a href="CHANGELOG/">CHANGELOG.md</a> for a full overview of the changes for each version.</p>
+<h2 id="citation">Citation</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>@misc{text_sensitivity,
+  title = {Python package text_sensitivity},
+  author = {Marcel Robeer and Elize Herrewijnen},
+  howpublished = {https://git.science.uu.nl/m.j.robeer/text_sensitivity},
+  year = {2021}
+}
+</code></pre></div>
+</td></tr></table>
 <h2 id="maintenance">Maintenance</h2>
 <h3 id="contributors">Contributors</h3>
 <ul>
@@ -729,13 +757,17 @@
 <p>Tasks yet to be done:</p>
 <ul>
 <li>Word-level perturbations</li>
-<li>Add fairness-specific metrics:</li>
+<li>Add fairness-specific metrics:<ul>
 <li>Subgroup fairness</li>
 <li>Counterfactual fairness</li>
-<li>Tests</li>
+</ul>
+</li>
+<li>Tests<ul>
 <li>Add tests for data generation</li>
 <li>Add tests for perturbations</li>
 <li>Add tests for test-schemes</li>
+</ul>
+</li>
 <li>Add visualization ability</li>
 </ul>
                 
