@@ -2,6 +2,7 @@
 
 {% block extrahead %}
   {% set title = config.site_name %}
+  {% set description = "Documentation for text_explainability" %}
   {% if page and page.meta and page.meta.title %}
     {% set title = title ~ " - " ~ page.meta.title %}
   {% elif page and page.title and not page.is_homepage %}
@@ -9,7 +10,7 @@
   {% endif %}
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ title }}" />
-  <meta property="og:description" content="{{ config.site_description }}" />
+  <meta property="og:description" content="{{ description }}" />
   <meta property="og:url" content="{{ page.canonical_url }}" />
   <meta property="og:image" content="https://i.ibb.co/xXtJ23n/Text-Logo-Logo-large.png" />
   <meta property="og:image:type" content="image/png" />
@@ -20,6 +21,6 @@
   <meta name="twitter:site" content="{{ page.canonical_url }}" />
   <meta name="twitter:creator" content="Marcel Robeer" />
   <meta name="twitter:title" content="{{ title }}" />
-  <meta name="twitter:description" content="{{ config.site_description }}" />
+  <meta name="twitter:description" content="{{ description }}" />
   <meta name="twitter:image" content="https://i.ibb.co/xXtJ23n/Text-Logo-Logo-large.png" />
 {% endblock %}
