@@ -778,9 +778,15 @@
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="n">RandomData</span><span class="p">,</span> <span class="n">RandomDigits</span><span class="p">,</span> <span class="n">RandomAscii</span><span class="p">,</span> <span class="n">RandomEmojis</span><span class="p">,</span> <span class="n">RandomWhitespace</span><span class="p">,</span> <span class="n">combine_generators</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="p">(</span><span class="n">RandomData</span><span class="p">,</span> <span class="n">RandomDigits</span><span class="p">,</span> <span class="n">RandomAscii</span><span class="p">,</span> <span class="n">RandomEmojis</span><span class="p">,</span>
+                              <span class="n">RandomWhitespace</span><span class="p">,</span> <span class="n">RandomCyrillic</span><span class="p">,</span> <span class="n">combine_generators</span><span class="p">)</span>
 
-<span class="c1"># Generate 10 instances with all printable characteres</span>
+<span class="c1"># Generate 10 instances with all printable characters</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">RandomData</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">all_data</span><span class="p">())</span>
 
 <span class="c1"># Generate 5 instances containing only digits</span>
@@ -789,6 +795,10 @@
 <span class="c1"># Generate 15 instances, combining emojis, whitespace characters and ASCII characters</span>
 <span class="n">random_generator</span> <span class="o">=</span> <span class="n">combine_generators</span><span class="p">(</span><span class="n">RandomAscii</span><span class="p">(),</span> <span class="n">RandomEmojis</span><span class="p">(),</span> <span class="n">RandomWhitespace</span><span class="p">())</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">random_generator</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">all_data</span><span class="p">())</span>
+
+<span class="c1"># Generate 20 instances with random ASCII characters, whitespace and Russian (Cyrillic) characters</span>
+<span class="n">ascii_cyrillic_generator</span> <span class="o">=</span> <span class="n">combine_generators</span><span class="p">(</span><span class="n">RandomAscii</span><span class="p">(),</span> <span class="n">RandomWhitespace</span><span class="p">(),</span> <span class="n">RandomCyrillic</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="s1">&#39;ru&#39;</span><span class="p">))</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">ascii_cyrillic_generator</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">all_data</span><span class="p">())</span>
 </code></pre></div>
 </td></tr></table>
 <h4 id="invariance-testing">Invariance testing</h4>
