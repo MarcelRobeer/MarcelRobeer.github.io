@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/CHANGELOG/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/example_usage/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/test/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/data/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/data/random/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/perturbation/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/perturbation/base/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/perturbation/characters/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/perturbation/sentences/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_sensitivity/reference/text_sensitivity/perturbation/words/</loc>
-         <lastmod>2021-09-30</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

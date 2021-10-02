@@ -351,6 +351,19 @@
     Fairness
   </a>
   
+    <nav class="md-nav" aria-label="Fairness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-random-data_1" class="md-nav__link">
+    Generating random data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -679,6 +692,19 @@
     Fairness
   </a>
   
+    <nav class="md-nav" aria-label="Fairness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-random-data_1" class="md-nav__link">
+    Generating random data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -768,6 +794,7 @@
 <h3 id="robustness">Robustness</h3>
 <p>A robust text model should be able to handle different types of input strings (e.g. ASCII, emojis) and be invariant to minor changes in inputs (e.g. converting a string to uppercase, adding an unrelated string or users making typos).</p>
 <h4 id="generating-random-data">Generating random data</h4>
+<p>Random strings can be used for testing if a model is able to handle ass sorts of inputs: </p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -787,18 +814,18 @@
                               <span class="n">RandomWhitespace</span><span class="p">,</span> <span class="n">RandomCyrillic</span><span class="p">,</span> <span class="n">combine_generators</span><span class="p">)</span>
 
 <span class="c1"># Generate 10 instances with all printable characters</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">RandomData</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">all_data</span><span class="p">())</span>
+<span class="n">RandomData</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 
 <span class="c1"># Generate 5 instances containing only digits</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">RandomDigits</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">all_data</span><span class="p">())</span>
+<span class="n">RandomDigits</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="c1"># Generate 15 instances, combining emojis, whitespace characters and ASCII characters</span>
 <span class="n">random_generator</span> <span class="o">=</span> <span class="n">combine_generators</span><span class="p">(</span><span class="n">RandomAscii</span><span class="p">(),</span> <span class="n">RandomEmojis</span><span class="p">(),</span> <span class="n">RandomWhitespace</span><span class="p">())</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">random_generator</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">all_data</span><span class="p">())</span>
+<span class="n">random_generator</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 
 <span class="c1"># Generate 20 instances with random ASCII characters, whitespace and Russian (Cyrillic) characters</span>
 <span class="n">ascii_cyrillic_generator</span> <span class="o">=</span> <span class="n">combine_generators</span><span class="p">(</span><span class="n">RandomAscii</span><span class="p">(),</span> <span class="n">RandomWhitespace</span><span class="p">(),</span> <span class="n">RandomCyrillic</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="s1">&#39;ru&#39;</span><span class="p">))</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">ascii_cyrillic_generator</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">all_data</span><span class="p">())</span>
+<span class="n">ascii_cyrillic_generator</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h4 id="invariance-testing">Invariance testing</h4>
@@ -870,6 +897,89 @@
 </td></tr></table>
 <h3 id="fairness">Fairness</h3>
 <p><em>TODO</em>: Write up fairness.</p>
+<h4 id="generating-random-data_1">Generating random data</h4>
+<p>Data for entities can be generated in the same manner as random strings:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="p">(</span><span class="n">RandomCity</span><span class="p">,</span> <span class="n">RandomCountry</span><span class="p">,</span> <span class="n">RandomName</span><span class="p">)</span>
+
+<span class="c1"># Generates data for the current locale, e.g. if it is &#39;nl&#39; it generates country names in Dutch and cities in the Netherlands</span>
+<span class="n">RandomCity</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># If you specify the locale, it can generate the entity (e.g. country) for multiple languages</span>
+<span class="n">RandomCountry</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nl&#39;</span><span class="p">,</span> <span class="s1">&#39;de&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">,</span> <span class="s1">&#39;jp&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>Unlike random strings, random entities can also output the corresponding attribute labels for the generated data
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># For example, generated Dutch and Russian male and female names, and output which language and sex they are</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">RandomName</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nl&#39;</span><span class="p">,</span> <span class="s1">&#39;ru&#39;</span><span class="p">],</span> <span class="n">sex</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># The same data can also be captured in an instancelib.InstanceProvider and instancelib.LabelProviders</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table></p>
+<p>Other random entities that can be generated are dates, street addresses, emails, phone numbers, price tags and crypto names:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Dates </span>
+<span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="n">RandomYear</span><span class="p">,</span> <span class="n">RandomMonth</span><span class="p">,</span> <span class="n">RandomDay</span><span class="p">,</span> <span class="n">RandomDayOfWeek</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomYear</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomMonth</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nl&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomDay</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomDayOfWeek</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Street addresses, emails, phone numbers, price tags and crypto names</span>
+<span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="n">RandomAddress</span><span class="p">,</span> <span class="n">RandomEmail</span><span class="p">,</span> <span class="n">RandomPhoneNumber</span><span class="p">,</span> <span class="n">RandomPriceTag</span><span class="p">,</span> <span class="n">RandomCryptoCurrency</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomAddress</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomEmail</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;pt&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomPhoneNumber</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomPriceTag</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ru&#39;</span><span class="p">,</span> <span class="s1">&#39;de&#39;</span><span class="p">,</span> <span class="s1">&#39;it&#39;</span><span class="p">,</span> <span class="s1">&#39;br&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">RandomCryptoCurrency</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+</td></tr></table>
+<p>In addition, <code>text_sensitivity</code> has several word lists available, which can be used for data perturbations or data generation.
+Note that when random data is generated here, they are sampled with a likelihood based on their relative population (e.g. 
+number of inhabitants compared to other cities in a country):</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity.data.wordlist</span> <span class="kn">import</span> <span class="n">Cities</span>
+
+<span class="c1"># Top-100 cities in Netherlands (&#39;nl&#39;) and Belgium (&#39;be&#39;)</span>
+<span class="n">Cities</span><span class="p">(</span><span class="n">country</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nl&#39;</span><span class="p">,</span> <span class="s1">&#39;be&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="c1"># 10 random cities from the top-100 cities in Italy</span>
+<span class="n">Cities</span><span class="p">(</span><span class="n">country</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;it&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
                 
               
               
@@ -924,6 +1034,10 @@
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2021 Marcel Robeer and Elize Herrewijnen
+          </div>
         
         
           Powered by
