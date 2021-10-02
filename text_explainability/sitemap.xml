@@ -2,112 +2,112 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/CHANGELOG/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/example_usage/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/docs/installation/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/decorators/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/default/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/global_explanation/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/internationalization/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/local_explanation/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/locale/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/utils/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/data/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/data/augmentation/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/data/embedding/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/data/sampling/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/data/weights/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/generation/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/generation/feature_selection/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/generation/return_types/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/generation/surrogate/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://marcelrobeer.github.io/text_explainability/reference/text_explainability/generation/target_encoding/</loc>
-         <lastmod>2021-09-29</lastmod>
+         <lastmod>2021-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
