@@ -353,8 +353,20 @@
   
   
     <li class="md-nav__item">
-      <a href="../../test/" class="md-nav__link">
-        Test
+      <a href="../../internationalization/" class="md-nav__link">
+        Internationalization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sensitivity/" class="md-nav__link">
+        Sensitivity
       </a>
     </li>
   
@@ -368,14 +380,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_3" type="checkbox" id="__nav_4_1_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_4" type="checkbox" id="__nav_4_1_4" >
       
-      <label class="md-nav__link" for="__nav_4_1_3">
+      <label class="md-nav__link" for="__nav_4_1_4">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_1_3">
+        <label class="md-nav__title" for="__nav_4_1_4">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -398,9 +410,96 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data/random/" class="md-nav__link">
-        Random
+      <a href="../../data/lists/" class="md-nav__link">
+        Lists
       </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/wordlist/" class="md-nav__link">
+        Wordlist
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_4_4" type="checkbox" id="__nav_4_1_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_1_4_4">
+        Random
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Random" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Random
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/random/base/" class="md-nav__link">
+        Base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/random/entity/" class="md-nav__link">
+        Entity
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/random/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/random/string/" class="md-nav__link">
+        String
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -421,14 +520,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_4" type="checkbox" id="__nav_4_1_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_5" type="checkbox" id="__nav_4_1_5" checked>
       
-      <label class="md-nav__link" for="__nav_4_1_4">
+      <label class="md-nav__link" for="__nav_4_1_5">
         Perturbation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Perturbation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_1_4">
+        <label class="md-nav__title" for="__nav_4_1_5">
           <span class="md-nav__icon md-icon"></span>
           Perturbation
         </label>
@@ -1232,7 +1331,7 @@
                 
                 
                 <h1 id="module-text_sensitivityperturbationbase">Module text_sensitivity.perturbation.base</h1>
-<p>None</p>
+<p>Apply perturbations to TextInstances and/or strings, generating one or many new instances.</p>
 <p>None</p>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
 <span class="normal">  2</span>
@@ -2182,7 +2281,21 @@
 <span class="normal">946</span>
 <span class="normal">947</span>
 <span class="normal">948</span>
-<span class="normal">949</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>import numpy as np
+<span class="normal">949</span>
+<span class="normal">950</span>
+<span class="normal">951</span>
+<span class="normal">952</span>
+<span class="normal">953</span>
+<span class="normal">954</span>
+<span class="normal">955</span>
+<span class="normal">956</span>
+<span class="normal">957</span>
+<span class="normal">958</span>
+<span class="normal">959</span>
+<span class="normal">960</span>
+<span class="normal">961</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Apply perturbations to TextInstances and/or strings, generating one or many new instances.&quot;&quot;&quot;
+
+import numpy as np
 
 import itertools
 
@@ -2638,17 +2751,19 @@ class OneToOnePerturbation(Perturbation):
 
         &quot;&quot;&quot;
 
-        mapping_list = [(a, b) for a, b in set(list(itertools.combinations(mapping_list, 2)))]
+        # TODO: add case-sensitivity
 
-        return OneToManyPerturbation.from_tuples(mapping_list,
+        mapping_dict = {k: v for k, v in set(list(itertools.combinations(mapping_list, 2)))}
 
-                                                 label_from=label_from,
+        return OneToManyPerturbation.from_dictionary(mapping_dict,
 
-                                                 label_to=label_to,
+                                                     label_from=label_from,
 
-                                                 tokenizer=tokenizer,
+                                                     label_to=label_to,
 
-                                                 detokenizer=detokenizer)
+                                                     tokenizer=tokenizer,
+
+                                                     detokenizer=detokenizer)
 
     @classmethod
 
@@ -2702,7 +2817,7 @@ class OneToOnePerturbation(Perturbation):
 
         Raises:
 
-            AssertionError: At least one of `prefix`, `suffix` and `replacement` should be provided.
+            ValueError: At least one of `prefix`, `suffix` and `replacement` should be provided.
 
         Args:
 
@@ -2728,9 +2843,9 @@ class OneToOnePerturbation(Perturbation):
 
         &quot;&quot;&quot;
 
-        assert prefix is not None or suffix is not None or replacement is not None, \
+        if prefix is None and suffix is None and replacement is None:
 
-            &#39;At least one of `prefix`, `suffix` and `replacement` should be provided.&#39;
+            raise ValueError(&#39;At least one of prefix, suffix and replacement should be provided.&#39;)
 
         if prefix is None:
 
@@ -2858,7 +2973,7 @@ class OneToOnePerturbation(Perturbation):
 
         res = self.perturbation_function(instance)
 
-        if res is None:
+        if res is None or isinstance(res, list) and all(r is None for r in res):
 
             return
 
@@ -2872,7 +2987,7 @@ class OneToOnePerturbation(Perturbation):
 
         for perturbed_text, original_label, label in zip(perturbed, original_labels, labels):
 
-            if perturbed_text != str(instance.data):
+            if perturbed_text is not None and perturbed_text != str(instance.data):
 
                 identifier = format_identifier(instance, 0)
 
@@ -2914,7 +3029,9 @@ class OneToManyPerturbation(Perturbation):
 
                       label_to: LT = &#39;perturbed&#39;,
 
-                      n: int = 10):
+                      n: int = 10,
+
+                      perform_once: bool = False):
 
         &quot;&quot;&quot;Construct a `OneToManyPerturbation` from a perturbation applied to a string.
 
@@ -2930,6 +3047,8 @@ class OneToManyPerturbation(Perturbation):
 
             n (int, optional): Number of instances to generate. Defaults to 10.
 
+            perform_once (bool, optional): If the n parameter is in class construction perform once. Defaults to False.
+
         &quot;&quot;&quot;
 
         import inspect
@@ -2937,6 +3056,10 @@ class OneToManyPerturbation(Perturbation):
         if &#39;n&#39; in inspect.signature(function).parameters:
 
             return super().from_function(lambda x: function(x, n=n), label_from=label_from, label_to=label_to)
+
+        elif perform_once:
+
+            return super().from_function(function, label_from=label_from, label_to=label_to)
 
         def perform_n_times(instance):
 
@@ -3082,7 +3205,7 @@ class OneToManyPerturbation(Perturbation):
 
                 return None
 
-        return cls.from_function(perturbation_function, n=n, label_from=label_from, label_to=label_to)
+        return cls.from_function(perturbation_function, perform_once=True, label_from=label_from, label_to=label_to)
 
     @text_instance
 
@@ -3110,7 +3233,7 @@ class OneToManyPerturbation(Perturbation):
 
         res = self.perturbation_function(instance)
 
-        if res is None:
+        if res is None or isinstance(res, list) and all(r is None for r in res):
 
             return
 
@@ -3644,7 +3767,15 @@ class OneToManyPerturbation(Perturbation):
 <span class="normal">246</span>
 <span class="normal">247</span>
 <span class="normal">248</span>
-<span class="normal">249</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class OneToManyPerturbation(Perturbation):
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class OneToManyPerturbation(Perturbation):
 
     def __init__(self,
 
@@ -3676,7 +3807,9 @@ class OneToManyPerturbation(Perturbation):
 
                       label_to: LT = &#39;perturbed&#39;,
 
-                      n: int = 10):
+                      n: int = 10,
+
+                      perform_once: bool = False):
 
         &quot;&quot;&quot;Construct a `OneToManyPerturbation` from a perturbation applied to a string.
 
@@ -3692,6 +3825,8 @@ class OneToManyPerturbation(Perturbation):
 
             n (int, optional): Number of instances to generate. Defaults to 10.
 
+            perform_once (bool, optional): If the n parameter is in class construction perform once. Defaults to False.
+
         &quot;&quot;&quot;
 
         import inspect
@@ -3699,6 +3834,10 @@ class OneToManyPerturbation(Perturbation):
         if &#39;n&#39; in inspect.signature(function).parameters:
 
             return super().from_function(lambda x: function(x, n=n), label_from=label_from, label_to=label_to)
+
+        elif perform_once:
+
+            return super().from_function(function, label_from=label_from, label_to=label_to)
 
         def perform_n_times(instance):
 
@@ -3844,7 +3983,7 @@ class OneToManyPerturbation(Perturbation):
 
                 return None
 
-        return cls.from_function(perturbation_function, n=n, label_from=label_from, label_to=label_to)
+        return cls.from_function(perturbation_function, perform_once=True, label_from=label_from, label_to=label_to)
 
     @text_instance
 
@@ -3872,7 +4011,7 @@ class OneToManyPerturbation(Perturbation):
 
         res = self.perturbation_function(instance)
 
-        if res is None:
+        if res is None or isinstance(res, list) and all(r is None for r in res):
 
             return
 
@@ -3943,8 +4082,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16bc8ef70</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16bc8f0d0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16c7beca0</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16c7bee50</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4168,11 +4307,13 @@ class OneToManyPerturbation(Perturbation):
 <span class="normal">3</span>
 <span class="normal">4</span>
 <span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">from_function</span><span class="p">(</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">from_function</span><span class="p">(</span>
     <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span> <span class="o">=</span> <span class="s1">&#39;original&#39;</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span> <span class="o">=</span> <span class="s1">&#39;perturbed&#39;</span><span class="p">,</span>
-    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">perform_once</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4218,6 +4359,12 @@ class OneToManyPerturbation(Perturbation):
 <td>Number of instances to generate. Defaults to 10.</td>
 <td>10</td>
 </tr>
+<tr>
+<td>perform_once</td>
+<td>bool</td>
+<td>If the n parameter is in class construction perform once. Defaults to False.</td>
+<td>False</td>
+</tr>
 </tbody>
 </table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -4260,7 +4407,15 @@ class OneToManyPerturbation(Perturbation):
 <span class="normal">38</span>
 <span class="normal">39</span>
 <span class="normal">40</span>
-<span class="normal">41</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @classmethod
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @classmethod
 
     def from_function(cls,
 
@@ -4270,7 +4425,9 @@ class OneToManyPerturbation(Perturbation):
 
                       label_to: LT = &#39;perturbed&#39;,
 
-                      n: int = 10):
+                      n: int = 10,
+
+                      perform_once: bool = False):
 
         &quot;&quot;&quot;Construct a `OneToManyPerturbation` from a perturbation applied to a string.
 
@@ -4286,6 +4443,8 @@ class OneToManyPerturbation(Perturbation):
 
             n (int, optional): Number of instances to generate. Defaults to 10.
 
+            perform_once (bool, optional): If the n parameter is in class construction perform once. Defaults to False.
+
         &quot;&quot;&quot;
 
         import inspect
@@ -4293,6 +4452,10 @@ class OneToManyPerturbation(Perturbation):
         if &#39;n&#39; in inspect.signature(function).parameters:
 
             return super().from_function(lambda x: function(x, n=n), label_from=label_from, label_to=label_to)
+
+        elif perform_once:
+
+            return super().from_function(function, label_from=label_from, label_to=label_to)
 
         def perform_n_times(instance):
 
@@ -4496,7 +4659,7 @@ class OneToManyPerturbation(Perturbation):
 
                 return None
 
-        return cls.from_function(perturbation_function, n=n, label_from=label_from, label_to=label_to)
+        return cls.from_function(perturbation_function, perform_once=True, label_from=label_from, label_to=label_to)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -4687,7 +4850,7 @@ class OneToManyPerturbation(Perturbation):
 
         res = self.perturbation_function(instance)
 
-        if res is None:
+        if res is None or isinstance(res, list) and all(r is None for r in res):
 
             return
 
@@ -5209,7 +5372,9 @@ class OneToManyPerturbation(Perturbation):
 <span class="normal">488</span>
 <span class="normal">489</span>
 <span class="normal">490</span>
-<span class="normal">491</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class OneToOnePerturbation(Perturbation):
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class OneToOnePerturbation(Perturbation):
 
     def __init__(self,
 
@@ -5457,17 +5622,19 @@ class OneToManyPerturbation(Perturbation):
 
         &quot;&quot;&quot;
 
-        mapping_list = [(a, b) for a, b in set(list(itertools.combinations(mapping_list, 2)))]
+        # TODO: add case-sensitivity
 
-        return OneToManyPerturbation.from_tuples(mapping_list,
+        mapping_dict = {k: v for k, v in set(list(itertools.combinations(mapping_list, 2)))}
 
-                                                 label_from=label_from,
+        return OneToManyPerturbation.from_dictionary(mapping_dict,
 
-                                                 label_to=label_to,
+                                                     label_from=label_from,
 
-                                                 tokenizer=tokenizer,
+                                                     label_to=label_to,
 
-                                                 detokenizer=detokenizer)
+                                                     tokenizer=tokenizer,
+
+                                                     detokenizer=detokenizer)
 
     @classmethod
 
@@ -5521,7 +5688,7 @@ class OneToManyPerturbation(Perturbation):
 
         Raises:
 
-            AssertionError: At least one of `prefix`, `suffix` and `replacement` should be provided.
+            ValueError: At least one of `prefix`, `suffix` and `replacement` should be provided.
 
         Args:
 
@@ -5547,9 +5714,9 @@ class OneToManyPerturbation(Perturbation):
 
         &quot;&quot;&quot;
 
-        assert prefix is not None or suffix is not None or replacement is not None, \
+        if prefix is None and suffix is None and replacement is None:
 
-            &#39;At least one of `prefix`, `suffix` and `replacement` should be provided.&#39;
+            raise ValueError(&#39;At least one of prefix, suffix and replacement should be provided.&#39;)
 
         if prefix is None:
 
@@ -5677,7 +5844,7 @@ class OneToManyPerturbation(Perturbation):
 
         res = self.perturbation_function(instance)
 
-        if res is None:
+        if res is None or isinstance(res, list) and all(r is None for r in res):
 
             return
 
@@ -5691,7 +5858,7 @@ class OneToManyPerturbation(Perturbation):
 
         for perturbed_text, original_label, label in zip(perturbed, original_labels, labels):
 
-            if perturbed_text != str(instance.data):
+            if perturbed_text is not None and perturbed_text != str(instance.data):
 
                 identifier = format_identifier(instance, 0)
 
@@ -5748,8 +5915,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">dictionary</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16bc8ef70</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16bc8f0d0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16c7beca0</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16c7bee50</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -6118,8 +6285,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">mapping_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span> <span class="o">=</span> <span class="s1">&#39;original&#39;</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span> <span class="o">=</span> <span class="s1">&#39;perturbed&#39;</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16bc8ef70</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16bc8f0d0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16c7beca0</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16c7bee50</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -6241,7 +6408,9 @@ in the list.</p>
 <span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
-<span class="normal">61</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @classmethod
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @classmethod
 
     def from_list(cls,
 
@@ -6291,17 +6460,19 @@ in the list.</p>
 
         &quot;&quot;&quot;
 
-        mapping_list = [(a, b) for a, b in set(list(itertools.combinations(mapping_list, 2)))]
+        # TODO: add case-sensitivity
 
-        return OneToManyPerturbation.from_tuples(mapping_list,
+        mapping_dict = {k: v for k, v in set(list(itertools.combinations(mapping_list, 2)))}
 
-                                                 label_from=label_from,
+        return OneToManyPerturbation.from_dictionary(mapping_dict,
 
-                                                 label_to=label_to,
+                                                     label_from=label_from,
 
-                                                 tokenizer=tokenizer,
+                                                     label_to=label_to,
 
-                                                 detokenizer=detokenizer)
+                                                     tokenizer=tokenizer,
+
+                                                     detokenizer=detokenizer)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -6607,7 +6778,7 @@ in the list.</p>
         &gt;&gt;&gt; OneToOnePerturbation.from_string(replacement=&#39;UNKWRDZ&#39;)
 
     Raises:
-        AssertionError: At least one of `prefix`, `suffix` and `replacement` should be provided.
+        ValueError: At least one of `prefix`, `suffix` and `replacement` should be provided.
 
     Args:
         label_from (LT): Attribute label of original instance. Defaults to &#39;original&#39;.
@@ -6784,7 +6955,7 @@ in the list.</p>
 
         Raises:
 
-            AssertionError: At least one of `prefix`, `suffix` and `replacement` should be provided.
+            ValueError: At least one of `prefix`, `suffix` and `replacement` should be provided.
 
         Args:
 
@@ -6810,9 +6981,9 @@ in the list.</p>
 
         &quot;&quot;&quot;
 
-        assert prefix is not None or suffix is not None or replacement is not None, \
+        if prefix is None and suffix is None and replacement is None:
 
-            &#39;At least one of `prefix`, `suffix` and `replacement` should be provided.&#39;
+            raise ValueError(&#39;At least one of prefix, suffix and replacement should be provided.&#39;)
 
         if prefix is None:
 
@@ -6857,8 +7028,8 @@ in the list.</p>
     <span class="n">tuples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16bc8ef70</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16bc8f0d0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16c7beca0</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16c7bee50</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -7249,7 +7420,7 @@ result it aims to perform the mapping from the tokens on the RHS to the LHS.</p>
 
         res = self.perturbation_function(instance)
 
-        if res is None:
+        if res is None or isinstance(res, list) and all(r is None for r in res):
 
             return
 
@@ -7263,7 +7434,7 @@ result it aims to perform the mapping from the tokens on the RHS to the LHS.</p>
 
         for perturbed_text, original_label, label in zip(perturbed, original_labels, labels):
 
-            if perturbed_text != str(instance.data):
+            if perturbed_text is not None and perturbed_text != str(instance.data):
 
                 identifier = format_identifier(instance, 0)
 
@@ -7764,7 +7935,7 @@ result it aims to perform the mapping from the tokens on the RHS to the LHS.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../data/random/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Random" rel="prev">
+        <a href="../../data/random/string/" class="md-footer__link md-footer__link--prev" aria-label="Previous: String" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -7773,7 +7944,7 @@ result it aims to perform the mapping from the tokens on the RHS to the LHS.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Random
+              String
             </div>
           </div>
         </a>

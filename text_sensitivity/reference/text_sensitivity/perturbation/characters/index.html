@@ -353,8 +353,20 @@
   
   
     <li class="md-nav__item">
-      <a href="../../test/" class="md-nav__link">
-        Test
+      <a href="../../internationalization/" class="md-nav__link">
+        Internationalization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sensitivity/" class="md-nav__link">
+        Sensitivity
       </a>
     </li>
   
@@ -368,14 +380,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_3" type="checkbox" id="__nav_4_1_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_4" type="checkbox" id="__nav_4_1_4" >
       
-      <label class="md-nav__link" for="__nav_4_1_3">
+      <label class="md-nav__link" for="__nav_4_1_4">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_1_3">
+        <label class="md-nav__title" for="__nav_4_1_4">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -398,9 +410,96 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data/random/" class="md-nav__link">
-        Random
+      <a href="../../data/lists/" class="md-nav__link">
+        Lists
       </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/wordlist/" class="md-nav__link">
+        Wordlist
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_4_4" type="checkbox" id="__nav_4_1_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_1_4_4">
+        Random
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Random" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Random
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/random/base/" class="md-nav__link">
+        Base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/random/entity/" class="md-nav__link">
+        Entity
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/random/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/random/string/" class="md-nav__link">
+        String
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -421,14 +520,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_4" type="checkbox" id="__nav_4_1_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_5" type="checkbox" id="__nav_4_1_5" checked>
       
-      <label class="md-nav__link" for="__nav_4_1_4">
+      <label class="md-nav__link" for="__nav_4_1_5">
         Perturbation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Perturbation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_1_4">
+        <label class="md-nav__title" for="__nav_4_1_5">
           <span class="md-nav__icon md-icon"></span>
           Perturbation
         </label>
@@ -708,7 +807,7 @@
                 
                 
                 <h1 id="module-text_sensitivityperturbationcharacters">Module text_sensitivity.perturbation.characters</h1>
-<p>None</p>
+<p>Create character-level perturbations (<code>text_sensitivity.perturbation.base.Perturbation</code>).</p>
 <p>None</p>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
 <span class="normal">  2</span>
@@ -916,7 +1015,7 @@
 <span class="normal">204</span>
 <span class="normal">205</span>
 <span class="normal">206</span>
-<span class="normal">207</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code># perturbations/characters.py
+<span class="normal">207</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Create character-level perturbations (`text_sensitivity.perturbation.base.Perturbation`).&quot;&quot;&quot;
 
 import numpy as np
 
@@ -932,23 +1031,23 @@ def __construct(cls_or_fn, constructor_one, constructor_many, **kwargs):
 
     &quot;&quot;&quot;Generic constructor, returning `constructor_many` if n &gt; 1 else `constructor_one`.&quot;&quot;&quot;
 
+    n = 1
+
     label_from = kwargs.pop(&#39;label_from&#39;) if &#39;label_from&#39; in kwargs else &#39;original&#39;
 
     label_to = kwargs.pop(&#39;label_to&#39;) if &#39;label_to&#39; in kwargs else &#39;perturbed&#39;
 
-    if &#39;n&#39; in kwargs and isinstance(kwargs[&#39;n&#39;], int) and kwargs[&#39;n&#39;] &gt; 1:
+    if &#39;n&#39; in kwargs and isinstance(kwargs[&#39;n&#39;], int):
 
         n = kwargs.pop(&#39;n&#39;)
-
-        if not isinstance(cls_or_fn, (str, dict, Callable)) or isinstance(cls_or_fn, type):
-
-            cls_or_fn = cls_or_fn(**kwargs)
-
-        return constructor_many(cls_or_fn, n=n, label_from=label_from, label_to=label_to)
 
     if not isinstance(cls_or_fn, (str, dict, Callable)) or isinstance(cls_or_fn, type):
 
         cls_or_fn = cls_or_fn(**kwargs)
+
+    if n &gt; 1:
+
+        return constructor_many(cls_or_fn, n=n, label_from=label_from, label_to=label_to)
 
     return constructor_one(cls_or_fn, label_from=label_from, label_to=label_to)
 
