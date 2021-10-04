@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installation" class="md-skip">
+        <a href="#quick-tour" class="md-skip">
           Skip to content
         </a>
       
@@ -275,6 +275,13 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-tour" class="md-nav__link">
+    Quick tour
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
@@ -740,6 +747,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#quick-tour" class="md-nav__link">
+    Quick tour
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
     Installation
   </a>
@@ -823,18 +837,85 @@
                 
                   <h1>Home</h1>
                 
-                <p align="center">
-  <img src="https://i.ibb.co/2nzcC1P/Text-Logo-Logo-large-sensitivity.png" alt="T_xt Sensitivity logo" width="70%">
-</p>
-
+                <p><em><p align="center">
+  <img src="https://git.science.uu.nl/m.j.robeer/text_sensitivity/-/raw/main/img/TextLogo-Logo_large_sensitivity.png" alt="T_xt Sensitivity logo" width="70%"></em>
+</p></p>
+<p><strong><h3 align="center">
+Sensitivity testing (fairness &amp; robustness) for text machine learning models</strong>
+</h3></p>
 <p><a href="https://pypi.org/project/text-sensitivity/"><img alt="PyPI" src="https://img.shields.io/pypi/v/text_sensitivity" /></a>
 <a href="https://pypi.org/project/text-sensitivity/"><img alt="Python_version" src="https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue" /></a>
 <a href="https://git.science.uu.nl/m.j.robeer/text_sensitivity/-/pipelines"><img alt="Build_passing" src="https://img.shields.io/badge/build-passing-brightgreen" /></a>
 <a href="https://www.gnu.org/licenses/lgpl-3.0.en.html"><img alt="License" src="https://img.shields.io/pypi/l/text_sensitivity" /></a>
-<a href="https://marcelrobeer.github.io/text_sensitivity"><img alt="Docs_passing" src="https://img.shields.io/badge/docs-external-blueviolet" /></a></p>
+<a href="https://marcelrobeer.github.io/text_sensitivity"><img alt="Docs_passing" src="https://img.shields.io/badge/docs-external-blueviolet" /></a>
+<a href="https://github.com/PyCQA/flake8"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-flake8-aa0000" /></a></p>
 <hr />
-<p><em>Extension of <a href="https://git.science.uu.nl/m.j.robeer/text_explainability">text_explainability</a> for sensitivity testing (robustness, fairness).</em></p>
-<p>Marcel Robeer, 2021</p>
+<blockquote>
+<p>Extension of <a href="https://git.science.uu.nl/m.j.robeer/text_explainability">text_explainability</a></p>
+</blockquote>
+<p>Uses the <strong>generic architecture</strong> of <code>text_explainability</code> to also include tests of <strong>robustness</strong> (<em>how generalizable the model is in production</em>, e.g. ability to handle input characters, stability when adding typos, or the effect of adding random unrelated data) and <strong>fairness</strong> (<em>whether equal individuals are treated equally by the model</em>, e.g. subgroup fairness on sex and nationality).</p>
+<p>&copy; Marcel Robeer, 2021</p>
+<h2 id="quick-tour">Quick tour</h2>
+<p><strong>Robustness</strong>: test whether your model is able to handle different data types...</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="n">RandomAscii</span><span class="p">,</span> <span class="n">RandomEmojis</span><span class="p">,</span> <span class="n">combine_generators</span>
+
+<span class="c1"># Generate 10 strings with random ASCII characters</span>
+<span class="n">RandomAscii</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Generate 5 strings with random ASCII characters and emojis</span>
+<span class="n">combine_generators</span><span class="p">(</span><span class="n">RandomAscii</span><span class="p">(),</span> <span class="n">RandomEmojis</span><span class="p">())</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>... whether your model performs equally for different entities ...
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="n">RandomAddress</span><span class="p">,</span> <span class="n">RandomEmail</span>
+
+<span class="c1"># Random address of your current locale (default = &#39;nl&#39;)</span>
+<span class="n">RandomAddress</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Random e-mail addresses in Spanish (&#39;es&#39;) and Portuguese (&#39;pt&#39;), and include from which country the e-mail is</span>
+<span class="n">RandomEmail</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;pt&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table></p>
+<p>... and if it is robust under simple perturbations.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="n">compare_accuracy</span>
+<span class="kn">from</span> <span class="nn">text_sensitivity.perturbation</span> <span class="kn">import</span> <span class="n">to_upper</span><span class="p">,</span> <span class="n">add_typos</span>
+
+<span class="c1"># Is model accuracy equal when we change all sentences to uppercase?</span>
+<span class="n">compare_accuracy</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">to_upper</span><span class="p">)</span>
+
+<span class="c1"># Is model accracy equal when we add typos in words?</span>
+<span class="n">compare_accuracy</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">add_typos</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table></p>
+<p><strong>Fairness</strong>: see if performance is equal among subgroups.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="n">RandomName</span>
+
+<span class="c1"># Generate random Dutch (&#39;nl&#39;) and Russian (&#39;ru&#39;) names, both &#39;male&#39; and &#39;female&#39; (+ return attributes)</span>
+<span class="n">RandomName</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nl&#39;</span><span class="p">,</span> <span class="s1">&#39;ru&#39;</span><span class="p">],</span> <span class="n">sex</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 <h2 id="installation">Installation</h2>
 <table>
 <thead>
