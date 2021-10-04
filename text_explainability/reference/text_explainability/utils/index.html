@@ -438,6 +438,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -557,14 +569,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_9" type="checkbox" id="__nav_5_1_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" >
       
-      <label class="md-nav__link" for="__nav_5_1_9">
+      <label class="md-nav__link" for="__nav_5_1_10">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_9">
+        <label class="md-nav__title" for="__nav_5_1_10">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -644,14 +656,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_11" type="checkbox" id="__nav_5_1_11" >
       
-      <label class="md-nav__link" for="__nav_5_1_10">
+      <label class="md-nav__link" for="__nav_5_1_11">
         Generation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Generation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_10">
+        <label class="md-nav__title" for="__nav_5_1_11">
           <span class="md-nav__icon md-icon"></span>
           Generation
         </label>
@@ -903,7 +915,9 @@
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Utility functions.&quot;&quot;&quot;
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Utility functions.&quot;&quot;&quot;
 
 import re
 
@@ -913,11 +927,13 @@ import numpy as np
 
 from typing import Sequence, Iterable
 
-def word_tokenizer(input: str) -&gt; Sequence[str]:
+def word_tokenizer(input: str, exclude_curly_brackets: bool = False) -&gt; Sequence[str]:
 
     &quot;&quot;&quot;Simple regex tokenizer.&quot;&quot;&quot;
 
-    return re.findall(r&quot;\w+|[^\w\s]+&quot;, input)
+    pattern = r&quot;\{.+?\}|\w+|[^\w\s]+&quot; if exclude_curly_brackets else r&quot;\w+|[^\w\s]+&quot;
+
+    return re.findall(pattern, input)
 
 def word_detokenizer(input: Iterable[str]) -&gt; str:
 
@@ -1084,8 +1100,10 @@ PUNCTUATION = list(string.punctuation) + [&#39;...&#39;]
 <h3 id="default_tokenizer">default_tokenizer</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">default_tokenizer</span><span class="p">(</span>
-    <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">default_tokenizer</span><span class="p">(</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">exclude_curly_brackets</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
@@ -1094,11 +1112,15 @@ PUNCTUATION = list(string.punctuation) + [&#39;...&#39;]
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def word_tokenizer(input: str) -&gt; Sequence[str]:
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def word_tokenizer(input: str, exclude_curly_brackets: bool = False) -&gt; Sequence[str]:
 
     &quot;&quot;&quot;Simple regex tokenizer.&quot;&quot;&quot;
 
-    return re.findall(r&quot;\w+|[^\w\s]+&quot;, input)
+    pattern = r&quot;\{.+?\}|\w+|[^\w\s]+&quot; if exclude_curly_brackets else r&quot;\w+|[^\w\s]+&quot;
+
+    return re.findall(pattern, input)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1158,8 +1180,10 @@ PUNCTUATION = list(string.punctuation) + [&#39;...&#39;]
 <h3 id="word_tokenizer">word_tokenizer</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">word_tokenizer</span><span class="p">(</span>
-    <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">word_tokenizer</span><span class="p">(</span>
+    <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">exclude_curly_brackets</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
@@ -1168,11 +1192,15 @@ PUNCTUATION = list(string.punctuation) + [&#39;...&#39;]
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def word_tokenizer(input: str) -&gt; Sequence[str]:
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def word_tokenizer(input: str, exclude_curly_brackets: bool = False) -&gt; Sequence[str]:
 
     &quot;&quot;&quot;Simple regex tokenizer.&quot;&quot;&quot;
 
-    return re.findall(r&quot;\w+|[^\w\s]+&quot;, input)
+    pattern = r&quot;\{.+?\}|\w+|[^\w\s]+&quot; if exclude_curly_brackets else r&quot;\w+|[^\w\s]+&quot;
+
+    return re.findall(pattern, input)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1195,7 +1223,7 @@ PUNCTUATION = list(string.punctuation) + [&#39;...&#39;]
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../locale/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Locale" rel="prev">
+        <a href="../model/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Model" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1204,7 +1232,7 @@ PUNCTUATION = list(string.punctuation) + [&#39;...&#39;]
               <span class="md-footer__direction">
                 Previous
               </span>
-              Locale
+              Model
             </div>
           </div>
         </a>

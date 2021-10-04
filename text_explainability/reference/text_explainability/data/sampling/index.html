@@ -440,6 +440,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../utils/" class="md-nav__link">
         Utils
       </a>
@@ -457,14 +469,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_9" type="checkbox" id="__nav_5_1_9" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_9">
+      <label class="md-nav__link" for="__nav_5_1_10">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_9">
+        <label class="md-nav__title" for="__nav_5_1_10">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -843,14 +855,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_11" type="checkbox" id="__nav_5_1_11" >
       
-      <label class="md-nav__link" for="__nav_5_1_10">
+      <label class="md-nav__link" for="__nav_5_1_11">
         Generation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Generation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_10">
+        <label class="md-nav__title" for="__nav_5_1_11">
           <span class="md-nav__icon md-icon"></span>
           Generation
         </label>
@@ -3191,7 +3203,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">LabelProvider</span><span class="p">],</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x15f964820</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x1618ebaf0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4013,7 +4025,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MMDCritic</span><span class="p">(</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x15f964820</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x1618ebaf0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>

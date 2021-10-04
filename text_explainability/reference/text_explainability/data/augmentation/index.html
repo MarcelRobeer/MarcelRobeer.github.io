@@ -440,6 +440,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../utils/" class="md-nav__link">
         Utils
       </a>
@@ -457,14 +469,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_9" type="checkbox" id="__nav_5_1_9" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_9">
+      <label class="md-nav__link" for="__nav_5_1_10">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_9">
+        <label class="md-nav__title" for="__nav_5_1_10">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -811,14 +823,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_11" type="checkbox" id="__nav_5_1_11" >
       
-      <label class="md-nav__link" for="__nav_5_1_10">
+      <label class="md-nav__link" for="__nav_5_1_11">
         Generation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Generation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_10">
+        <label class="md-nav__title" for="__nav_5_1_11">
           <span class="md-nav__icon md-icon"></span>
           Generation
         </label>
@@ -1580,7 +1592,19 @@
 <span class="normal">398</span>
 <span class="normal">399</span>
 <span class="normal">400</span>
-<span class="normal">401</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Augment a single instance to generate neighborhood data.
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Augment a single instance to generate neighborhood data.
 
 Todo:
 
@@ -1664,7 +1688,7 @@ class LocalTokenPertubator(MultiplePertubator[TextInstance],
 
                 *args: Any, **kwargs: Any) -&gt; Iterator[Tuple[Iterable[str], Iterable[int]]]:
 
-        raise NotImplementedError
+        raise NotImplementedError(&#39;Implemented in subclasses&#39;)
 
     def discard_children(self, parent: TextInstance) -&gt; None:
 
@@ -1836,6 +1860,18 @@ class TokenReplacement(LocalTokenPertubator):
 
         which is assumed not to be part of the original tokens.
 
+        Example:
+
+            Randomly replace at least two tokens with the replacement word &#39;UNK&#39;:
+
+            &gt;&gt;&gt; from text_explainability.augmentation import TokenReplacement
+
+            &gt;&gt;&gt; TokenReplacement(replacement=&#39;UNK&#39;).perturb([&#39;perturb&#39;, &#39;this&#39;, &#39;into&#39;, &#39;multiple&#39;],
+
+            &gt;&gt;&gt;                                             n_samples=3,
+
+            &gt;&gt;&gt;                                             min_changes=2)
+
         Args:
 
             tokenized_instance (Iterable[str]): Tokenized instance to apply perturbations to.
@@ -1992,7 +2028,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">4</span>
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LeaveOut</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x15f92dd30</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x1618b2c10</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2388,7 +2424,19 @@ class LeaveOut(TokenReplacement):
 <span class="normal">138</span>
 <span class="normal">139</span>
 <span class="normal">140</span>
-<span class="normal">141</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
 
                 tokenized_instance: Iterable[str],
 
@@ -2407,6 +2455,18 @@ class LeaveOut(TokenReplacement):
         &quot;&quot;&quot;Perturb a tokenized instance by replacing it with a single replacement token (e.g. &#39;UNKWRDZ&#39;),
 
         which is assumed not to be part of the original tokens.
+
+        Example:
+
+            Randomly replace at least two tokens with the replacement word &#39;UNK&#39;:
+
+            &gt;&gt;&gt; from text_explainability.augmentation import TokenReplacement
+
+            &gt;&gt;&gt; TokenReplacement(replacement=&#39;UNK&#39;).perturb([&#39;perturb&#39;, &#39;this&#39;, &#39;into&#39;, &#39;multiple&#39;],
+
+            &gt;&gt;&gt;                                             n_samples=3,
+
+            &gt;&gt;&gt;                                             min_changes=2)
 
         Args:
 
@@ -2558,7 +2618,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LocalTokenPertubator</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x15f92dd30</span><span class="o">&gt;</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x1618b2c10</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -2734,7 +2794,7 @@ class LeaveOut(TokenReplacement):
 
                 *args: Any, **kwargs: Any) -&gt; Iterator[Tuple[Iterable[str], Iterable[int]]]:
 
-        raise NotImplementedError
+        raise NotImplementedError(&#39;Implemented in subclasses&#39;)
 
     def discard_children(self, parent: TextInstance) -&gt; None:
 
@@ -2931,7 +2991,7 @@ class LeaveOut(TokenReplacement):
 
                 *args: Any, **kwargs: Any) -&gt; Iterator[Tuple[Iterable[str], Iterable[int]]]:
 
-        raise NotImplementedError
+        raise NotImplementedError(&#39;Implemented in subclasses&#39;)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -2963,7 +3023,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">5</span>
 <span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TokenReplacement</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x15f92dd30</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x1618b2c10</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">replacement</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;UNKWRDZ&#39;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
@@ -3183,7 +3243,19 @@ class LeaveOut(TokenReplacement):
 <span class="normal">212</span>
 <span class="normal">213</span>
 <span class="normal">214</span>
-<span class="normal">215</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class TokenReplacement(LocalTokenPertubator):
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class TokenReplacement(LocalTokenPertubator):
 
     def __init__(self,
 
@@ -3276,6 +3348,18 @@ class LeaveOut(TokenReplacement):
         &quot;&quot;&quot;Perturb a tokenized instance by replacing it with a single replacement token (e.g. &#39;UNKWRDZ&#39;),
 
         which is assumed not to be part of the original tokens.
+
+        Example:
+
+            Randomly replace at least two tokens with the replacement word &#39;UNK&#39;:
+
+            &gt;&gt;&gt; from text_explainability.augmentation import TokenReplacement
+
+            &gt;&gt;&gt; TokenReplacement(replacement=&#39;UNK&#39;).perturb([&#39;perturb&#39;, &#39;this&#39;, &#39;into&#39;, &#39;multiple&#39;],
+
+            &gt;&gt;&gt;                                             n_samples=3,
+
+            &gt;&gt;&gt;                                             min_changes=2)
 
         Args:
 
@@ -3747,7 +3831,19 @@ class LeaveOut(TokenReplacement):
 <span class="normal">138</span>
 <span class="normal">139</span>
 <span class="normal">140</span>
-<span class="normal">141</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
 
                 tokenized_instance: Iterable[str],
 
@@ -3766,6 +3862,18 @@ class LeaveOut(TokenReplacement):
         &quot;&quot;&quot;Perturb a tokenized instance by replacing it with a single replacement token (e.g. &#39;UNKWRDZ&#39;),
 
         which is assumed not to be part of the original tokens.
+
+        Example:
+
+            Randomly replace at least two tokens with the replacement word &#39;UNK&#39;:
+
+            &gt;&gt;&gt; from text_explainability.augmentation import TokenReplacement
+
+            &gt;&gt;&gt; TokenReplacement(replacement=&#39;UNK&#39;).perturb([&#39;perturb&#39;, &#39;this&#39;, &#39;into&#39;, &#39;multiple&#39;],
+
+            &gt;&gt;&gt;                                             n_samples=3,
+
+            &gt;&gt;&gt;                                             min_changes=2)
 
         Args:
 
