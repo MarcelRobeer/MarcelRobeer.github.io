@@ -822,14 +822,10 @@
                 
                 <h1 id="example-usage">Example Usage</h1>
 <h2 id="dependencies">Dependencies</h2>
-<p><code>text_explainability</code> uses instances and machine learning models wrapped with the <a href="https://pypi.org/project/instancelib/">InstanceLib</a> library.
+<p><code>text_explainability</code> uses instances and machine learning models wrapped with the <a href="https://pypi.org/project/instancelib/">InstanceLib</a> library. For your convenience, we wrap some <code>instancelib</code> functions in <code>text_explainability.data</code> and <code>explainability.model</code>.
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="kn">from</span> <span class="nn">instancelib.ingest.spreadsheet</span> <span class="kn">import</span> <span class="n">read_csv_dataset</span>
-<span class="kn">from</span> <span class="nn">instancelib.instances.text</span> <span class="kn">import</span> <span class="n">MemoryTextInstance</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_explainability.data</span> <span class="kn">import</span> <span class="n">import_data</span><span class="p">,</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">from_string</span>
+<span class="kn">from</span> <span class="nn">text_explainability.model</span> <span class="kn">import</span> <span class="n">from_sklearn</span>
 </code></pre></div>
 </td></tr></table></p>
 <h2 id="dataset-and-model">Dataset and model</h2>
@@ -848,35 +844,21 @@
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span><span class="p">,</span> <span class="n">TfidfTransformer</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
-<span class="kn">from</span> <span class="nn">instancelib.machinelearning</span> <span class="kn">import</span> <span class="n">SkLearnDataClassifier</span>
-
 <span class="c1"># Create train/test dataset</span>
-<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;./datasets/test.csv&#39;</span><span class="p">)</span>
-<span class="n">test_env</span> <span class="o">=</span> <span class="n">read_csv_dataset</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">data_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fulltext&#39;</span><span class="p">],</span> <span class="n">label_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
-<span class="n">instanceprovider</span> <span class="o">=</span> <span class="n">test_env</span><span class="o">.</span><span class="n">dataset</span>
-<span class="n">labelprovider</span> <span class="o">=</span> <span class="n">test_env</span><span class="o">.</span><span class="n">labels</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">test_env</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">instanceprovider</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.70</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">import_data</span><span class="p">(</span><span class="s1">&#39;./datasets/test.csv&#39;</span><span class="p">,</span> <span class="n">data_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fulltext&#39;</span><span class="p">],</span> <span class="n">label_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
+<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.70</span><span class="p">)</span>
+<span class="n">labelprovider</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">labels</span>
 
 <span class="c1"># Create sklearn model with pipeline</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;vect&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">()),</span>
-              <span class="p">(</span><span class="s1">&#39;tfidf&#39;</span><span class="p">,</span> <span class="n">TfidfTransformer</span><span class="p">(</span><span class="n">use_idf</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
-              <span class="p">(</span><span class="s1">&#39;rf&#39;</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-             <span class="p">])</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;tfidf&#39;</span><span class="p">,</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">use_idf</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+                     <span class="p">(</span><span class="s1">&#39;rf&#39;</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">))])</span>
 
 <span class="c1"># Build and fit (train) model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">SkLearnDataClassifier</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">test_env</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit_provider</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">labelprovider</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">from_sklearn</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h2 id="using-text-explainability">Using Text Explainability</h2>
@@ -885,11 +867,9 @@
 <p>Popular local explanations include <code>LIME</code>, <code>KernelSHAP</code> , local decion trees (<code>LocalTree</code>), local decision rules (<code>LocalRules</code>) and <code>FoilTree</code>. First, let us create a sample to explain:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_explainability</span> <span class="kn">import</span> <span class="n">default_tokenizer</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_explainability.data</span> <span class="kn">import</span> <span class="n">from_string</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;Dit is zeer positieve proef...&#39;</span>
-<span class="n">sample</span> <span class="o">=</span> <span class="n">MemoryTextInstance</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tokenized</span> <span class="o">=</span> <span class="n">default_tokenizer</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">from_string</span><span class="p">(</span><span class="s1">&#39;Dit is zeer positieve of negatieve proef... Of toch negatief?&#39;</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p>Next, the prediction of <code>model</code> on <code>sample</code> can be explained by generating neighborhood data (<code>text_explainability.data.augmentation.TokenReplacement</code>), used by <code>LIME</code>, <code>LocalTree</code>, <code>FoilTree</code> and <code>KernelSHAP</code>:</p>
@@ -912,7 +892,7 @@
 <span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_explainability</span> <span class="kn">import</span> <span class="n">LIME</span><span class="p">,</span> <span class="n">LocalTree</span><span class="p">,</span> <span class="n">FoilTree</span><span class="p">,</span> <span class="n">KernelSHAP</span>
 
 <span class="c1"># LIME explainer for `sample` on `model`</span>
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">LIME</span><span class="p">(</span><span class="n">test_env</span><span class="p">)</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">LIME</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
 <span class="n">explainer</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;neutraal&#39;</span><span class="p">,</span> <span class="s1">&#39;positief&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">scores</span>
 
 <span class="c1"># SHAP explanation for `sample` on `model`, limited to 4 features</span>
@@ -947,14 +927,14 @@
 <span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_explainability</span> <span class="kn">import</span> <span class="n">TokenFrequency</span><span class="p">,</span> <span class="n">TokenInformation</span>
 
 <span class="c1"># Global word frequency explanation on ground-truth labels</span>
-<span class="n">tf</span> <span class="o">=</span> <span class="n">TokenFrequency</span><span class="p">(</span><span class="n">instanceprovider</span><span class="p">)</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="n">TokenFrequency</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
 <span class="n">tf</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">labelprovider</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="c1"># Global word frequency explanation on model predictions</span>
 <span class="n">tf</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">filter_words</span><span class="o">=</span><span class="n">PUNCTUATION</span><span class="p">)</span>
 
 <span class="c1"># Token information for dataset</span>
-<span class="n">ti</span> <span class="o">=</span> <span class="n">TokenInformation</span><span class="p">(</span><span class="n">instanceprovider</span><span class="p">)</span>
+<span class="n">ti</span> <span class="o">=</span> <span class="n">TokenInformation</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
 <span class="n">ti</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">labelprovider</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">scores</span>
 
 <span class="c1"># Token information for model</span>
@@ -978,16 +958,16 @@
 <span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_explainability</span> <span class="kn">import</span> <span class="n">KMedoids</span><span class="p">,</span> <span class="n">MMDCritic</span><span class="p">,</span> <span class="n">LabelwiseMMDCritic</span>
 
 <span class="c1"># Extract top-2 prototypes with KMedoids</span>
-<span class="n">KMedoids</span><span class="p">(</span><span class="n">instanceprovider</span><span class="p">)</span><span class="o">.</span><span class="n">prototypes</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">KMedoids</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">prototypes</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Extract top-2 prototypes and top-2 criticisms label with MMDCritic</span>
-<span class="n">MMDCritic</span><span class="p">(</span><span class="n">instanceprovider</span><span class="p">)(</span><span class="n">n_prototypes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_criticisms</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">MMDCritic</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)(</span><span class="n">n_prototypes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_criticisms</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Extract 1 prototype for each ground-truth label with MMDCritic</span>
-<span class="n">LabelwiseMMDCritic</span><span class="p">(</span><span class="n">instanceprovider</span><span class="p">,</span> <span class="n">labelprovider</span><span class="p">)</span><span class="o">.</span><span class="n">prototypes</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">LabelwiseMMDCritic</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labelprovider</span><span class="p">)</span><span class="o">.</span><span class="n">prototypes</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Extract 1 prototype and 2 criticisms for each predicted label with MMDCritic</span>
-<span class="n">LabelwiseMMDCritic</span><span class="p">(</span><span class="n">instanceprovider</span><span class="p">,</span> <span class="n">model</span><span class="p">)(</span><span class="n">n_prototypes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_criticisms</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">LabelwiseMMDCritic</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">model</span><span class="p">)(</span><span class="n">n_prototypes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_criticisms</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
                 

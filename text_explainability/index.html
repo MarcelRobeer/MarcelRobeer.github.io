@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installation" class="md-skip">
+        <a href="#quick-tour" class="md-skip">
           Skip to content
         </a>
       
@@ -275,6 +275,13 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-tour" class="md-nav__link">
+    Quick tour
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
@@ -775,6 +782,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#quick-tour" class="md-nav__link">
+    Quick tour
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
     Installation
   </a>
@@ -873,7 +887,7 @@
                   <h1>Home</h1>
                 
                 <p align="center">
-  <img src="https://i.ibb.co/xXtJ23n/Text-Logo-Logo-large.png" alt="T_xt Explainability logo" width="70%">
+  <img src="https://git.science.uu.nl/m.j.robeer/text_explainability/-/raw/main/img/TextLogo-Logo%20large.png" alt="T_xt Explainability logo" width="70%">
 </p>
 
 <p><a href="https://pypi.org/project/text-explainability/"><img alt="PyPI" src="https://img.shields.io/pypi/v/text_explainability" /></a>
@@ -882,8 +896,56 @@
 <a href="https://www.gnu.org/licenses/lgpl-3.0.en.html"><img alt="License" src="https://img.shields.io/pypi/l/text_explainability" /></a>
 <a href="https://marcelrobeer.github.io/text_explainability"><img alt="Docs_passing" src="https://img.shields.io/badge/docs-external-blueviolet" /></a></p>
 <hr />
-<p><em>A generic explainability architecture for explaining text machine learning models.</em></p>
-<p>Marcel Robeer, 2021</p>
+<h3 align="center">
+    <p>A generic explainability architecture for explaining text machine learning models</p>
+</h3>
+
+<p><code>text_explainability</code> provides a <strong>generic architecture</strong> from which well-known state-of-the-art explainability approaches for text can be composed. This modular architecture allows components to be swapped out and combined, to <strong>quickly develop new types of explainability approaches</strong> for (natural language) text, or to <strong>improve a plethora of approaches by improving a single module</strong>.</p>
+<p>Several example methods are included, which provide <strong>local explanations</strong> (<em>explaining the prediction of a single instance</em>, e.g. <code>LIME</code> and <code>SHAP</code>) or <strong>global explanations</strong> (<em>explaining the dataset, or model behavior on the dataset</em>, e.g. <code>TokenFrequency</code> and <code>MMDCritic</code>). By replacing the default modules (e.g. local data generation, global data sampling or improved embedding methods), these methods can be improved upon or new methods can be introduced.</p>
+<p>&copy; Marcel Robeer, 2021</p>
+<h2 id="quick-tour">Quick tour</h2>
+<p><strong>Local explanation</strong>: explain a models' prediction on a given sample, self-provided or from a dataset.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_explainability</span> <span class="kn">import</span> <span class="n">LIME</span><span class="p">,</span> <span class="n">LocalRules</span>
+
+<span class="c1"># Define sample to explain</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="s1">&#39;Explain why this is positive and not negative!&#39;</span>
+
+<span class="c1"># LIME explanation (local feature importance)</span>
+<span class="n">LIME</span><span class="p">()</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># List of local rules</span>
+<span class="n">LocalRules</span><span class="p">()</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table></p>
+<p><strong>Global explanation</strong>: explain the whole dataset (e.g. train set, test set), and what they look like for the ground-truth or predicted labels.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Import dataset</span>
+<span class="kn">from</span> <span class="nn">text_explainability.data</span> <span class="kn">import</span> <span class="n">import_data</span><span class="p">,</span> <span class="n">TokenFrequency</span><span class="p">,</span> <span class="n">MMDCritic</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">import_data</span><span class="p">(</span><span class="s1">&#39;./datasets/test.csv&#39;</span><span class="p">,</span> <span class="n">data_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fulltext&#39;</span><span class="p">],</span> <span class="n">label_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
+
+<span class="c1"># Top-k most frequent tokens per label</span>
+<span class="n">TokenFrequency</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">labelprovider</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># 2 prototypes and 1 criticisms for the dataset</span>
+<span class="n">MMDCritic</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)(</span><span class="n">n_prototypes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_criticisms</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table></p>
 <h2 id="installation">Installation</h2>
 <p>See <a href="docs/installation/">installation.md</a> for an extended installation guide.</p>
 <table>
