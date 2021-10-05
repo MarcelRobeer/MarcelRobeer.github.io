@@ -714,11 +714,27 @@
                 <h1 id="module-text_sensitivityperturbation">Module text_sensitivity.perturbation</h1>
 <p>Apply perturbation to one or multiple (tokenized) strings.</p>
 <p>None</p>
-<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Apply perturbation to one or multiple (tokenized) strings.&quot;&quot;&quot;
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Apply perturbation to one or multiple (tokenized) strings.&quot;&quot;&quot;
 
 from text_sensitivity.perturbation.base import Perturbation, OneToOnePerturbation, OneToManyPerturbation
+
+from text_sensitivity.perturbation.characters import (add_typos, random_case_swap, random_lower,
+
+                                                      random_spaces, random_upper, swap_random, delete_random)
+
+# from text_sensitivity.perturbation.words import
+
+from text_sensitivity.perturbation.sentences import to_lower, to_upper, repeat_n_times
 </code></pre></div>
 </td></tr></table>
 </details>
