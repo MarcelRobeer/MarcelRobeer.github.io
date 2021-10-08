@@ -453,6 +453,30 @@
   
   
     <li class="md-nav__item">
+      <a href="data/base/" class="md-nav__link">
+        Base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="data/generate/" class="md-nav__link">
+        Generate
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="data/" class="md-nav__link">
         Index
       </a>
@@ -492,30 +516,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_4" type="checkbox" id="__nav_5_1_4_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_6" type="checkbox" id="__nav_5_1_4_6" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_4">
+      <label class="md-nav__link" for="__nav_5_1_4_6">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_4">
+        <label class="md-nav__title" for="__nav_5_1_4_6">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="data/random/base/" class="md-nav__link">
-        Base
-      </a>
-    </li>
-  
-
           
             
   
@@ -732,7 +744,9 @@
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from text_sensitivity.sensitivity import compare_accuracy, compare_precision, compare_recall
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from text_sensitivity.sensitivity import compare_accuracy, compare_precision, compare_recall, input_space_robustness, input_space_robustness
 
 from text_sensitivity.perturbation import Perturbation, OneToOnePerturbation, OneToManyPerturbation
 
@@ -750,9 +764,11 @@ from text_sensitivity.data.random.entity import (RandomAddress, RandomCity, Rand
 
                                                  RandomYear, RandomMonth, RandomDay, RandomDayOfWeek,
 
-                                                 RandomCurrencySymbol, RandomCryptoCurrency)
+                                                 RandomCurrencySymbol, RandomCryptoCurrency, RandomLicensePlate)
 
-__version__ = &#39;0.1.9&#39;
+from text_sensitivity.data.generate import from_pattern, default_patterns
+
+__version__ = &#39;0.2.0&#39;
 </code></pre></div>
 </td></tr></table>
 </details>

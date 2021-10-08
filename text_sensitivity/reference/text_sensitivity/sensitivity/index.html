@@ -462,6 +462,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#input_space_robustness" class="md-nav__link">
+    input_space_robustness
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -495,6 +502,30 @@
           Data
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/base/" class="md-nav__link">
+        Base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/generate/" class="md-nav__link">
+        Generate
+      </a>
+    </li>
+  
+
           
             
   
@@ -540,30 +571,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_4" type="checkbox" id="__nav_5_1_4_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_6" type="checkbox" id="__nav_5_1_4_6" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_4">
+      <label class="md-nav__link" for="__nav_5_1_4_6">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_4">
+        <label class="md-nav__title" for="__nav_5_1_4_6">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../data/random/base/" class="md-nav__link">
-        Base
-      </a>
-    </li>
-  
-
           
             
   
@@ -787,6 +806,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#input_space_robustness" class="md-nav__link">
+    input_space_robustness
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -924,25 +950,233 @@
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
-<span class="normal">117</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sensitivity testing, for fairness and robustness.&quot;&quot;&quot;
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sensitivity testing, for fairness and robustness.&quot;&quot;&quot;
 
-from typing import Union
+from typing import Iterator, Union, List, Optional, Tuple
 
-from instancelib.instances.base import InstanceProvider
+from instancelib.analysis.base import label_metrics, BinaryModelMetrics, MulticlassModelMetrics
 
 from instancelib.environment.text import TextEnvironment
 
-from instancelib.instances.text import TextInstanceProvider
+from instancelib.instances.base import InstanceProvider
+
+from instancelib.instances.text import MemoryTextInstance, TextInstanceProvider
 
 from instancelib.labels.memory import MemoryLabelProvider
 
-from instancelib.analysis.base import label_metrics
+from instancelib.machinelearning.base import AbstractClassifier
+
+from instancelib.typehints import LT
+
+from text_sensitivity.data.random.string import RandomString, combine_generators
 
 from text_sensitivity.perturbation.base import Perturbation
 
 def apply_perturbation(dataset: Union[InstanceProvider, TextEnvironment],
 
-                       perturbation: Perturbation):
+                       perturbation: Perturbation) -&gt; Tuple[TextInstanceProvider, MemoryLabelProvider]:
+
+    &quot;&quot;&quot;Apply a perturbation to a dataset, getting the perturbed instances and corresponding attribute labels.
+
+    Examples:
+
+        Repeat each string twice:
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation.sentences import repeat_k_times
+
+        &gt;&gt;&gt; apply_perturbation(env, repeat_k_times(k=2))
+
+        Add the unrelated string &#39;This is unrelated.&#39; before each instance:
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation import OneToOnePerturbation
+
+        &gt;&gt;&gt; perturbation = OneToOnePerturbation.from_string(prefix=&#39;This is unrelated.&#39;)
+
+        &gt;&gt;&gt; apply_perturbation(env, perturbation)
+
+    Args:
+
+        dataset (Union[InstanceProvider, TextEnvironment]): Dataset to apply perturbation to (e.g. all data, train set,
+
+            test set, set belonging to a given label, or subset of data for a (un)protected group).
+
+        perturbation (Perturbation): Perturbation to apply, one-to-one or one-to-many.
+
+    Returns:
+
+        Tuple[TextInstanceProvider, MemoryLabelProvider]: Perturbed instances and corresponding attribute labels.
+
+    &quot;&quot;&quot;
 
     if isinstance(dataset, TextEnvironment):
 
@@ -982,13 +1216,59 @@ def equal_ground_truth(ground_truth, instances):
 
         yield (key, ground_truth._labeldict[parent_key])
 
-def compare_metric(env, model, perturbation):
+def compare_metric(env: TextEnvironment,
 
-    &quot;&quot;&quot;Get metrics for each ground-truth label and attribute.&quot;&quot;&quot;
+                   model: AbstractClassifier,
+
+                   perturbation: Perturbation
+
+                   ) -&gt; Iterator[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]:
+
+    &quot;&quot;&quot;Get metrics for each ground-truth label and attribute.
+
+    Examples:
+
+        Compare metric of `model` performance (e.g. accuracy, precision) before and after mapping each instance in a
+
+        dataset to uppercase.
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation.sentences import to_upper
+
+        &gt;&gt;&gt; compare_metric(env, model, to_upper)
+
+        Compare metric when randomly adding 10 perturbed instances with typos to each instance in a dataset.
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation.characters import add_typos
+
+        &gt;&gt;&gt; compare_metric(env, model, add_typos(n=10))
+
+    Args:
+
+        env (TextEnvironment): Environment containing original instances (`.dataset`)
+
+            and ground-truth labels (`.labels`).
+
+        model (AbstractClassifier): Black-box model to compare metrics on.
+
+        perturbation (Perturbation): Peturbation to apply.
+
+    Yields:
+
+        Iterator[Sequence[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]]: Original label (before
+
+            perturbation), perturbed label (after perturbation) and metrics for label-attribute pair.
+
+    &quot;&quot;&quot;
+
+    # Apply perturbations and get attributes
 
     instances, attributes = apply_perturbation(env, perturbation)
 
+    # Perform prediction on original instances and perturbed instances
+
     model_predictions = MemoryLabelProvider.from_tuples(model.predict(instances))
+
+    # Expectation (for now that labels should remain equal)
 
     ground_truth = MemoryLabelProvider.from_tuples(equal_ground_truth(env.labels, instances))
 
@@ -1041,6 +1321,92 @@ def compare_recall(*args, **kwargs):
                          for label, attribute, metrics in compare_metric(*args, **kwargs)],
 
                         columns=[&#39;label&#39;, &#39;attribute&#39;, &#39;recall&#39;])
+
+def input_space_robustness(model: AbstractClassifier,
+
+                           generators: List[RandomString],
+
+                           n_samples: int = 100,
+
+                           min_length: int = 0,
+
+                           max_length: int = 100,
+
+                           seed: Optional[int] = 0) -&gt; Tuple[float, List[MemoryTextInstance]]:
+
+    &quot;&quot;&quot;Test the robustness of a machine learning model to different input types.
+
+    Example:
+
+        Test a pretrained black-box `model` for its robustness to 1000 random strings (length 0 to 500),
+
+        containing whitespace characters, ASCII (upper, lower and numbers), emojis and Russian Cyrillic characters:
+
+        &gt;&gt;&gt; from text_sensitivity.data.random.string import RandomAscii, RandomCyrillic, RandomEmojis, RandomWhitespace
+
+        &gt;&gt;&gt; input_space_robustness(model,
+
+        &gt;&gt;&gt;                        [RandomWhitespace(), RandomAscii(), RandomEmojis(base=True), RandomCyrillic(&#39;ru&#39;)],
+
+        &gt;&gt;&gt;                        n_samples=1000,
+
+        &gt;&gt;&gt;                        min_length=0,
+
+        &gt;&gt;&gt;                        max_length=500)
+
+    Args:
+
+        model (AbstractClassifier): Machine learning model to test.
+
+        generators (List[RandomString]): Random character generators.
+
+        n_samples (int, optional): Number of test samples. Defaults to 100.
+
+        min_length (int, optional): Input minimum length. Defaults to 0.
+
+        max_length (int, optional): Input maximum length. Defaults to 100.
+
+        seed (Optional[int], optional): Seed for reproducibility purposes. Defaults to 0.
+
+    Returns:
+
+        Tuple[float, List[MemoryTextInstance]]: Percentage of success cases, list of failed instances
+
+    &quot;&quot;&quot;
+
+    # Combine all generators into one
+
+    generator = combine_generators(*generators, seed=seed)
+
+    # Generate instances
+
+    instances = generator.generate(n=n_samples, min_length=min_length, max_length=max_length)
+
+    # Percentage success, instances that failed
+
+    success: int = 0
+
+    failures: List[List[str]] = []
+
+    # Do not perform it batchwise but per instance, in order to return the error-throwing failures
+
+    for i in instances:
+
+        try:
+
+            model.predict([instances[i]])
+
+            success += 1
+
+        except Exception as e:
+
+            print(e)
+
+            failures.append(instances[i])
+
+    success = 1.0 if len(instances) == 0 else success / len(instances)
+
+    return success, failures
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1052,9 +1418,56 @@ def compare_recall(*args, **kwargs):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">apply_perturbation</span><span class="p">(</span>
     <span class="n">dataset</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextEnvironment</span><span class="p">],</span>
     <span class="n">perturbation</span><span class="p">:</span> <span class="n">text_sensitivity</span><span class="o">.</span><span class="n">perturbation</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Perturbation</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstanceProvider</span><span class="p">,</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryLabelProvider</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
+<p>Apply a perturbation to a dataset, getting the perturbed instances and corresponding attribute labels.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataset</td>
+<td>Union[InstanceProvider, TextEnvironment]</td>
+<td>Dataset to apply perturbation to (e.g. all data, train set,</td>
+<td></td>
+</tr>
+<tr>
+<td>test set, set belonging to a given label, or subset of data for a (un)protected group).</td>
+<td>None</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>perturbation</td>
+<td>Perturbation</td>
+<td>Perturbation to apply, one-to-one or one-to-many.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tuple[TextInstanceProvider, MemoryLabelProvider]</td>
+<td>Perturbed instances and corresponding attribute labels.</td>
+</tr>
+</tbody>
+</table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1083,9 +1496,73 @@ def compare_recall(*args, **kwargs):
 <span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span>
-<span class="normal">29</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def apply_perturbation(dataset: Union[InstanceProvider, TextEnvironment],
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def apply_perturbation(dataset: Union[InstanceProvider, TextEnvironment],
 
-                       perturbation: Perturbation):
+                       perturbation: Perturbation) -&gt; Tuple[TextInstanceProvider, MemoryLabelProvider]:
+
+    &quot;&quot;&quot;Apply a perturbation to a dataset, getting the perturbed instances and corresponding attribute labels.
+
+    Examples:
+
+        Repeat each string twice:
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation.sentences import repeat_k_times
+
+        &gt;&gt;&gt; apply_perturbation(env, repeat_k_times(k=2))
+
+        Add the unrelated string &#39;This is unrelated.&#39; before each instance:
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation import OneToOnePerturbation
+
+        &gt;&gt;&gt; perturbation = OneToOnePerturbation.from_string(prefix=&#39;This is unrelated.&#39;)
+
+        &gt;&gt;&gt; apply_perturbation(env, perturbation)
+
+    Args:
+
+        dataset (Union[InstanceProvider, TextEnvironment]): Dataset to apply perturbation to (e.g. all data, train set,
+
+            test set, set belonging to a given label, or subset of data for a (un)protected group).
+
+        perturbation (Perturbation): Perturbation to apply, one-to-one or one-to-many.
+
+    Returns:
+
+        Tuple[TextInstanceProvider, MemoryLabelProvider]: Perturbed instances and corresponding attribute labels.
+
+    &quot;&quot;&quot;
 
     if isinstance(dataset, TextEnvironment):
 
@@ -1156,13 +1633,69 @@ def compare_recall(*args, **kwargs):
 <span class="normal">3</span>
 <span class="normal">4</span>
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compare_metric</span><span class="p">(</span>
-    <span class="n">env</span><span class="p">,</span>
-    <span class="n">model</span><span class="p">,</span>
-    <span class="n">perturbation</span>
-<span class="p">)</span>
+    <span class="n">env</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextEnvironment</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
+    <span class="n">perturbation</span><span class="p">:</span> <span class="n">text_sensitivity</span><span class="o">.</span><span class="n">perturbation</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Perturbation</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">,</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">BinaryModelMetrics</span><span class="p">,</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">MulticlassModelMetrics</span><span class="p">]]]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Get metrics for each ground-truth label and attribute.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>env</td>
+<td>TextEnvironment</td>
+<td>Environment containing original instances (<code>.dataset</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>and ground-truth labels (<code>.labels</code>).</td>
+<td>None</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>model</td>
+<td>AbstractClassifier</td>
+<td>Black-box model to compare metrics on.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>perturbation</td>
+<td>Perturbation</td>
+<td>Peturbation to apply.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Yields:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Iterator[Sequence[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]]</td>
+<td>Original label (before</td>
+</tr>
+<tr>
+<td>perturbation), perturbed label (after perturbation) and metrics for label-attribute pair.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1185,13 +1718,105 @@ def compare_recall(*args, **kwargs):
 <span class="normal">20</span>
 <span class="normal">21</span>
 <span class="normal">22</span>
-<span class="normal">23</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def compare_metric(env, model, perturbation):
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def compare_metric(env: TextEnvironment,
 
-    &quot;&quot;&quot;Get metrics for each ground-truth label and attribute.&quot;&quot;&quot;
+                   model: AbstractClassifier,
+
+                   perturbation: Perturbation
+
+                   ) -&gt; Iterator[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]:
+
+    &quot;&quot;&quot;Get metrics for each ground-truth label and attribute.
+
+    Examples:
+
+        Compare metric of `model` performance (e.g. accuracy, precision) before and after mapping each instance in a
+
+        dataset to uppercase.
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation.sentences import to_upper
+
+        &gt;&gt;&gt; compare_metric(env, model, to_upper)
+
+        Compare metric when randomly adding 10 perturbed instances with typos to each instance in a dataset.
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation.characters import add_typos
+
+        &gt;&gt;&gt; compare_metric(env, model, add_typos(n=10))
+
+    Args:
+
+        env (TextEnvironment): Environment containing original instances (`.dataset`)
+
+            and ground-truth labels (`.labels`).
+
+        model (AbstractClassifier): Black-box model to compare metrics on.
+
+        perturbation (Perturbation): Peturbation to apply.
+
+    Yields:
+
+        Iterator[Sequence[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]]: Original label (before
+
+            perturbation), perturbed label (after perturbation) and metrics for label-attribute pair.
+
+    &quot;&quot;&quot;
+
+    # Apply perturbations and get attributes
 
     instances, attributes = apply_perturbation(env, perturbation)
 
+    # Perform prediction on original instances and perturbed instances
+
     model_predictions = MemoryLabelProvider.from_tuples(model.predict(instances))
+
+    # Expectation (for now that labels should remain equal)
 
     ground_truth = MemoryLabelProvider.from_tuples(equal_ground_truth(env.labels, instances))
 
@@ -1315,6 +1940,261 @@ def compare_recall(*args, **kwargs):
 </code></pre></div>
 </td></tr></table>
 </details>
+<h3 id="input_space_robustness">input_space_robustness</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">input_space_robustness</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
+    <span class="n">generators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">text_sensitivity</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">RandomString</span><span class="p">],</span>
+    <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]]</span>
+</code></pre></div>
+</td></tr></table>
+<p>Test the robustness of a machine learning model to different input types.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>model</td>
+<td>AbstractClassifier</td>
+<td>Machine learning model to test.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>generators</td>
+<td>List[RandomString]</td>
+<td>Random character generators.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>n_samples</td>
+<td>int</td>
+<td>Number of test samples. Defaults to 100.</td>
+<td>100</td>
+</tr>
+<tr>
+<td>min_length</td>
+<td>int</td>
+<td>Input minimum length. Defaults to 0.</td>
+<td>0</td>
+</tr>
+<tr>
+<td>max_length</td>
+<td>int</td>
+<td>Input maximum length. Defaults to 100.</td>
+<td>100</td>
+</tr>
+<tr>
+<td>seed</td>
+<td>Optional[int]</td>
+<td>Seed for reproducibility purposes. Defaults to 0.</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tuple[float, List[MemoryTextInstance]]</td>
+<td>Percentage of success cases, list of failed instances</td>
+</tr>
+</tbody>
+</table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def input_space_robustness(model: AbstractClassifier,
+
+                           generators: List[RandomString],
+
+                           n_samples: int = 100,
+
+                           min_length: int = 0,
+
+                           max_length: int = 100,
+
+                           seed: Optional[int] = 0) -&gt; Tuple[float, List[MemoryTextInstance]]:
+
+    &quot;&quot;&quot;Test the robustness of a machine learning model to different input types.
+
+    Example:
+
+        Test a pretrained black-box `model` for its robustness to 1000 random strings (length 0 to 500),
+
+        containing whitespace characters, ASCII (upper, lower and numbers), emojis and Russian Cyrillic characters:
+
+        &gt;&gt;&gt; from text_sensitivity.data.random.string import RandomAscii, RandomCyrillic, RandomEmojis, RandomWhitespace
+
+        &gt;&gt;&gt; input_space_robustness(model,
+
+        &gt;&gt;&gt;                        [RandomWhitespace(), RandomAscii(), RandomEmojis(base=True), RandomCyrillic(&#39;ru&#39;)],
+
+        &gt;&gt;&gt;                        n_samples=1000,
+
+        &gt;&gt;&gt;                        min_length=0,
+
+        &gt;&gt;&gt;                        max_length=500)
+
+    Args:
+
+        model (AbstractClassifier): Machine learning model to test.
+
+        generators (List[RandomString]): Random character generators.
+
+        n_samples (int, optional): Number of test samples. Defaults to 100.
+
+        min_length (int, optional): Input minimum length. Defaults to 0.
+
+        max_length (int, optional): Input maximum length. Defaults to 100.
+
+        seed (Optional[int], optional): Seed for reproducibility purposes. Defaults to 0.
+
+    Returns:
+
+        Tuple[float, List[MemoryTextInstance]]: Percentage of success cases, list of failed instances
+
+    &quot;&quot;&quot;
+
+    # Combine all generators into one
+
+    generator = combine_generators(*generators, seed=seed)
+
+    # Generate instances
+
+    instances = generator.generate(n=n_samples, min_length=min_length, max_length=max_length)
+
+    # Percentage success, instances that failed
+
+    success: int = 0
+
+    failures: List[List[str]] = []
+
+    # Do not perform it batchwise but per instance, in order to return the error-throwing failures
+
+    for i in instances:
+
+        try:
+
+            model.predict([instances[i]])
+
+            success += 1
+
+        except Exception as e:
+
+            print(e)
+
+            failures.append(instances[i])
+
+    success = 1.0 if len(instances) == 0 else success / len(instances)
+
+    return success, failures
+</code></pre></div>
+</td></tr></table>
+</details>
                 
               
               
@@ -1350,13 +2230,13 @@ def compare_recall(*args, **kwargs):
       
       
         
-        <a href="../data/" class="md-footer__link md-footer__link--next" aria-label="Next: Index" rel="next">
+        <a href="../data/base/" class="md-footer__link md-footer__link--next" aria-label="Next: Base" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Index
+              Base
             </div>
           </div>
           <div class="md-footer__button md-icon">

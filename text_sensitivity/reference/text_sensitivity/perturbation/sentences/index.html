@@ -413,6 +413,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data/base/" class="md-nav__link">
+        Base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/generate/" class="md-nav__link">
+        Generate
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data/" class="md-nav__link">
         Index
       </a>
@@ -452,30 +476,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_4" type="checkbox" id="__nav_5_1_4_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_6" type="checkbox" id="__nav_5_1_4_6" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_4">
+      <label class="md-nav__link" for="__nav_5_1_4_6">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_4">
+        <label class="md-nav__title" for="__nav_5_1_4_6">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../data/random/base/" class="md-nav__link">
-        Base
-      </a>
-    </li>
-  
-
           
             
   
@@ -630,8 +642,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#repeat_n_times" class="md-nav__link">
-    repeat_n_times
+  <a href="#repeat_k_times" class="md-nav__link">
+    repeat_k_times
   </a>
   
 </li>
@@ -727,8 +739,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#repeat_n_times" class="md-nav__link">
-    repeat_n_times
+  <a href="#repeat_k_times" class="md-nav__link">
+    repeat_k_times
   </a>
   
 </li>
@@ -808,34 +820,34 @@ def to_lower() -&gt; OneToOnePerturbation:
 
     return OneToOnePerturbation.from_function(str.lower, &#39;not_lower&#39;, &#39;lower&#39;)
 
-def repeat_n_times(n: int = 10, connector: Optional[str] = &#39; &#39;):
+def repeat_k_times(k: int = 10, connector: Optional[str] = &#39; &#39;):
 
-    &quot;&quot;&quot;Repeat a string n times.&quot;&quot;&quot;
+    &quot;&quot;&quot;Repeat a string k times.&quot;&quot;&quot;
 
     if connector is None:
 
         connector = &#39;&#39;
 
-    def repeat_n(string: str) -&gt; str:
+    def repeat_k(string: str) -&gt; str:
 
-        return connector.join([string] * n)
+        return connector.join([string] * k)
 
-    return OneToOnePerturbation.from_function(repeat_n, label_to=&#39;repeated&#39;)
+    return OneToOnePerturbation.from_function(repeat_k, label_to=&#39;repeated&#39;)
 </code></pre></div>
 </td></tr></table>
 </details>
 <h2 id="functions">Functions</h2>
-<h3 id="repeat_n_times">repeat_n_times</h3>
+<h3 id="repeat_k_times">repeat_k_times</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">repeat_n_times</span><span class="p">(</span>
-    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">repeat_k_times</span><span class="p">(</span>
+    <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
     <span class="n">connector</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-<p>Repeat a string n times.</p>
+<p>Repeat a string k times.</p>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -848,19 +860,19 @@ def repeat_n_times(n: int = 10, connector: Optional[str] = &#39; &#39;):
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def repeat_n_times(n: int = 10, connector: Optional[str] = &#39; &#39;):
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def repeat_k_times(k: int = 10, connector: Optional[str] = &#39; &#39;):
 
-    &quot;&quot;&quot;Repeat a string n times.&quot;&quot;&quot;
+    &quot;&quot;&quot;Repeat a string k times.&quot;&quot;&quot;
 
     if connector is None:
 
         connector = &#39;&#39;
 
-    def repeat_n(string: str) -&gt; str:
+    def repeat_k(string: str) -&gt; str:
 
-        return connector.join([string] * n)
+        return connector.join([string] * k)
 
-    return OneToOnePerturbation.from_function(repeat_n, label_to=&#39;repeated&#39;)
+    return OneToOnePerturbation.from_function(repeat_k, label_to=&#39;repeated&#39;)
 </code></pre></div>
 </td></tr></table>
 </details>

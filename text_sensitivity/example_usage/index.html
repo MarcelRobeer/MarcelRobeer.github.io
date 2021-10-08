@@ -376,6 +376,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#generating-data-from-patterns" class="md-nav__link">
+    Generating data from patterns
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -516,6 +523,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../reference/text_sensitivity/data/base/" class="md-nav__link">
+        Base
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/text_sensitivity/data/generate/" class="md-nav__link">
+        Generate
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../reference/text_sensitivity/data/" class="md-nav__link">
         Index
       </a>
@@ -555,30 +586,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_4" type="checkbox" id="__nav_5_1_4_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_6" type="checkbox" id="__nav_5_1_4_6" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_4">
+      <label class="md-nav__link" for="__nav_5_1_4_6">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_4">
+        <label class="md-nav__title" for="__nav_5_1_4_6">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reference/text_sensitivity/data/random/base/" class="md-nav__link">
-        Base
-      </a>
-    </li>
-  
-
           
             
   
@@ -816,6 +835,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#generating-data-from-patterns" class="md-nav__link">
+    Generating data from patterns
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -986,7 +1012,7 @@
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity.perturbation.sentences</span> <span class="kn">import</span> <span class="n">to_upper</span><span class="p">,</span> <span class="n">repeat_n_times</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity.perturbation.sentences</span> <span class="kn">import</span> <span class="n">to_upper</span><span class="p">,</span> <span class="n">repeat_k_times</span>
 <span class="kn">from</span> <span class="nn">text_sensitivity.perturbation.characters</span> <span class="kn">import</span> <span class="n">random_case_swap</span><span class="p">,</span> <span class="n">random_spaces</span><span class="p">,</span> <span class="n">swap_random</span><span class="p">,</span> <span class="n">add_typos</span>
 
 <span class="n">sample</span> <span class="o">=</span> <span class="s1">&#39;This is his example string, made especially for HER!&#39;</span>
@@ -995,8 +1021,8 @@
 <span class="nb">list</span><span class="p">(</span><span class="n">to_upper</span><span class="p">()(</span><span class="n">sample</span><span class="p">))</span>
 
 <span class="c1"># Repeat the string &#39;test&#39; n times</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">repeat_n_times</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)(</span><span class="s1">&#39;test&#39;</span><span class="p">))</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">repeat_n_times</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">connector</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)(</span><span class="s1">&#39;test&#39;</span><span class="p">))</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">repeat_k_times</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)(</span><span class="s1">&#39;test&#39;</span><span class="p">))</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">repeat_k_times</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">connector</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)(</span><span class="s1">&#39;test&#39;</span><span class="p">))</span>
 
 <span class="c1"># Randomly swap the character case (lower to upper or vice versa) in sample</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">random_case_swap</span><span class="p">()(</span><span class="n">sample</span><span class="p">))</span>
@@ -1074,6 +1100,49 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">RandomPhoneNumber</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">RandomPriceTag</span><span class="p">(</span><span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ru&#39;</span><span class="p">,</span> <span class="s1">&#39;de&#39;</span><span class="p">,</span> <span class="s1">&#39;it&#39;</span><span class="p">,</span> <span class="s1">&#39;br&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">RandomCryptoCurrency</span><span class="p">()</span><span class="o">.</span><span class="n">generate_list</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+</td></tr></table>
+<h4 id="generating-data-from-patterns">Generating data from patterns</h4>
+<p>These entities, or your own lists, can be used to generate strings for locally testing model robustness/fairness. Text 
+within curly braces (<code>{}</code>) is replaced, and attribute are added to each perturbed instance. The text outside of the curly 
+braces remains the same. Examples of patterns that can be put between curly braces are:</p>
+<ul>
+<li><code>{a|b|c}</code> generates a list with elements <code>a</code>, <code>b</code> and <code>c</code>.</li>
+<li><code>{city}</code> uses <code>RandomCity()</code> (in current locale) to generate <code>n</code> random cities. For a full list of default patterns see <code>from text_sensitivity import default_patterns; default_patterns()</code>.</li>
+<li><code>{custom_entity_name}</code> with keyword argument <code>custom_entity_name=['this', 'is', 'cool]</code> generates a list with elements <code>this</code>, <code>is</code>, <code>cool</code>.</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_sensitivity</span> <span class="kn">import</span> <span class="n">from_pattern</span>
+
+<span class="c1"># Generate a list [&#39;This is his house&#39;, &#39;This was his house&#39;, &#39;This is his car&#39;, &#39;This was his car&#39;, ...]:</span>
+<span class="n">from_pattern</span><span class="p">(</span><span class="s1">&#39;This {is|was} his {house|car|boat}&#39;</span><span class="p">)</span>
+
+<span class="c1"># Generate a list [&#39;His home town is Eindhoven.&#39;, &#39;Her home town is Eindhoven.&#39;,  &#39;His home town is Meerssen.&#39;, ...]. By default uses `RandomCity()` to generate the city name.</span>
+<span class="n">from_pattern</span><span class="p">(</span><span class="s1">&#39;{His|Her} home town is </span><span class="si">{city}</span><span class="s1">.&#39;</span><span class="p">)</span>
+
+<span class="c1"># Override the &#39;city&#39; default with your own list [&#39;Amsterdam&#39;, &#39;Rotterdam&#39;, &#39;Utrecht&#39;]:</span>
+<span class="n">from_pattern</span><span class="p">(</span><span class="s1">&#39;{His|Her} home town is </span><span class="si">{city}</span><span class="s1">.&#39;</span><span class="p">,</span> <span class="n">city</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Amsterdam&#39;</span><span class="p">,</span> <span class="s1">&#39;Rotterdam&#39;</span><span class="p">,</span> <span class="s1">&#39;Utrecht&#39;</span><span class="p">])</span>
+</code></pre></div>
+</td></tr></table>
+<p>In addition, modifiers can be added before a semicolon (<code>:</code>) within a curly brace to modify the generated data. Example 
+modifiers are:</p>
+<ul>
+<li><code>{lower:address}</code> generates addresses (<code>RandomAddress()</code> for current locale) in all-lowercase</li>
+<li><code>{upper:name}</code> generates full name (<code>RandomName()</code> for current locale) in all-uppercase</li>
+<li><code>{sentence:day_of_week}</code> generates day of week (<code>RandomDayOfWeek()</code> for current locale) in sentencecase.</li>
+<li><code>{title:country}</code> generates country names (<code>RandomCountry()</code> in locale language) in titlecase.</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Apply lower case to the first argument and uppercase to the last, getting [&#39;Vandaag, donderdag heeft Sanne COLIN gebeld op +31612351983!&#39;, ..., &#39;Vandaag, maandag heeft Nora SEPP gebeld op +31612351983!&#39;, ...]</span>
+<span class="n">from_pattern</span><span class="p">(</span><span class="s1">&#39;Vandaag, {lower:day_of_week}, heeft </span><span class="si">{first_name}</span><span class="s1"> {upper:first_name} gebeld op </span><span class="si">{phone_number}</span><span class="s1">!&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
                 
