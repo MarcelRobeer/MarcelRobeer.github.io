@@ -1188,10 +1188,14 @@
                 
                 <h1 id="module-text_explainabilitydataaugmentation">Module text_explainability.data.augmentation</h1>
 <p>Augment a single instance to generate neighborhood data.</p>
-<p>Todo:
-    * Add more complex sampling methods (e.g. top-k replacement by contextual language model, WordNet, ...)
-    * Replacement with k tokens at each index
-    * Ensure inactive[i] is set to 0 if the replacement token is the same as the original token[i]</p>
+<p>Todo:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Add more complex sampling methods (e.g. top-k replacement by contextual language model, WordNet, ...)
+* Replacement with k tokens at each index
+* Ensure inactive[i] is set to 0 if the replacement token is the same as the original token[i]
+</code></pre></div>
+</td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
 <span class="normal">  2</span>
 <span class="normal">  3</span>
@@ -1604,7 +1608,23 @@
 <span class="normal">410</span>
 <span class="normal">411</span>
 <span class="normal">412</span>
-<span class="normal">413</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Augment a single instance to generate neighborhood data.
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Augment a single instance to generate neighborhood data.
 
 Todo:
 
@@ -1726,13 +1746,19 @@ class LocalTokenPertubator(MultiplePertubator[TextInstance],
 
             **kwargs: Keyword arguments to be passed on to `perturb()` function.
 
+        Raises:
+
+            ValueError: &#39;Tokenize your instance before applying a perturbation&#39;
+
         Yields:
 
             Iterator[Sequence[TextInstance]]: Neighborhood data instances.
 
         &quot;&quot;&quot;
 
-        assert hasattr(instance, &#39;tokenized&#39;), &#39;Tokenize your instance before applying a perturbation&#39;
+        if not hasattr(instance, &#39;tokenized&#39;):
+
+            raise ValueError(&#39;Tokenize your instance before applying a perturbation&#39;)
 
         if instance.data not in self.env.all_instances.all_data():
 
@@ -1814,6 +1840,10 @@ class TokenReplacement(LocalTokenPertubator):
 
             keep (Iterable[int]): Binary indicator whether to keep (1) or replace (0) a token.
 
+        Raises:
+
+            ValueError: Too few replacements in self.replacement.
+
         Returns:
 
             Iterable[str]: Tokenized instance with perturbation applied.
@@ -1830,9 +1860,11 @@ class TokenReplacement(LocalTokenPertubator):
 
             replacement_len = len(self.replacement)
 
-            assert replacement_len &gt;= instance_len, \
+            if not (replacement_len &gt;= instance_len):
 
-                f&#39;Too few replacements in `self.replacement`, got {replacement_len} and expected {instance_len}&#39;
+                raise ValueError(f&#39;Too few replacements in `self.replacement`, got {replacement_len} &#39;,
+
+                                 f&#39;and expected {instance_len}&#39;)
 
             return [self.replacement[i] if j == 0 else token
 
@@ -1892,6 +1924,10 @@ class TokenReplacement(LocalTokenPertubator):
 
                 Defaults to False.
 
+        Raises:
+
+            ValueError: min_changes cannot be greater than max_changes.
+
         Yields:
 
             Iterator[Sequence[Iterable[str], Iterable[int]]]: Pertubed text instances and indices where
@@ -1906,9 +1942,9 @@ class TokenReplacement(LocalTokenPertubator):
 
         max_changes = min(instance_len, max_changes)
 
-        assert min_changes &lt;= max_changes, \
+        if min_changes &gt; max_changes:
 
-            f&#39;Unable to produce any perturbations since min_changes={min_changes} and max_changes={max_changes}&#39;
+            raise ValueError(f&#39;Unable to produce any perturbations since {min_changes=} and {max_changes=}&#39;)
 
         rand = np.random.RandomState(self._seed)
 
@@ -2028,7 +2064,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">4</span>
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LeaveOut</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x167961c10</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x164bfef70</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2284,6 +2320,21 @@ class LeaveOut(TokenReplacement):
 </tr>
 </tbody>
 </table>
+<p><strong>Raises:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ValueError</td>
+<td>min_changes cannot be greater than max_changes.</td>
+</tr>
+</tbody>
+</table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
 <span class="normal">  2</span>
 <span class="normal">  3</span>
@@ -2436,7 +2487,11 @@ class LeaveOut(TokenReplacement):
 <span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span>
-<span class="normal">153</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
 
                 tokenized_instance: Iterable[str],
 
@@ -2488,6 +2543,10 @@ class LeaveOut(TokenReplacement):
 
                 Defaults to False.
 
+        Raises:
+
+            ValueError: min_changes cannot be greater than max_changes.
+
         Yields:
 
             Iterator[Sequence[Iterable[str], Iterable[int]]]: Pertubed text instances and indices where
@@ -2502,9 +2561,9 @@ class LeaveOut(TokenReplacement):
 
         max_changes = min(instance_len, max_changes)
 
-        assert min_changes &lt;= max_changes, \
+        if min_changes &gt; max_changes:
 
-            f&#39;Unable to produce any perturbations since min_changes={min_changes} and max_changes={max_changes}&#39;
+            raise ValueError(f&#39;Unable to produce any perturbations since {min_changes=} and {max_changes=}&#39;)
 
         rand = np.random.RandomState(self._seed)
 
@@ -2618,7 +2677,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LocalTokenPertubator</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x167961c10</span><span class="o">&gt;</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x164bfef70</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -2746,7 +2805,13 @@ class LeaveOut(TokenReplacement):
 <span class="normal">122</span>
 <span class="normal">123</span>
 <span class="normal">124</span>
-<span class="normal">125</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalTokenPertubator(MultiplePertubator[TextInstance],
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalTokenPertubator(MultiplePertubator[TextInstance],
 
                            ChildGenerator[TextInstance],
 
@@ -2832,13 +2897,19 @@ class LeaveOut(TokenReplacement):
 
             **kwargs: Keyword arguments to be passed on to `perturb()` function.
 
+        Raises:
+
+            ValueError: &#39;Tokenize your instance before applying a perturbation&#39;
+
         Yields:
 
             Iterator[Sequence[TextInstance]]: Neighborhood data instances.
 
         &quot;&quot;&quot;
 
-        assert hasattr(instance, &#39;tokenized&#39;), &#39;Tokenize your instance before applying a perturbation&#39;
+        if not hasattr(instance, &#39;tokenized&#39;):
+
+            raise ValueError(&#39;Tokenize your instance before applying a perturbation&#39;)
 
         if instance.data not in self.env.all_instances.all_data():
 
@@ -3023,7 +3094,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">5</span>
 <span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TokenReplacement</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x167961c10</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x164bfef70</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">replacement</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;UNKWRDZ&#39;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
@@ -3255,7 +3326,17 @@ class LeaveOut(TokenReplacement):
 <span class="normal">224</span>
 <span class="normal">225</span>
 <span class="normal">226</span>
-<span class="normal">227</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class TokenReplacement(LocalTokenPertubator):
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class TokenReplacement(LocalTokenPertubator):
 
     def __init__(self,
 
@@ -3303,6 +3384,10 @@ class LeaveOut(TokenReplacement):
 
             keep (Iterable[int]): Binary indicator whether to keep (1) or replace (0) a token.
 
+        Raises:
+
+            ValueError: Too few replacements in self.replacement.
+
         Returns:
 
             Iterable[str]: Tokenized instance with perturbation applied.
@@ -3319,9 +3404,11 @@ class LeaveOut(TokenReplacement):
 
             replacement_len = len(self.replacement)
 
-            assert replacement_len &gt;= instance_len, \
+            if not (replacement_len &gt;= instance_len):
 
-                f&#39;Too few replacements in `self.replacement`, got {replacement_len} and expected {instance_len}&#39;
+                raise ValueError(f&#39;Too few replacements in `self.replacement`, got {replacement_len} &#39;,
+
+                                 f&#39;and expected {instance_len}&#39;)
 
             return [self.replacement[i] if j == 0 else token
 
@@ -3381,6 +3468,10 @@ class LeaveOut(TokenReplacement):
 
                 Defaults to False.
 
+        Raises:
+
+            ValueError: min_changes cannot be greater than max_changes.
+
         Yields:
 
             Iterator[Sequence[Iterable[str], Iterable[int]]]: Pertubed text instances and indices where
@@ -3395,9 +3486,9 @@ class LeaveOut(TokenReplacement):
 
         max_changes = min(instance_len, max_changes)
 
-        assert min_changes &lt;= max_changes, \
+        if min_changes &gt; max_changes:
 
-            f&#39;Unable to produce any perturbations since min_changes={min_changes} and max_changes={max_changes}&#39;
+            raise ValueError(f&#39;Unable to produce any perturbations since {min_changes=} and {max_changes=}&#39;)
 
         rand = np.random.RandomState(self._seed)
 
@@ -3691,6 +3782,21 @@ class LeaveOut(TokenReplacement):
 </tr>
 </tbody>
 </table>
+<p><strong>Raises:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ValueError</td>
+<td>min_changes cannot be greater than max_changes.</td>
+</tr>
+</tbody>
+</table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
 <span class="normal">  2</span>
 <span class="normal">  3</span>
@@ -3843,7 +3949,11 @@ class LeaveOut(TokenReplacement):
 <span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span>
-<span class="normal">153</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
 
                 tokenized_instance: Iterable[str],
 
@@ -3895,6 +4005,10 @@ class LeaveOut(TokenReplacement):
 
                 Defaults to False.
 
+        Raises:
+
+            ValueError: min_changes cannot be greater than max_changes.
+
         Yields:
 
             Iterator[Sequence[Iterable[str], Iterable[int]]]: Pertubed text instances and indices where
@@ -3909,9 +4023,9 @@ class LeaveOut(TokenReplacement):
 
         max_changes = min(instance_len, max_changes)
 
-        assert min_changes &lt;= max_changes, \
+        if min_changes &gt; max_changes:
 
-            f&#39;Unable to produce any perturbations since min_changes={min_changes} and max_changes={max_changes}&#39;
+            raise ValueError(f&#39;Unable to produce any perturbations since {min_changes=} and {max_changes=}&#39;)
 
         rand = np.random.RandomState(self._seed)
 

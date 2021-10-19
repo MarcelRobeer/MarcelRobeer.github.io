@@ -1100,8 +1100,10 @@
                 
                 <h1 id="module-text_explainabilitydataembedding">Module text_explainability.data.embedding</h1>
 <p>Embed text instances into numerical vectors.</p>
-<p>Todo:
-    * Add more sentence embedding methods</p>
+<p>Todo:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Add more sentence embedding methods
+</code></pre></div>
+</td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
 <span class="normal">  2</span>
 <span class="normal">  3</span>
@@ -1324,7 +1326,13 @@
 <span class="normal">220</span>
 <span class="normal">221</span>
 <span class="normal">222</span>
-<span class="normal">223</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Embed text instances into numerical vectors.
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Embed text instances into numerical vectors.
 
 Todo:
 
@@ -1362,6 +1370,10 @@ def as_n_dimensional(vectors: Union[np.ndarray, list, MemoryBucketProvider],
 
         **kwargs: Optional arguments passed to method constructor.
 
+    Raises:
+
+        ValueError: Unknown method selected.
+
     Returns:
 
         np.ndarray: Vectors summarized in n dimensions.
@@ -1388,7 +1400,9 @@ def as_n_dimensional(vectors: Union[np.ndarray, list, MemoryBucketProvider],
 
         kwargs[&#39;init&#39;] = &#39;pca&#39;
 
-    assert method in methods.keys(), f&#39;Unknown method &quot;{method}&quot;. Choose from {list(methods.keys())}.&#39;
+    if method not in methods.keys():
+
+        raise ValueError(f&#39;Unknown {method=}. Choose from {list(methods.keys())}.&#39;)
 
     if isinstance(vectors, MemoryBucketProvider):
 
@@ -1674,6 +1688,21 @@ class TfidfVectorizer(Embedder):
 </tr>
 </tbody>
 </table>
+<p><strong>Raises:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ValueError</td>
+<td>Unknown method selected.</td>
+</tr>
+</tbody>
+</table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1728,7 +1757,13 @@ class TfidfVectorizer(Embedder):
 <span class="normal">52</span>
 <span class="normal">53</span>
 <span class="normal">54</span>
-<span class="normal">55</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def as_n_dimensional(vectors: Union[np.ndarray, list, MemoryBucketProvider],
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def as_n_dimensional(vectors: Union[np.ndarray, list, MemoryBucketProvider],
 
                      n: int = 2,
 
@@ -1749,6 +1784,10 @@ class TfidfVectorizer(Embedder):
             &#39;incremental_pca&#39;, &#39;nmf&#39;, &#39;tsne&#39;]. Defaults to &#39;pca&#39;.
 
         **kwargs: Optional arguments passed to method constructor.
+
+    Raises:
+
+        ValueError: Unknown method selected.
 
     Returns:
 
@@ -1776,7 +1815,9 @@ class TfidfVectorizer(Embedder):
 
         kwargs[&#39;init&#39;] = &#39;pca&#39;
 
-    assert method in methods.keys(), f&#39;Unknown method &quot;{method}&quot;. Choose from {list(methods.keys())}.&#39;
+    if method not in methods.keys():
+
+        raise ValueError(f&#39;Unknown {method=}. Choose from {list(methods.keys())}.&#39;)
 
     if isinstance(vectors, MemoryBucketProvider):
 

@@ -786,8 +786,10 @@
                 
                 <h1 id="module-text_explainabilitygenerationfeature_selection">Module text_explainability.generation.feature_selection</h1>
 <p>Feature selection methods for limiting explanation length.</p>
-<p>Todo:
-    * Convert to factory design pattern</p>
+<p>Todo:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Convert to factory design pattern
+</code></pre></div>
+</td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
 <span class="normal">  2</span>
 <span class="normal">  3</span>
@@ -1168,7 +1170,17 @@
 <span class="normal">378</span>
 <span class="normal">379</span>
 <span class="normal">380</span>
-<span class="normal">381</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Feature selection methods for limiting explanation length.
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Feature selection methods for limiting explanation length.
 
 Todo:
 
@@ -1232,9 +1244,7 @@ class FeatureSelector(Readable):
 
         Raises:
 
-            AssertionError: The local linear model used to calculate forward_selection
-
-                was not defined.
+            ValueError: The local linear model used to calculate forward_selection was not defined.
 
         Returns:
 
@@ -1246,7 +1256,9 @@ class FeatureSelector(Readable):
 
         &quot;&quot;&quot;
 
-        assert self.model is not None, &#39;forward_selection requires a local linear model&#39;
+        if self.model is None:
+
+            raise ValueError(&#39;forward_selection requires a local linear model&#39;)
 
         n_features = min(X.shape[1], n_features)
 
@@ -1298,9 +1310,7 @@ class FeatureSelector(Readable):
 
         Raises:
 
-            AssertionError: The local linear model used to calculate forward_selection
-
-                was not defined.
+            ValueError: The local linear model used to calculate highest_weights was not defined.
 
         Returns:
 
@@ -1312,7 +1322,9 @@ class FeatureSelector(Readable):
 
         &quot;&quot;&quot;
 
-        assert self.model is not None, &#39;highest_weights requires a local linear model&#39;
+        if self.model is None:
+
+            raise ValueError(&#39;highest_weights requires a local linear model&#39;)
 
         self.model.fit(X, y, weights=weights)
 
@@ -1400,6 +1412,10 @@ class FeatureSelector(Readable):
 
                 `Bayesian Information Criterion`_ (`bic`). Defaults to &#39;aic&#39;.
 
+        Raises:
+
+            ValueError: Unknown criterion.
+
         Returns:
 
             np.ndarray: Indices of selected features.
@@ -1418,7 +1434,17 @@ class FeatureSelector(Readable):
 
         &quot;&quot;&quot;
 
-        assert criterion in [&#39;aic&#39;, &#39;bic&#39;], f&#39;Unknown criterion &quot;{criterion}&quot;&#39;
+        if criterion not in [&#39;aic&#39;, &#39;bic&#39;]:
+
+            raise ValueError(f&#39;Unknown criterion &quot;{criterion}&quot;, choose from [aic, bic]&#39;)
+
+        # use n_features
+
+        if y.ndim &gt; 1:
+
+            # TODO: multiclass support?
+
+            y = y[:, 0]
 
         return np.nonzero(LassoLarsIC(criterion=criterion).fit(X, y).coef_)[0]
 
@@ -1456,7 +1482,7 @@ class FeatureSelector(Readable):
 
         if y.ndim &gt; 1:
 
-            # To-do: multiclass support?
+            # TODO: multiclass support?
 
             y = y[:, 0]
 
@@ -1498,7 +1524,7 @@ class FeatureSelector(Readable):
 
         Raises:
 
-            AssertionError: Unknown method, or the requirements of a method have not been satisfied.
+            ValueError: Unknown method, or the requirements of a method have not been satisfied.
 
         Returns:
 
@@ -1506,19 +1532,15 @@ class FeatureSelector(Readable):
 
         &quot;&quot;&quot;
 
-        if self.model is None:
+        if self.model is None and method in [&#39;forward_selection&#39;, &#39;highest_weights&#39;]:
 
-            assert method not in [&#39;forward_selection&#39;, &#39;highest_weights&#39;], \
+            raise ValueError(f&#39;{self.__class__.__name__} requires a `model` to use methods forward_selection and &#39;,
 
-                f&#39;{self.__class__.__name__} requires a `model` to use methods forward_selection and &#39; \
+                             &#39;highest_weights&#39;)
 
-                &#39;highest_weights&#39;
+        if method not in [None, &#39;forward_selection&#39;, &#39;highest_weights&#39;, &#39;lasso_path&#39;, &#39;aic&#39;, &#39;bic&#39;, &#39;l1_reg&#39;]:
 
-        assert method in [None, &#39;forward_selection&#39;, &#39;highest_weights&#39;, &#39;lasso_path&#39;,
-
-                          &#39;aic&#39;, &#39;bic&#39;, &#39;l1_reg&#39;], \
-
-            f&#39;Unknown method &quot;{method}&quot;&#39;
+            raise ValueError(f&#39;Unknown {method=}&#39;)
 
         n_features = min(X.shape[1], n_features)
 
@@ -1923,7 +1945,17 @@ class FeatureSelector(Readable):
 <span class="normal">360</span>
 <span class="normal">361</span>
 <span class="normal">362</span>
-<span class="normal">363</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class FeatureSelector(Readable):
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class FeatureSelector(Readable):
 
     def __init__(self, model: Optional[LinearSurrogate] = None):
 
@@ -1969,9 +2001,7 @@ class FeatureSelector(Readable):
 
         Raises:
 
-            AssertionError: The local linear model used to calculate forward_selection
-
-                was not defined.
+            ValueError: The local linear model used to calculate forward_selection was not defined.
 
         Returns:
 
@@ -1983,7 +2013,9 @@ class FeatureSelector(Readable):
 
         &quot;&quot;&quot;
 
-        assert self.model is not None, &#39;forward_selection requires a local linear model&#39;
+        if self.model is None:
+
+            raise ValueError(&#39;forward_selection requires a local linear model&#39;)
 
         n_features = min(X.shape[1], n_features)
 
@@ -2035,9 +2067,7 @@ class FeatureSelector(Readable):
 
         Raises:
 
-            AssertionError: The local linear model used to calculate forward_selection
-
-                was not defined.
+            ValueError: The local linear model used to calculate highest_weights was not defined.
 
         Returns:
 
@@ -2049,7 +2079,9 @@ class FeatureSelector(Readable):
 
         &quot;&quot;&quot;
 
-        assert self.model is not None, &#39;highest_weights requires a local linear model&#39;
+        if self.model is None:
+
+            raise ValueError(&#39;highest_weights requires a local linear model&#39;)
 
         self.model.fit(X, y, weights=weights)
 
@@ -2137,6 +2169,10 @@ class FeatureSelector(Readable):
 
                 `Bayesian Information Criterion`_ (`bic`). Defaults to &#39;aic&#39;.
 
+        Raises:
+
+            ValueError: Unknown criterion.
+
         Returns:
 
             np.ndarray: Indices of selected features.
@@ -2155,7 +2191,17 @@ class FeatureSelector(Readable):
 
         &quot;&quot;&quot;
 
-        assert criterion in [&#39;aic&#39;, &#39;bic&#39;], f&#39;Unknown criterion &quot;{criterion}&quot;&#39;
+        if criterion not in [&#39;aic&#39;, &#39;bic&#39;]:
+
+            raise ValueError(f&#39;Unknown criterion &quot;{criterion}&quot;, choose from [aic, bic]&#39;)
+
+        # use n_features
+
+        if y.ndim &gt; 1:
+
+            # TODO: multiclass support?
+
+            y = y[:, 0]
 
         return np.nonzero(LassoLarsIC(criterion=criterion).fit(X, y).coef_)[0]
 
@@ -2193,7 +2239,7 @@ class FeatureSelector(Readable):
 
         if y.ndim &gt; 1:
 
-            # To-do: multiclass support?
+            # TODO: multiclass support?
 
             y = y[:, 0]
 
@@ -2235,7 +2281,7 @@ class FeatureSelector(Readable):
 
         Raises:
 
-            AssertionError: Unknown method, or the requirements of a method have not been satisfied.
+            ValueError: Unknown method, or the requirements of a method have not been satisfied.
 
         Returns:
 
@@ -2243,19 +2289,15 @@ class FeatureSelector(Readable):
 
         &quot;&quot;&quot;
 
-        if self.model is None:
+        if self.model is None and method in [&#39;forward_selection&#39;, &#39;highest_weights&#39;]:
 
-            assert method not in [&#39;forward_selection&#39;, &#39;highest_weights&#39;], \
+            raise ValueError(f&#39;{self.__class__.__name__} requires a `model` to use methods forward_selection and &#39;,
 
-                f&#39;{self.__class__.__name__} requires a `model` to use methods forward_selection and &#39; \
+                             &#39;highest_weights&#39;)
 
-                &#39;highest_weights&#39;
+        if method not in [None, &#39;forward_selection&#39;, &#39;highest_weights&#39;, &#39;lasso_path&#39;, &#39;aic&#39;, &#39;bic&#39;, &#39;l1_reg&#39;]:
 
-        assert method in [None, &#39;forward_selection&#39;, &#39;highest_weights&#39;, &#39;lasso_path&#39;,
-
-                          &#39;aic&#39;, &#39;bic&#39;, &#39;l1_reg&#39;], \
-
-            f&#39;Unknown method &quot;{method}&quot;&#39;
+            raise ValueError(f&#39;Unknown {method=}&#39;)
 
         n_features = min(X.shape[1], n_features)
 

@@ -745,11 +745,15 @@
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from text_explainability.global_explanation import (TokenFrequency, TokenInformation,
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from text_explainability.global_explanation import (TokenFrequency, TokenInformation,
 
                                                     KMedoids, LabelwiseKMedoids, MMDCritic, LabelwiseMMDCritic)
 
-from text_explainability.local_explanation import LIME, KernelSHAP, Anchor, LocalTree
+from text_explainability.local_explanation import LIME, KernelSHAP, Anchor, LocalTree, LocalRules
 
 from text_explainability.utils import (default_tokenizer, default_detokenizer,
 
@@ -757,7 +761,11 @@ from text_explainability.utils import (default_tokenizer, default_detokenizer,
 
                                        character_tokenizer, character_detokenizer)
 
-__version__ = &#39;0.4.6&#39;
+from text_explainability.data import from_string, import_data, train_test_split
+
+from text_explainability.model import from_sklearn
+
+__version__ = &#39;0.5.2&#39;
 </code></pre></div>
 </td></tr></table>
 </details>

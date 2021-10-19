@@ -1252,10 +1252,14 @@
                 
                 <h1 id="module-text_explainabilitydatasampling">Module text_explainability.data.sampling</h1>
 <p>Sample an (informative) subset from the data.</p>
-<p>Todo:
-    * Sample (informative?) subset from data
-    * Refactor to make sampling base class
-    * Add ability to perform MMD critic on a subset (e.g. single class)</p>
+<p>Todo:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Sample (informative?) subset from data
+* Refactor to make sampling base class
+* Add ability to perform MMD critic on a subset (e.g. single class)
+</code></pre></div>
+</td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
 <span class="normal">  2</span>
 <span class="normal">  3</span>
@@ -1962,7 +1966,17 @@
 <span class="normal">704</span>
 <span class="normal">705</span>
 <span class="normal">706</span>
-<span class="normal">707</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
+<span class="normal">707</span>
+<span class="normal">708</span>
+<span class="normal">709</span>
+<span class="normal">710</span>
+<span class="normal">711</span>
+<span class="normal">712</span>
+<span class="normal">713</span>
+<span class="normal">714</span>
+<span class="normal">715</span>
+<span class="normal">716</span>
+<span class="normal">717</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
 
 Todo:
 
@@ -2178,6 +2192,10 @@ class MMDCritic(PrototypeSampler):
 
             n (int, optional): Number of prototypes to select. Defaults to 5.
 
+        Raises:
+
+            ValueError: Cannot select more instances than the total number of instances.
+
         Returns:
 
             Sequence[MemoryTextInstance]: List of prototype instances.
@@ -2188,7 +2206,9 @@ class MMDCritic(PrototypeSampler):
 
         &quot;&quot;&quot;
 
-        assert n &lt;= len(self.instances), f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;
+        if n &gt; len(self.instances):
+
+            raise ValueError(f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;)
 
         K = self.K
 
@@ -2250,6 +2270,8 @@ class MMDCritic(PrototypeSampler):
 
             Exception: `MMDCritic.prototypes()` must first be run before being able to determine the criticisms.
 
+            ValueError: Unknown regularizer or requested more criticisms than there are samples left.
+
         Returns:
 
             Sequence[MemoryTextInstance]: List of criticism instances.
@@ -2266,13 +2288,15 @@ class MMDCritic(PrototypeSampler):
 
         regularizers = {None, &#39;logdet&#39;, &#39;iterative&#39;}
 
-        assert regularizer in regularizers, \
+        if regularizer not in regularizers:
 
-            f&#39;Unknown regularizer &quot;{regularizer}&quot;, choose from {regularizers}.&#39;
+            raise ValueError(f&#39;Unknown {regularizer=}. Choose from {regularizers}.&#39;)
 
-        assert n &lt;= (len(self.instances) - len(self._prototypes)), \
+        if n &gt; (len(self.instances) - len(self._prototypes)):
 
-            f&#39;Cannot select more than instances excluding prototypes ({len(self.instances) - len(self._prototypes)})&#39;
+            raise ValueError(&#39;Cannot select more than instances excluding prototypes &#39;,
+
+                             f&#39;({len(self.instances) - len(self._prototypes)})&#39;)
 
         prototypes = np.array([p.identifier for p in self._prototypes])
 
@@ -2308,7 +2332,7 @@ class MMDCritic(PrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K)[candidate_indices]
+                diag = np.diagonal(K + 1)[candidate_indices]  # TODO: look at hotfix
 
                 if inverse_of_prev_selected is not None:
 
@@ -3203,7 +3227,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">LabelProvider</span><span class="p">],</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16799aaf0</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x164c37e50</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4025,7 +4049,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MMDCritic</span><span class="p">(</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16799aaf0</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x164c37e50</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4285,7 +4309,17 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">254</span>
 <span class="normal">255</span>
 <span class="normal">256</span>
-<span class="normal">257</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class MMDCritic(PrototypeSampler):
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class MMDCritic(PrototypeSampler):
 
     def __init__(self,
 
@@ -4339,6 +4373,10 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             n (int, optional): Number of prototypes to select. Defaults to 5.
 
+        Raises:
+
+            ValueError: Cannot select more instances than the total number of instances.
+
         Returns:
 
             Sequence[MemoryTextInstance]: List of prototype instances.
@@ -4349,7 +4387,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         &quot;&quot;&quot;
 
-        assert n &lt;= len(self.instances), f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;
+        if n &gt; len(self.instances):
+
+            raise ValueError(f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;)
 
         K = self.K
 
@@ -4411,6 +4451,8 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             Exception: `MMDCritic.prototypes()` must first be run before being able to determine the criticisms.
 
+            ValueError: Unknown regularizer or requested more criticisms than there are samples left.
+
         Returns:
 
             Sequence[MemoryTextInstance]: List of criticism instances.
@@ -4427,13 +4469,15 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         regularizers = {None, &#39;logdet&#39;, &#39;iterative&#39;}
 
-        assert regularizer in regularizers, \
+        if regularizer not in regularizers:
 
-            f&#39;Unknown regularizer &quot;{regularizer}&quot;, choose from {regularizers}.&#39;
+            raise ValueError(f&#39;Unknown {regularizer=}. Choose from {regularizers}.&#39;)
 
-        assert n &lt;= (len(self.instances) - len(self._prototypes)), \
+        if n &gt; (len(self.instances) - len(self._prototypes)):
 
-            f&#39;Cannot select more than instances excluding prototypes ({len(self.instances) - len(self._prototypes)})&#39;
+            raise ValueError(&#39;Cannot select more than instances excluding prototypes &#39;,
+
+                             f&#39;({len(self.instances) - len(self._prototypes)})&#39;)
 
         prototypes = np.array([p.identifier for p in self._prototypes])
 
@@ -4469,7 +4513,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K)[candidate_indices]
+                diag = np.diagonal(K + 1)[candidate_indices]  # TODO: look at hotfix
 
                 if inverse_of_prev_selected is not None:
 
@@ -4636,6 +4680,10 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <td>Exception</td>
 <td><code>MMDCritic.prototypes()</code> must first be run before being able to determine the criticisms.</td>
 </tr>
+<tr>
+<td>ValueError</td>
+<td>Unknown regularizer or requested more criticisms than there are samples left.</td>
+</tr>
 </tbody>
 </table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
@@ -4754,7 +4802,11 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
-<span class="normal">117</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[MemoryTextInstance]:
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[MemoryTextInstance]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes), using `MMD-critic implementation`_.
 
@@ -4769,6 +4821,8 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
         Raises:
 
             Exception: `MMDCritic.prototypes()` must first be run before being able to determine the criticisms.
+
+            ValueError: Unknown regularizer or requested more criticisms than there are samples left.
 
         Returns:
 
@@ -4786,13 +4840,15 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         regularizers = {None, &#39;logdet&#39;, &#39;iterative&#39;}
 
-        assert regularizer in regularizers, \
+        if regularizer not in regularizers:
 
-            f&#39;Unknown regularizer &quot;{regularizer}&quot;, choose from {regularizers}.&#39;
+            raise ValueError(f&#39;Unknown {regularizer=}. Choose from {regularizers}.&#39;)
 
-        assert n &lt;= (len(self.instances) - len(self._prototypes)), \
+        if n &gt; (len(self.instances) - len(self._prototypes)):
 
-            f&#39;Cannot select more than instances excluding prototypes ({len(self.instances) - len(self._prototypes)})&#39;
+            raise ValueError(&#39;Cannot select more than instances excluding prototypes &#39;,
+
+                             f&#39;({len(self.instances) - len(self._prototypes)})&#39;)
 
         prototypes = np.array([p.identifier for p in self._prototypes])
 
@@ -4828,7 +4884,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K)[candidate_indices]
+                diag = np.diagonal(K + 1)[candidate_indices]  # TODO: look at hotfix
 
                 if inverse_of_prev_selected is not None:
 
@@ -4927,6 +4983,21 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </tr>
 </tbody>
 </table>
+<p><strong>Raises:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ValueError</td>
+<td>Cannot select more instances than the total number of instances.</td>
+</tr>
+</tbody>
+</table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -4989,13 +5060,23 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">60</span>
 <span class="normal">61</span>
 <span class="normal">62</span>
-<span class="normal">63</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Sequence[MemoryTextInstance]:
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Sequence[MemoryTextInstance]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances), using `MMD-critic implementation`_.
 
         Args:
 
             n (int, optional): Number of prototypes to select. Defaults to 5.
+
+        Raises:
+
+            ValueError: Cannot select more instances than the total number of instances.
 
         Returns:
 
@@ -5007,7 +5088,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         &quot;&quot;&quot;
 
-        assert n &lt;= len(self.instances), f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;
+        if n &gt; len(self.instances):
+
+            raise ValueError(f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;)
 
         K = self.K
 

@@ -803,17 +803,13 @@
 <span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Function decorators to ensure functions are fool-proof en readable.&quot;&quot;&quot;
+<span class="normal">45</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Function decorators to ensure functions are fool-proof en readable.&quot;&quot;&quot;
 
 import inspect
 
 from functools import wraps, partial
 
-from uuid import uuid4
-
-from instancelib.instances.text import MemoryTextInstance
+from text_explainability.data import from_string
 
 from text_explainability.utils import default_tokenizer
 
@@ -829,7 +825,7 @@ def text_instance(func=None, *, tokenize: bool = False):
 
         if isinstance(arg, str):
 
-            arg = MemoryTextInstance(str(uuid4()), arg, None)
+            arg = from_string(arg)
 
         if tokenize and not arg.tokenized:
 
@@ -915,7 +911,7 @@ def text_instance(func=None, *, tokenize: bool = False):
 
         if isinstance(arg, str):
 
-            arg = MemoryTextInstance(str(uuid4()), arg, None)
+            arg = from_string(arg)
 
         if tokenize and not arg.tokenized:
 
