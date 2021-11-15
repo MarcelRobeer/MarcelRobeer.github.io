@@ -740,7 +740,11 @@
 <span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
-<span class="normal">61</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Support for i18n internationalization, using text_explainability to globally set the languages.
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Support for i18n internationalization, using text_explainability to globally set the languages.
 
 Todo:
 
@@ -748,7 +752,11 @@ Todo:
 
 &quot;&quot;&quot;
 
-from text_explainability.internationalization import translate_string, translate_list, set_locale, get_locale
+from text_explainability.internationalization import (get_locale, set_locale,
+
+                                                      translate_list,
+
+                                                      translate_string)
 
 LOCALE_MAP = {&#39;br&#39;: &#39;pt_BR&#39;,
 
@@ -860,7 +868,7 @@ __all__ = [translate_string, translate_list, set_locale, get_locale, LOCALE_MAP]
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer and Elize Herrewijnen
+            Copyright &copy; 2021 Marcel Robeer
           </div>
         
         

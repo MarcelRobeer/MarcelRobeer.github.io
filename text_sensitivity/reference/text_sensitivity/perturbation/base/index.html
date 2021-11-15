@@ -2320,27 +2320,33 @@
 <span class="normal">958</span>
 <span class="normal">959</span>
 <span class="normal">960</span>
-<span class="normal">961</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Apply perturbations to TextInstances and/or strings, generating one or many new instances.&quot;&quot;&quot;
-
-import numpy as np
-
-import itertools
+<span class="normal">961</span>
+<span class="normal">962</span>
+<span class="normal">963</span>
+<span class="normal">964</span>
+<span class="normal">965</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Apply perturbations to TextInstances and/or strings, generating one or many new instances.&quot;&quot;&quot;
 
 import copy
 
-from typing import Tuple, Dict, List, Optional, Callable, Sequence, Union, Iterable
+import itertools
 
-from nlpaug.base_augmenter import Augmenter
+from typing import (Callable, Dict, Iterable, List, Optional, Sequence, Tuple,
 
-from instancelib.instances.text import TextInstance, MemoryTextInstance
+                    Union)
+
+import numpy as np
+
+from instancelib.instances.text import MemoryTextInstance, TextInstance
 
 from instancelib.typehints import KT, LT
 
-from text_explainability.default import Readable
+from nlpaug.base_augmenter import Augmenter
 
 from text_explainability.decorators import text_instance
 
-from text_explainability.utils import default_tokenizer, default_detokenizer
+from text_explainability.default import Readable
+
+from text_explainability.utils import default_detokenizer, default_tokenizer
 
 def oneway_dictionary_mapping(instance: TextInstance,
 
@@ -2392,9 +2398,11 @@ def one_to_one_dictionary_mapping(instance: TextInstance,
 
                                   detokenizer):
 
-    return list(oneway_dictionary_mapping(instance, dictionary, label_from=label_from, label_to=label_to,
+    res = oneway_dictionary_mapping(instance, dictionary, label_from=label_from, label_to=label_to,
 
-                                          tokenizer=tokenizer, detokenizer=detokenizer, n=1))[0]
+                                    tokenizer=tokenizer, detokenizer=detokenizer, n=1)
+
+    return list(res) if res is not None else res
 
 def one_to_many_dictionary_mapping(instance: TextInstance,
 
@@ -3423,7 +3431,9 @@ class OneToManyPerturbation(Perturbation):
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
-<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def one_to_one_dictionary_mapping(instance: TextInstance,
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def one_to_one_dictionary_mapping(instance: TextInstance,
 
                                   dictionary: Dict[str, List[str]],
 
@@ -3435,9 +3445,11 @@ class OneToManyPerturbation(Perturbation):
 
                                   detokenizer):
 
-    return list(oneway_dictionary_mapping(instance, dictionary, label_from=label_from, label_to=label_to,
+    res = oneway_dictionary_mapping(instance, dictionary, label_from=label_from, label_to=label_to,
 
-                                          tokenizer=tokenizer, detokenizer=detokenizer, n=1))[0]
+                                    tokenizer=tokenizer, detokenizer=detokenizer, n=1)
+
+    return list(res) if res is not None else res
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -4109,8 +4121,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x1670e6d30</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16781e1f0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16381dd30</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16381dee0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -5942,8 +5954,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">dictionary</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x1670e6d30</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16781e1f0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16381dd30</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16381dee0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -6312,8 +6324,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">mapping_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span> <span class="o">=</span> <span class="s1">&#39;original&#39;</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span> <span class="o">=</span> <span class="s1">&#39;perturbed&#39;</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x1670e6d30</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16781e1f0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16381dd30</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16381dee0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -7055,8 +7067,8 @@ in the list.</p>
     <span class="n">tuples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x1670e6d30</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16781e1f0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16381dd30</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16381dee0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -7999,7 +8011,7 @@ result it aims to perform the mapping from the tokens on the RHS to the LHS.</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer and Elize Herrewijnen
+            Copyright &copy; 2021 Marcel Robeer
           </div>
         
         

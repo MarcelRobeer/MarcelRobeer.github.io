@@ -1042,17 +1042,25 @@
 <span class="normal">204</span>
 <span class="normal">205</span>
 <span class="normal">206</span>
-<span class="normal">207</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Create character-level perturbations (`text_sensitivity.perturbation.base.Perturbation`).&quot;&quot;&quot;
-
-import numpy as np
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Create character-level perturbations (`text_sensitivity.perturbation.base.Perturbation`).&quot;&quot;&quot;
 
 from typing import Callable
 
-import nlpaug.augmenter.word as naw
-
 import nlpaug.augmenter.char as nac
 
-from text_sensitivity.perturbation.base import Perturbation, OneToOnePerturbation, OneToManyPerturbation
+import nlpaug.augmenter.word as naw
+
+import numpy as np
+
+from text_sensitivity.perturbation.base import (OneToManyPerturbation,
+
+                                                OneToOnePerturbation,
+
+                                                Perturbation)
 
 def __construct(cls_or_fn, constructor_one, constructor_many, **kwargs):
 
@@ -1966,7 +1974,7 @@ def delete_random(n: int = 1, **kwargs) -&gt; Perturbation:
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer and Elize Herrewijnen
+            Copyright &copy; 2021 Marcel Robeer
           </div>
         
         

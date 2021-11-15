@@ -984,27 +984,51 @@
 <span class="normal">188</span>
 <span class="normal">189</span>
 <span class="normal">190</span>
-<span class="normal">191</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Generate data from a pattern, e.g. `&#39;{He|She} lives in {city}.&#39;`&quot;&quot;&quot;
-
-from typing import Tuple, List
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Generate data from a pattern, e.g. `&#39;{He|She} lives in {city}.&#39;`&quot;&quot;&quot;
 
 import itertools
 
-from instancelib.labels.memory import MemoryLabelProvider
+from typing import List, Tuple
 
 from instancelib.instances.text import MemoryTextInstance, TextInstanceProvider
 
-from text_explainability.utils import word_tokenizer, word_detokenizer
+from instancelib.labels.memory import MemoryLabelProvider
 
-from text_sensitivity.data.random.entity import (RandomAddress, RandomCity, RandomCountry,
+from text_explainability.utils import word_detokenizer, word_tokenizer
 
-                                                 RandomFirstName, RandomLastName, RandomName,
+from text_sensitivity.data.random.entity import (RandomAddress, RandomCity,
 
-                                                 RandomEmail, RandomPhoneNumber, RandomPriceTag,
+                                                 RandomCountry,
 
-                                                 RandomYear, RandomMonth, RandomDay, RandomDayOfWeek,
+                                                 RandomCryptoCurrency,
 
-                                                 RandomCurrencySymbol, RandomCryptoCurrency, RandomLicensePlate)
+                                                 RandomCurrencySymbol,
+
+                                                 RandomDay, RandomDayOfWeek,
+
+                                                 RandomEmail, RandomFirstName,
+
+                                                 RandomLastName,
+
+                                                 RandomLicensePlate,
+
+                                                 RandomMonth, RandomName,
+
+                                                 RandomPhoneNumber,
+
+                                                 RandomPriceTag, RandomYear)
 
 from text_sensitivity.data.wordlist import WordList
 
@@ -1594,7 +1618,7 @@ def default_patterns() -&gt; List[str]:
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer and Elize Herrewijnen
+            Copyright &copy; 2021 Marcel Robeer
           </div>
         
         

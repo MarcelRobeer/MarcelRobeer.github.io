@@ -1412,9 +1412,9 @@
 <span class="normal">200</span>
 <span class="normal">201</span>
 <span class="normal">202</span>
-<span class="normal">203</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from typing import List, Dict, Optional, Union
+<span class="normal">203</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from functools import lru_cache
 
-from functools import lru_cache
+from typing import Dict, List, Optional, Union
 
 import numpy as np
 
@@ -1422,7 +1422,7 @@ import pandas as pd
 
 from text_explainability.default import Readable
 
-from text_sensitivity.data.base import SeedMixin, CaseMixin
+from text_sensitivity.data.base import CaseMixin, SeedMixin
 
 Label = Union[str, int]
 
@@ -2956,7 +2956,7 @@ class WordListGetterMixin:
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer and Elize Herrewijnen
+            Copyright &copy; 2021 Marcel Robeer
           </div>
         
         

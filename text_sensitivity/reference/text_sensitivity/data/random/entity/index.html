@@ -5082,7 +5082,7 @@
 <span class="normal">582</span>
 <span class="normal">583</span>
 <span class="normal">584</span>
-<span class="normal">585</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from typing import Union, List, Tuple, Dict, Optional, Callable
+<span class="normal">585</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from typing import Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
@@ -5096,9 +5096,9 @@ from instancelib.labels.memory import MemoryLabelProvider
 
 from text_explainability.default import Readable
 
-from text_sensitivity.data.base import SeedMixin, CaseMixin
+from text_sensitivity.data.base import CaseMixin, SeedMixin
 
-from text_sensitivity.internationalization import get_locale, LOCALE_MAP
+from text_sensitivity.internationalization import LOCALE_MAP, get_locale
 
 class RandomEntity(Readable, SeedMixin, CaseMixin):
 
@@ -5294,15 +5294,15 @@ class CityByPopulationMixin(Readable):
 
         country_code = country_code.split(&#39;_&#39;)[-1] if &#39;_&#39; in country_code else country_code
 
-        from collections import OrderedDict
-
         import json
-
-        import requests
 
         import os
 
+        from collections import OrderedDict
+
         import pandas as pd
+
+        import requests
 
         res = []
 
@@ -5781,15 +5781,15 @@ class RandomLicensePlate(RandomEntity):
 
         country_code = country_code.split(&#39;_&#39;)[-1] if &#39;_&#39; in country_code else country_code
 
-        from collections import OrderedDict
-
         import json
-
-        import requests
 
         import os
 
+        from collections import OrderedDict
+
         import pandas as pd
+
+        import requests
 
         res = []
 
@@ -5968,15 +5968,15 @@ class RandomLicensePlate(RandomEntity):
 
         country_code = country_code.split(&#39;_&#39;)[-1] if &#39;_&#39; in country_code else country_code
 
-        from collections import OrderedDict
-
         import json
-
-        import requests
 
         import os
 
+        from collections import OrderedDict
+
         import pandas as pd
+
+        import requests
 
         res = []
 
@@ -6245,15 +6245,15 @@ class RandomLicensePlate(RandomEntity):
 
         country_code = country_code.split(&#39;_&#39;)[-1] if &#39;_&#39; in country_code else country_code
 
-        from collections import OrderedDict
-
         import json
-
-        import requests
 
         import os
 
+        from collections import OrderedDict
+
         import pandas as pd
+
+        import requests
 
         res = []
 
@@ -7189,15 +7189,15 @@ class RandomLicensePlate(RandomEntity):
 
         country_code = country_code.split(&#39;_&#39;)[-1] if &#39;_&#39; in country_code else country_code
 
-        from collections import OrderedDict
-
         import json
-
-        import requests
 
         import os
 
+        from collections import OrderedDict
+
         import pandas as pd
+
+        import requests
 
         res = []
 
@@ -19343,7 +19343,7 @@ class RandomLicensePlate(RandomEntity):
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer and Elize Herrewijnen
+            Copyright &copy; 2021 Marcel Robeer
           </div>
         
         
