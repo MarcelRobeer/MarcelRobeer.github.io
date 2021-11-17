@@ -2842,7 +2842,11 @@
 <span class="normal">1130</span>
 <span class="normal">1131</span>
 <span class="normal">1132</span>
-<span class="normal">1133</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Local explanations explain why a model made a prediction for a single instance.
+<span class="normal">1133</span>
+<span class="normal">1134</span>
+<span class="normal">1135</span>
+<span class="normal">1136</span>
+<span class="normal">1137</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Local explanations explain why a model made a prediction for a single instance.
 
 Todo:
 
@@ -2852,53 +2856,45 @@ Todo:
 
 &quot;&quot;&quot;
 
-import numpy as np
-
 import math
+
+import sys
 
 from typing import Callable, Optional, Sequence, Tuple, Union
 
-from instancelib import (AbstractEnvironment, InstanceProvider,
+import numpy as np
 
-                         LabelProvider, MemoryLabelProvider, TextEnvironment)
+import six
 
-from instancelib.machinelearning import AbstractClassifier
+from instancelib import (AbstractEnvironment, InstanceProvider, LabelProvider,
+
+                         MemoryLabelProvider, TextEnvironment)
 
 from instancelib.instances.text import TextInstance, TextInstanceProvider
+
+from instancelib.machinelearning import AbstractClassifier
 
 from sklearn.linear_model import Ridge
 
 from sklearn.tree import DecisionTreeClassifier
 
-from text_explainability.data.augmentation import (LocalTokenPertubator,
+from .data.augmentation import LeaveOut, LocalTokenPertubator
 
-                                                   LeaveOut)
+from .data.weights import exponential_kernel, pairwise_distances
 
-from text_explainability.data.weights import (exponential_kernel,
+from .decorators import text_instance
 
-                                              pairwise_distances)
+from .default import Readable
 
-from text_explainability.default import Readable
+from .generation.feature_selection import FeatureSelector
 
-from text_explainability.generation.feature_selection import FeatureSelector
+from .generation.return_types import FeatureAttribution, Rules
 
-from text_explainability.generation.return_types import FeatureAttribution, Rules
+from .generation.surrogate import LinearSurrogate, RuleSurrogate, TreeSurrogate
 
-from text_explainability.generation.surrogate import (LinearSurrogate,
+from .generation.target_encoding import FactFoilEncoder
 
-                                                      TreeSurrogate,
-
-                                                      RuleSurrogate)
-
-from text_explainability.generation.target_encoding import FactFoilEncoder
-
-from text_explainability.decorators import text_instance
-
-from text_explainability.utils import binarize, default_detokenizer
-
-import six
-
-import sys
+from .utils import binarize, default_detokenizer
 
 sys.modules[&#39;sklearn.externals.six&#39;] = six  # ensure backward compatibility
 
@@ -3052,6 +3048,8 @@ class LocalExplanation(Readable):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -3074,7 +3072,7 @@ class LocalExplanation(Readable):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -3086,9 +3084,9 @@ class LocalExplanation(Readable):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 
     def explain(self, *args, **kwargs):
 
@@ -3268,9 +3266,9 @@ class LIME(LocalExplanation, WeightedExplanation):
 
         # Generate neighborhood samples
 
-        provider, perturbed, y = self.augment_sample(sample, model, sequential=False,
+        provider, original_id, perturbed, y = self.augment_sample(sample, model, sequential=False,
 
-                                                     contiguous=False, n_samples=n_samples)
+                                                                  contiguous=False, n_samples=n_samples)
 
         perturbed = binarize(perturbed)  # flatten all n replacements into one
 
@@ -3317,6 +3315,8 @@ class LIME(LocalExplanation, WeightedExplanation):
             used_features[label] = features
 
         return FeatureAttribution(provider=provider,
+
+                                  original_id=original_id,
 
                                   scores=feature_importances,
 
@@ -3476,11 +3476,11 @@ class KernelSHAP(LocalExplanation):
 
         n_samples = min(n_samples, 2 ** 30)
 
-        provider, perturbed, y = self.augment_sample(sample, model, sequential=True,
+        provider, original_id, perturbed, y = self.augment_sample(sample, model, sequential=True,
 
-                                                     contiguous=False, n_samples=n_samples,
+                                                                  contiguous=False, n_samples=n_samples,
 
-                                                     add_background_instance=True)
+                                                                  add_background_instance=True)
 
         # TODO: exclude non-varying feature groups
 
@@ -3537,6 +3537,8 @@ class KernelSHAP(LocalExplanation):
                 phi = np.dot(tmp2, np.dot(X_W, y)).T
 
         return FeatureAttribution(provider=provider,
+
+                                  original_id=original_id,
 
                                   scores=phi,
 
@@ -3684,11 +3686,11 @@ class Anchor(LocalExplanation):
 
         # https://github.com/marcotcr/anchor/blob/master/anchor/anchor_base.py
 
-        provider, perturbed = self.augment_sample(sample, None, sequential=False,
+        provider, original_id, perturbed = self.augment_sample(sample, None, sequential=False,
 
-                                                  contiguous=False, n_samples=n_samples,
+                                                               contiguous=False, n_samples=n_samples,
 
-                                                  predict=False)
+                                                               predict=False)
 
         perturbed = binarize(perturbed[1:])  # flatten all n replacements into one
 
@@ -3766,15 +3768,15 @@ class LocalTree(LocalExplanation, WeightedExplanation):
 
                  **sample_kwargs):
 
-        provider, perturbed, y = self.augment_sample(sample,
+        provider, original_id, perturbed, y = self.augment_sample(sample,
 
-                                                     model,
+                                                                  model,
 
-                                                     n_samples=n_samples,
+                                                                  n_samples=n_samples,
 
-                                                     avoid_proba=True,
+                                                                  avoid_proba=True,
 
-                                                     **sample_kwargs)
+                                                                  **sample_kwargs)
 
         perturbed = binarize(perturbed)  # flatten all n replacements into one
 
@@ -3785,6 +3787,8 @@ class LocalTree(LocalExplanation, WeightedExplanation):
         self.local_model.fit(perturbed, y, weights=weights)
 
         return Rules(provider=provider,
+
+                     original_id=original_id,
 
                      rules=self.local_model,
 
@@ -3858,15 +3862,15 @@ class FoilTree(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                  **sample_kwargs):
 
-        provider, perturbed, y = self.augment_sample(sample,
+        provider, original_id, perturbed, y = self.augment_sample(sample,
 
-                                                     model,
+                                                                  model,
 
-                                                     n_samples=n_samples,
+                                                                  n_samples=n_samples,
 
-                                                     avoid_proba=True,
+                                                                  avoid_proba=True,
 
-                                                     **sample_kwargs)
+                                                                  **sample_kwargs)
 
         perturbed = binarize(perturbed)  # flatten all n replacements into one
 
@@ -3885,6 +3889,8 @@ class FoilTree(FactFoilMixin, LocalExplanation, WeightedExplanation):
         # TODO: pass to which label the Foil Tree applies
 
         return Rules(provider=provider,
+
+                     original_id=original_id,
 
                      rules=self.local_model,
 
@@ -3946,15 +3952,15 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                  **sample_kwargs):
 
-        provider, perturbed, y = self.augment_sample(sample,
+        provider, original_id, perturbed, y = self.augment_sample(sample,
 
-                                                     model,
+                                                                  model,
 
-                                                     n_samples=n_samples,
+                                                                  n_samples=n_samples,
 
-                                                     avoid_proba=True,
+                                                                  avoid_proba=True,
 
-                                                     **sample_kwargs)
+                                                                  **sample_kwargs)
 
         perturbed = binarize(perturbed)  # flatten all n replacements into one
 
@@ -3969,6 +3975,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
         self.local_model.fit(perturbed, y_, weights=weights)
 
         return Rules(provider,
+
+                     original_id=original_id,
 
                      rules=self.local_model,
 
@@ -4387,11 +4395,11 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         # https://github.com/marcotcr/anchor/blob/master/anchor/anchor_base.py
 
-        provider, perturbed = self.augment_sample(sample, None, sequential=False,
+        provider, original_id, perturbed = self.augment_sample(sample, None, sequential=False,
 
-                                                  contiguous=False, n_samples=n_samples,
+                                                               contiguous=False, n_samples=n_samples,
 
-                                                  predict=False)
+                                                               predict=False)
 
         perturbed = binarize(perturbed[1:])  # flatten all n replacements into one
 
@@ -4854,7 +4862,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -4920,6 +4930,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -4942,7 +4954,7 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -4954,9 +4966,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -5203,7 +5215,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">82</span>
 <span class="normal">83</span>
 <span class="normal">84</span>
-<span class="normal">85</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class FoilTree(FactFoilMixin, LocalExplanation, WeightedExplanation):
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class FoilTree(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
     def __init__(self,
 
@@ -5255,15 +5269,15 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                  **sample_kwargs):
 
-        provider, perturbed, y = self.augment_sample(sample,
+        provider, original_id, perturbed, y = self.augment_sample(sample,
 
-                                                     model,
+                                                                  model,
 
-                                                     n_samples=n_samples,
+                                                                  n_samples=n_samples,
 
-                                                     avoid_proba=True,
+                                                                  avoid_proba=True,
 
-                                                     **sample_kwargs)
+                                                                  **sample_kwargs)
 
         perturbed = binarize(perturbed)  # flatten all n replacements into one
 
@@ -5282,6 +5296,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
         # TODO: pass to which label the Foil Tree applies
 
         return Rules(provider=provider,
+
+                     original_id=original_id,
 
                      rules=self.local_model,
 
@@ -5509,7 +5525,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -5575,6 +5593,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -5597,7 +5617,7 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -5609,9 +5629,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -5939,7 +5959,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">220</span>
 <span class="normal">221</span>
 <span class="normal">222</span>
-<span class="normal">223</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class KernelSHAP(LocalExplanation):
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class KernelSHAP(LocalExplanation):
 
     def __init__(self,
 
@@ -6089,11 +6111,11 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         n_samples = min(n_samples, 2 ** 30)
 
-        provider, perturbed, y = self.augment_sample(sample, model, sequential=True,
+        provider, original_id, perturbed, y = self.augment_sample(sample, model, sequential=True,
 
-                                                     contiguous=False, n_samples=n_samples,
+                                                                  contiguous=False, n_samples=n_samples,
 
-                                                     add_background_instance=True)
+                                                                  add_background_instance=True)
 
         # TODO: exclude non-varying feature groups
 
@@ -6150,6 +6172,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
                 phi = np.dot(tmp2, np.dot(X_W, y)).T
 
         return FeatureAttribution(provider=provider,
+
+                                  original_id=original_id,
 
                                   scores=phi,
 
@@ -6527,7 +6551,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -6593,6 +6619,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -6615,7 +6643,7 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -6627,9 +6655,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -6871,7 +6899,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">196</span>
 <span class="normal">197</span>
 <span class="normal">198</span>
-<span class="normal">199</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LIME(LocalExplanation, WeightedExplanation):
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LIME(LocalExplanation, WeightedExplanation):
 
     def __init__(self,
 
@@ -7013,9 +7043,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         # Generate neighborhood samples
 
-        provider, perturbed, y = self.augment_sample(sample, model, sequential=False,
+        provider, original_id, perturbed, y = self.augment_sample(sample, model, sequential=False,
 
-                                                     contiguous=False, n_samples=n_samples)
+                                                                  contiguous=False, n_samples=n_samples)
 
         perturbed = binarize(perturbed)  # flatten all n replacements into one
 
@@ -7062,6 +7092,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
             used_features[label] = features
 
         return FeatureAttribution(provider=provider,
+
+                                  original_id=original_id,
 
                                   scores=feature_importances,
 
@@ -7290,7 +7322,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -7356,6 +7390,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -7378,7 +7414,7 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -7390,9 +7426,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -7622,7 +7658,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">160</span>
 <span class="normal">161</span>
 <span class="normal">162</span>
-<span class="normal">163</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalExplanation(Readable):
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalExplanation(Readable):
 
     def __init__(self,
 
@@ -7744,6 +7782,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -7766,7 +7806,7 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -7778,9 +7818,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 
     def explain(self, *args, **kwargs):
 
@@ -8012,7 +8052,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -8078,6 +8120,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -8100,7 +8144,7 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -8112,9 +8156,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -8242,7 +8286,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
-<span class="normal">83</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
     def __init__(self,
 
@@ -8296,15 +8342,15 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                  **sample_kwargs):
 
-        provider, perturbed, y = self.augment_sample(sample,
+        provider, original_id, perturbed, y = self.augment_sample(sample,
 
-                                                     model,
+                                                                  model,
 
-                                                     n_samples=n_samples,
+                                                                  n_samples=n_samples,
 
-                                                     avoid_proba=True,
+                                                                  avoid_proba=True,
 
-                                                     **sample_kwargs)
+                                                                  **sample_kwargs)
 
         perturbed = binarize(perturbed)  # flatten all n replacements into one
 
@@ -8319,6 +8365,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
         self.local_model.fit(perturbed, y_, weights=weights)
 
         return Rules(provider,
+
+                     original_id=original_id,
 
                      rules=self.local_model,
 
@@ -8546,7 +8594,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -8612,6 +8662,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -8634,7 +8686,7 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -8646,9 +8698,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -8836,7 +8888,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">72</span>
 <span class="normal">73</span>
 <span class="normal">74</span>
-<span class="normal">75</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalTree(LocalExplanation, WeightedExplanation):
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalTree(LocalExplanation, WeightedExplanation):
 
     def __init__(self,
 
@@ -8886,15 +8940,15 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                  **sample_kwargs):
 
-        provider, perturbed, y = self.augment_sample(sample,
+        provider, original_id, perturbed, y = self.augment_sample(sample,
 
-                                                     model,
+                                                                  model,
 
-                                                     n_samples=n_samples,
+                                                                  n_samples=n_samples,
 
-                                                     avoid_proba=True,
+                                                                  avoid_proba=True,
 
-                                                     **sample_kwargs)
+                                                                  **sample_kwargs)
 
         perturbed = binarize(perturbed)  # flatten all n replacements into one
 
@@ -8905,6 +8959,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
         self.local_model.fit(perturbed, y, weights=weights)
 
         return Rules(provider=provider,
+
+                     original_id=original_id,
 
                      rules=self.local_model,
 
@@ -9131,7 +9187,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -9197,6 +9255,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         provider.add(sample)
 
+        original_id = next(iter(provider))
+
         # Do sampling
 
         augmenter = self.augmenter(sample,
@@ -9219,7 +9279,7 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
             ys = model.predict_proba_raw(provider)
 
-            y = np.vstack([y_ for id, y_ in ys]).squeeze()
+            y = np.vstack([y_ for _, y_ in ys]).squeeze()
 
             if avoid_proba:
 
@@ -9231,9 +9291,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
         if predict:
 
-            return provider, perturbed, y
+            return provider, original_id, perturbed, y
 
-        return provider, perturbed
+        return provider, original_id, perturbed
 </code></pre></div>
 </td></tr></table>
 </details>

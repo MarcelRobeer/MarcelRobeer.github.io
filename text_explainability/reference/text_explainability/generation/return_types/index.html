@@ -1742,7 +1742,33 @@
 <span class="normal">480</span>
 <span class="normal">481</span>
 <span class="normal">482</span>
-<span class="normal">483</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;General return types for global/local explanations.
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span>
+<span class="normal">495</span>
+<span class="normal">496</span>
+<span class="normal">497</span>
+<span class="normal">498</span>
+<span class="normal">499</span>
+<span class="normal">500</span>
+<span class="normal">501</span>
+<span class="normal">502</span>
+<span class="normal">503</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;General return types for global/local explanations.
 
 Todo:
 
@@ -1754,13 +1780,17 @@ Todo:
 
 &quot;&quot;&quot;
 
-import numpy as np
+import copy
 
-from typing import Union, Optional, Sequence, Dict, Tuple
+from typing import Dict, Optional, Sequence, Tuple, Union
+
+import numpy as np
 
 from instancelib import InstanceProvider
 
-from text_explainability.generation.surrogate import TreeSurrogate, RuleSurrogate
+from instancelib.typehints import LT
+
+from .surrogate import RuleSurrogate, TreeSurrogate
 
 class BaseReturnType:
 
@@ -1786,7 +1816,7 @@ class BaseReturnType:
 
         &quot;&quot;&quot;
 
-        self._used_features = used_features
+        self._used_features = copy.deepcopy(used_features)
 
         self._labels = labels
 
@@ -1978,6 +2008,8 @@ class DataExplanation:
 
                  provider: InstanceProvider,
 
+                 original_id: Optional[LT] = None,
+
                  sampled: bool = False):
 
         &quot;&quot;&quot;Save the sampled/generated instances used to determine an explanation.
@@ -1985,6 +2017,8 @@ class DataExplanation:
         Args:
 
             provider (InstanceProvider): Sampled or generated data, including original instance.
+
+            original_id (Optional[LT], optional): ID of original instance; picks first if None. Defaults to None.
 
             sampled (bool, optional): Whether the data in the provider was sampled (True) or generated (False).
 
@@ -1994,9 +2028,11 @@ class DataExplanation:
 
         self._provider = provider
 
-        self._original_instance = self._provider[next(iter(self._provider))]
+        original_id = next(iter(self._provider)) if original_id is None else original_id
 
-        self._neighborhood_instances = self._provider.get_children(self._original_instance)
+        self._original_instance = copy.deepcopy(self._provider[original_id])
+
+        self._neighborhood_instances = copy.deepcopy(self._provider.get_children(self._original_instance))
 
         self.sampled = sampled
 
@@ -2042,6 +2078,10 @@ class ReadableDataMixin:
 
         if hasattr(self.original_instance, &#39;tokenized&#39;):
 
+            if isinstance(self._used_features, dict):
+
+                return {k: [self.original_instance.tokenized[i] for i in v] for k, v in self._used_features.items()}
+
             return [self.original_instance.tokenized[i] for i in self._used_features]
 
         return list(self._used_features)
@@ -2076,6 +2116,8 @@ class FeatureAttribution(ReadableDataMixin, FeatureList, DataExplanation):
 
                  labelset: Optional[Sequence[str]] = None,
 
+                 original_id: Optional[LT] = None,
+
                  sampled: bool = False):
 
         &quot;&quot;&quot;Create a `FeatureList` with additional information saved.
@@ -2104,6 +2146,8 @@ class FeatureAttribution(ReadableDataMixin, FeatureList, DataExplanation):
 
             labelset (Optional[Sequence[str]], optional): Label names corresponding to labels. Defaults to None.
 
+            original_id (Optional[LT], optional): ID of original instance; picks first if None. Defaults to None.
+
             sampled (bool, optional): Whether the data in the provider was sampled (True) or generated (False).
 
                 Defaults to False.
@@ -2113,6 +2157,8 @@ class FeatureAttribution(ReadableDataMixin, FeatureList, DataExplanation):
         DataExplanation.__init__(self,
 
                                  provider=provider,
+
+                                 original_id=original_id,
 
                                  sampled=sampled)
 
@@ -2156,6 +2202,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 
                  labelset: Optional[Sequence[str]] = None,
 
+                 original_id: Optional[LT] = None,
+
                  sampled: bool = False):
 
         &quot;&quot;&quot;Base return type.
@@ -2174,6 +2222,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 
             labelset (Optional[Sequence[str]], optional): Lookup for label names. Defaults to None.
 
+            original_id (Optional[LT], optional): ID of original instance; picks first if None. Defaults to None.
+
             sampled (bool, optional): Whether the data in the provider was sampled (True) or generated (False).
 
                 Defaults to False.
@@ -2183,6 +2233,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
         DataExplanation.__init__(self,
 
                                  provider=provider,
+
+                                 original_id=original_id,
 
                                  sampled=sampled)
 
@@ -2353,7 +2405,7 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 
         &quot;&quot;&quot;
 
-        self._used_features = used_features
+        self._used_features = copy.deepcopy(used_features)
 
         self._labels = labels
 
@@ -2561,8 +2613,10 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DataExplanation</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DataExplanation</span><span class="p">(</span>
     <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span>
+    <span class="n">original_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">sampled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2625,11 +2679,19 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class DataExplanation:
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class DataExplanation:
 
     def __init__(self,
 
                  provider: InstanceProvider,
+
+                 original_id: Optional[LT] = None,
 
                  sampled: bool = False):
 
@@ -2639,6 +2701,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 
             provider (InstanceProvider): Sampled or generated data, including original instance.
 
+            original_id (Optional[LT], optional): ID of original instance; picks first if None. Defaults to None.
+
             sampled (bool, optional): Whether the data in the provider was sampled (True) or generated (False).
 
                 Defaults to False.
@@ -2647,9 +2711,11 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 
         self._provider = provider
 
-        self._original_instance = self._provider[next(iter(self._provider))]
+        original_id = next(iter(self._provider)) if original_id is None else original_id
 
-        self._neighborhood_instances = self._provider.get_children(self._original_instance)
+        self._original_instance = copy.deepcopy(self._provider[original_id])
+
+        self._neighborhood_instances = copy.deepcopy(self._provider.get_children(self._original_instance))
 
         self.sampled = sampled
 
@@ -2720,7 +2786,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 <span class="normal"> 7</span>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FeatureAttribution</span><span class="p">(</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">FeatureAttribution</span><span class="p">(</span>
     <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span>
     <span class="n">scores</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="n">used_features</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2728,6 +2795,7 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
     <span class="n">base_score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">labelset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">original_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">sampled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2814,7 +2882,13 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
-<span class="normal">83</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class FeatureAttribution(ReadableDataMixin, FeatureList, DataExplanation):
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class FeatureAttribution(ReadableDataMixin, FeatureList, DataExplanation):
 
     def __init__(self,
 
@@ -2831,6 +2905,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
                  labels: Optional[Sequence[int]] = None,
 
                  labelset: Optional[Sequence[str]] = None,
+
+                 original_id: Optional[LT] = None,
 
                  sampled: bool = False):
 
@@ -2860,6 +2936,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 
             labelset (Optional[Sequence[str]], optional): Label names corresponding to labels. Defaults to None.
 
+            original_id (Optional[LT], optional): ID of original instance; picks first if None. Defaults to None.
+
             sampled (bool, optional): Whether the data in the provider was sampled (True) or generated (False).
 
                 Defaults to False.
@@ -2869,6 +2947,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
         DataExplanation.__init__(self,
 
                                  provider=provider,
+
+                                 original_id=original_id,
 
                                  sampled=sampled)
 
@@ -3959,7 +4039,11 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
-<span class="normal">25</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class ReadableDataMixin:
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class ReadableDataMixin:
 
     @property
 
@@ -3968,6 +4052,10 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
         &quot;&quot;&quot;Names of features of the original instance.&quot;&quot;&quot;
 
         if hasattr(self.original_instance, &#39;tokenized&#39;):
+
+            if isinstance(self._used_features, dict):
+
+                return {k: [self.original_instance.tokenized[i] for i in v] for k, v in self._used_features.items()}
 
             return [self.original_instance.tokenized[i] for i in self._used_features]
 
@@ -4006,12 +4094,14 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 <span class="normal">5</span>
 <span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Rules</span><span class="p">(</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Rules</span><span class="p">(</span>
     <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span>
     <span class="n">rules</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">surrogate</span><span class="o">.</span><span class="n">TreeSurrogate</span><span class="p">,</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">surrogate</span><span class="o">.</span><span class="n">RuleSurrogate</span><span class="p">],</span>
     <span class="n">used_features</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">labelset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">original_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">sampled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4098,7 +4188,13 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
-<span class="normal">83</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 
     def __init__(self,
 
@@ -4111,6 +4207,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
                  labels: Optional[Sequence[int]] = None,
 
                  labelset: Optional[Sequence[str]] = None,
+
+                 original_id: Optional[LT] = None,
 
                  sampled: bool = False):
 
@@ -4130,6 +4228,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
 
             labelset (Optional[Sequence[str]], optional): Lookup for label names. Defaults to None.
 
+            original_id (Optional[LT], optional): ID of original instance; picks first if None. Defaults to None.
+
             sampled (bool, optional): Whether the data in the provider was sampled (True) or generated (False).
 
                 Defaults to False.
@@ -4139,6 +4239,8 @@ class Rules(ReadableDataMixin, BaseReturnType, DataExplanation):
         DataExplanation.__init__(self,
 
                                  provider=provider,
+
+                                 original_id=original_id,
 
                                  sampled=sampled)
 

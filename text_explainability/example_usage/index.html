@@ -928,7 +928,7 @@
 
 <span class="c1"># Global word frequency explanation on ground-truth labels</span>
 <span class="n">tf</span> <span class="o">=</span> <span class="n">TokenFrequency</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
-<span class="n">tf</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">labelprovider</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">tf</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">labelprovider</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">scores</span>
 
 <span class="c1"># Global word frequency explanation on model predictions</span>
 <span class="n">tf</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">filter_words</span><span class="o">=</span><span class="n">PUNCTUATION</span><span class="p">)</span>

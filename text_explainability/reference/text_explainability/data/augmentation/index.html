@@ -1191,9 +1191,11 @@
 <p>Todo:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Add more complex sampling methods (e.g. top-k replacement by contextual language model, WordNet, ...)
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Add more complex sampling methods (e.g. top-k replacement by contextual language model, WordNet, ...)
 * Replacement with k tokens at each index
 * Ensure inactive[i] is set to 0 if the replacement token is the same as the original token[i]
+* Replace seed with SeedMixin
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
@@ -1624,7 +1626,11 @@
 <span class="normal">426</span>
 <span class="normal">427</span>
 <span class="normal">428</span>
-<span class="normal">429</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Augment a single instance to generate neighborhood data.
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Augment a single instance to generate neighborhood data.
 
 Todo:
 
@@ -1634,7 +1640,19 @@ Todo:
 
     * Ensure inactive[i] is set to 0 if the replacement token is the same as the original token[i]
 
+    * Replace seed with SeedMixin
+
 &quot;&quot;&quot;
+
+import itertools
+
+import math
+
+from typing import (Any, Callable, Iterable, Iterator, List, Optional, Tuple,
+
+                    Union)
+
+import numpy as np
 
 from instancelib.environment.base import AbstractEnvironment
 
@@ -1642,23 +1660,15 @@ from instancelib.environment.text import TextEnvironment
 
 from instancelib.instances.base import InstanceProvider
 
-import numpy as np
-
-import math
-
-import itertools
-
-from typing import (Callable, Iterable, Any, Iterator, Tuple, Optional, List, Union)
-
 from instancelib.instances.text import TextInstance
 
-from instancelib.pertubations.base import MultiplePertubator, ChildGenerator
+from instancelib.pertubations.base import ChildGenerator, MultiplePertubator
 
-from text_explainability.default import Readable
+from ..decorators import text_instance
 
-from text_explainability.decorators import text_instance
+from ..default import Readable
 
-from text_explainability.utils import default_detokenizer
+from ..utils import default_detokenizer
 
 class LocalTokenPertubator(MultiplePertubator[TextInstance],
 
@@ -2064,7 +2074,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">4</span>
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LeaveOut</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16726df70</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16a1e14c0</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2677,7 +2687,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LocalTokenPertubator</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16726df70</span><span class="o">&gt;</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16a1e14c0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -3094,7 +3104,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">5</span>
 <span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TokenReplacement</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16726df70</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16a1e14c0</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">replacement</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;UNKWRDZ&#39;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>

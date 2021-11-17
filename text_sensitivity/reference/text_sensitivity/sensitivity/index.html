@@ -1416,7 +1416,7 @@ def compare_metric(env: TextEnvironment,
 
     # Expectation (for now that labels should remain equal)
 
-    ground_truth = MemoryLabelProvider.from_tuples(equal_ground_truth(env.labels, instances))
+    ground_truth = MemoryLabelProvider.from_tuples(list(equal_ground_truth(env.labels, instances)))
 
     for label in list(model_predictions.labelset):
 
@@ -2066,7 +2066,7 @@ def mean_score(pattern: str,
 
     # Expectation (for now that labels should remain equal)
 
-    ground_truth = MemoryLabelProvider.from_tuples(equal_ground_truth(env.labels, instances))
+    ground_truth = MemoryLabelProvider.from_tuples(list(equal_ground_truth(env.labels, instances)))
 
     for label in list(model_predictions.labelset):
 

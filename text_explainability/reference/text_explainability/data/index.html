@@ -963,7 +963,7 @@
 
 import os
 
-from typing import Callable, Union, Tuple, Sequence
+from typing import Callable, Sequence, Tuple, Union
 
 from uuid import uuid4
 
@@ -975,7 +975,7 @@ from instancelib.instances.text import MemoryTextInstance, TextInstanceProvider
 
 from instancelib.typehints import LT
 
-from text_explainability.utils import default_tokenizer
+from ..utils import default_tokenizer
 
 def import_data(filename: str, *args, **kwargs) -&gt; TextEnvironment:
 
@@ -1238,7 +1238,7 @@ def from_string(string: str, tokenizer: Callable[[str], Sequence[str]] = default
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span>
     <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16726ddc0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x10ef2e790</span><span class="o">&gt;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span>
 </code></pre></div>
 </td></tr></table>

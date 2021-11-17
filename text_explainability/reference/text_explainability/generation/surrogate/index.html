@@ -1476,7 +1476,13 @@
 <span class="normal">210</span>
 <span class="normal">211</span>
 <span class="normal">212</span>
-<span class="normal">213</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Wrappers for surrogate models, used for local/global explanations.
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Wrappers for surrogate models, used for local/global explanations.
 
 Todo:
 
@@ -1488,11 +1494,11 @@ Todo:
 
 &quot;&quot;&quot;
 
+from typing import Optional, Sequence
+
 import numpy as np
 
 from sklearn.base import clone
-
-from typing import Optional, Sequence
 
 from text_explainability.default import Readable
 
@@ -1528,7 +1534,9 @@ class LinearSurrogate(BaseSurrogate):
 
         super().__init__(model)
 
-        self.__alpha_original = self._model.alpha
+        if hasattr(self._model, &#39;alpha&#39;):
+
+            self.__alpha_original = self._model.alpha
 
     @property
 
@@ -1554,11 +1562,15 @@ class LinearSurrogate(BaseSurrogate):
 
     def alpha_zero(self):
 
-        self._model.alpha = 0
+        if hasattr(self._model, &#39;alpha&#39;):
+
+            self._model.alpha = 0
 
     def alpha_reset(self):
 
-        self._model.alpha = self.__alpha_original
+        if hasattr(self._model, &#39;alpha&#39;):
+
+            self._model.alpha = self.__alpha_original
 
     @property
 
@@ -1644,9 +1656,9 @@ class TreeSurrogate(BaseSurrogate):
 
     def to_rules(self):
 
-        from skrules.skope_rules import SkopeRules, BASE_FEATURE_NAME
-
         from skrules.rule import Rule
+
+        from skrules.skope_rules import BASE_FEATURE_NAME, SkopeRules
 
         feature_names = [BASE_FEATURE_NAME + str(i) for i in range(self._model.n_features_)]
 
@@ -1867,7 +1879,13 @@ class RuleSurrogate(BaseSurrogate):
 <span class="normal">48</span>
 <span class="normal">49</span>
 <span class="normal">50</span>
-<span class="normal">51</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LinearSurrogate(BaseSurrogate):
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LinearSurrogate(BaseSurrogate):
 
     def __init__(self, model):
 
@@ -1875,7 +1893,9 @@ class RuleSurrogate(BaseSurrogate):
 
         super().__init__(model)
 
-        self.__alpha_original = self._model.alpha
+        if hasattr(self._model, &#39;alpha&#39;):
+
+            self.__alpha_original = self._model.alpha
 
     @property
 
@@ -1901,11 +1921,15 @@ class RuleSurrogate(BaseSurrogate):
 
     def alpha_zero(self):
 
-        self._model.alpha = 0
+        if hasattr(self._model, &#39;alpha&#39;):
+
+            self._model.alpha = 0
 
     def alpha_reset(self):
 
-        self._model.alpha = self.__alpha_original
+        if hasattr(self._model, &#39;alpha&#39;):
+
+            self._model.alpha = self.__alpha_original
 
     @property
 
@@ -1951,9 +1975,13 @@ class RuleSurrogate(BaseSurrogate):
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def alpha_reset(self):
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def alpha_reset(self):
 
-        self._model.alpha = self.__alpha_original
+        if hasattr(self._model, &#39;alpha&#39;):
+
+            self._model.alpha = self.__alpha_original
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1967,9 +1995,13 @@ class RuleSurrogate(BaseSurrogate):
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def alpha_zero(self):
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def alpha_zero(self):
 
-        self._model.alpha = 0
+        if hasattr(self._model, &#39;alpha&#39;):
+
+            self._model.alpha = 0
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -2354,9 +2386,9 @@ class RuleSurrogate(BaseSurrogate):
 
     def to_rules(self):
 
-        from skrules.skope_rules import SkopeRules, BASE_FEATURE_NAME
-
         from skrules.rule import Rule
+
+        from skrules.skope_rules import BASE_FEATURE_NAME, SkopeRules
 
         feature_names = [BASE_FEATURE_NAME + str(i) for i in range(self._model.n_features_)]
 
@@ -2550,9 +2582,9 @@ class RuleSurrogate(BaseSurrogate):
 <span class="normal">14</span>
 <span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def to_rules(self):
 
-        from skrules.skope_rules import SkopeRules, BASE_FEATURE_NAME
-
         from skrules.rule import Rule
+
+        from skrules.skope_rules import BASE_FEATURE_NAME, SkopeRules
 
         feature_names = [BASE_FEATURE_NAME + str(i) for i in range(self._model.n_features_)]
 

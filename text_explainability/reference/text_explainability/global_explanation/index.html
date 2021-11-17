@@ -999,7 +999,9 @@
 <span class="normal">302</span>
 <span class="normal">303</span>
 <span class="normal">304</span>
-<span class="normal">305</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Global explanations explain the whole dataset or model behavior on that dataset.
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Global explanations explain the whole dataset or model behavior on that dataset.
 
 Todo:
 
@@ -1011,11 +1013,13 @@ Todo:
 
 &quot;&quot;&quot;
 
-from instancelib import InstanceProvider
+from typing import (Any, Callable, Dict, FrozenSet, List, Optional, Sequence,
+
+                    Tuple, Union)
 
 import numpy as np
 
-from typing import (Callable, Optional, List, Dict, Tuple, Any, Sequence, FrozenSet, Union)
+from instancelib import InstanceProvider
 
 from instancelib.instances.text import TextInstance
 
@@ -1027,17 +1031,17 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from sklearn.feature_selection import mutual_info_classif
 
-from text_explainability.utils import default_tokenizer
+from .data.sampling import (KMedoids, LabelwiseKMedoids, LabelwiseMMDCritic,
 
-from text_explainability.default import Readable
+                            MMDCritic)
 
-from text_explainability.generation.return_types import FeatureList
+from .default import Readable
 
-from text_explainability.internationalization import translate_list
+from .generation.return_types import FeatureList
 
-from text_explainability.data.sampling import KMedoids, MMDCritic
+from .internationalization import translate_list
 
-from text_explainability.data.sampling import LabelwiseKMedoids, LabelwiseMMDCritic
+from .utils import default_tokenizer
 
 class GlobalExplanation(Readable):
 

@@ -1988,7 +1988,7 @@ Todo:
 
 &quot;&quot;&quot;
 
-from typing import Dict, Sequence, Callable, Optional, Union
+from typing import Callable, Dict, Optional, Sequence, Union
 
 import numpy as np
 
@@ -1996,17 +1996,17 @@ from instancelib.instances.memory import MemoryBucketProvider
 
 from instancelib.instances.text import MemoryTextInstance
 
-from instancelib.labels.memory import MemoryLabelProvider
-
 from instancelib.labels.base import LabelProvider
+
+from instancelib.labels.memory import MemoryLabelProvider
 
 from instancelib.machinelearning.base import AbstractClassifier
 
-from text_explainability.data.embedding import Embedder, TfidfVectorizer
+from ..default import Readable
 
-from text_explainability.data.weights import exponential_kernel
+from .embedding import Embedder, TfidfVectorizer
 
-from text_explainability.default import Readable
+from .weights import exponential_kernel
 
 class PrototypeSampler(Readable):
 
@@ -3227,7 +3227,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">LabelProvider</span><span class="p">],</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x1672a7e50</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16a968ca0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4049,7 +4049,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MMDCritic</span><span class="p">(</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x1672a7e50</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16a968ca0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>

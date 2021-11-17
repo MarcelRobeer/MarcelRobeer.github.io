@@ -1332,7 +1332,9 @@
 <span class="normal">226</span>
 <span class="normal">227</span>
 <span class="normal">228</span>
-<span class="normal">229</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Embed text instances into numerical vectors.
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Embed text instances into numerical vectors.
 
 Todo:
 
@@ -1340,13 +1342,13 @@ Todo:
 
 &quot;&quot;&quot;
 
-from typing import Union, Callable
+from typing import Callable, Union
 
 import numpy as np
 
 from instancelib.instances.memory import MemoryBucketProvider
 
-from text_explainability.default import Readable
+from ..default import Readable
 
 def as_n_dimensional(vectors: Union[np.ndarray, list, MemoryBucketProvider],
 
@@ -1380,7 +1382,7 @@ def as_n_dimensional(vectors: Union[np.ndarray, list, MemoryBucketProvider],
 
     &quot;&quot;&quot;
 
-    from sklearn.decomposition import PCA, KernelPCA, IncrementalPCA, NMF
+    from sklearn.decomposition import NMF, PCA, IncrementalPCA, KernelPCA
 
     from sklearn.manifold import TSNE
 
@@ -1512,7 +1514,9 @@ class SentenceTransformer(Embedder):
 
         &quot;&quot;&quot;
 
-        from sentence_transformers import SentenceTransformer as SentTransformer
+        from sentence_transformers import \
+
+            SentenceTransformer as SentTransformer
 
         self.model = SentTransformer(model_name)
 
@@ -1795,7 +1799,7 @@ class TfidfVectorizer(Embedder):
 
     &quot;&quot;&quot;
 
-    from sklearn.decomposition import PCA, KernelPCA, IncrementalPCA, NMF
+    from sklearn.decomposition import NMF, PCA, IncrementalPCA, KernelPCA
 
     from sklearn.manifold import TSNE
 
@@ -2341,7 +2345,9 @@ class TfidfVectorizer(Embedder):
 <span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
-<span class="normal">31</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class SentenceTransformer(Embedder):
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class SentenceTransformer(Embedder):
 
     def __init__(self, model_name: str = &#39;distiluse-base-multilingual-cased-v1&#39;, **kwargs):
 
@@ -2367,7 +2373,9 @@ class TfidfVectorizer(Embedder):
 
         &quot;&quot;&quot;
 
-        from sentence_transformers import SentenceTransformer as SentTransformer
+        from sentence_transformers import \
+
+            SentenceTransformer as SentTransformer
 
         self.model = SentTransformer(model_name)
 

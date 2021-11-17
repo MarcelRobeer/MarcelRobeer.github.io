@@ -1147,9 +1147,9 @@
 <span class="normal">178</span>
 <span class="normal">179</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Encode targets into binary labels for contrastive explanation.&quot;&quot;&quot;
 
-import numpy as np
+from typing import Generator, List, Optional, Sequence, Union
 
-from typing import Optional, Sequence, Union, Generator, List
+import numpy as np
 
 from instancelib.machinelearning import AbstractClassifier
 

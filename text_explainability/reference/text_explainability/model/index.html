@@ -805,7 +805,9 @@
 <span class="normal">44</span>
 <span class="normal">45</span>
 <span class="normal">46</span>
-<span class="normal">47</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Wrap models using instancelib.&quot;&quot;&quot;
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Wrap models using instancelib.&quot;&quot;&quot;
 
 from typing import Union
 
@@ -813,9 +815,11 @@ from instancelib.environment.text import TextEnvironment
 
 from instancelib.instances.text import TextInstanceProvider
 
-from instancelib.machinelearning import AbstractClassifier, SkLearnDataClassifier
+from instancelib.machinelearning import (AbstractClassifier,
 
-from text_explainability.data import train_test_split
+                                         SkLearnDataClassifier)
+
+from .data import train_test_split
 
 def from_sklearn(model,
 

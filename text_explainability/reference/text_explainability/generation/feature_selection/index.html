@@ -629,6 +629,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    select
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -757,6 +771,20 @@
           <li class="md-nav__item">
   <a href="#ancestors-in-mro" class="md-nav__link">
     Ancestors (in MRO)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    select
   </a>
   
 </li>
@@ -1180,7 +1208,13 @@
 <span class="normal">388</span>
 <span class="normal">389</span>
 <span class="normal">390</span>
-<span class="normal">391</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Feature selection methods for limiting explanation length.
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Feature selection methods for limiting explanation length.
 
 Todo:
 
@@ -1188,15 +1222,15 @@ Todo:
 
 &quot;&quot;&quot;
 
-import numpy as np
-
 from typing import Optional
 
-from sklearn.linear_model import LassoLarsIC, Lasso, lars_path
+import numpy as np
 
-from text_explainability.generation.surrogate import LinearSurrogate
+from sklearn.linear_model import Lasso, LassoLarsIC, lars_path
 
-from text_explainability.default import Readable
+from ..default import Readable
+
+from .surrogate import LinearSurrogate
 
 class FeatureSelector(Readable):
 
@@ -1498,7 +1532,7 @@ class FeatureSelector(Readable):
 
                  n_features: int = 10,
 
-                 method: str = None,
+                 method: Optional[str] = None,
 
                  alpha: Optional[float] = None) -&gt; np.ndarray:
 
@@ -1571,6 +1605,12 @@ class FeatureSelector(Readable):
         elif method == &#39;l1_reg&#39;:
 
             return self._l1_reg(X, y, n_features=n_features, alpha=alpha)
+
+    def select(self, *args, **kwargs):
+
+        &quot;&quot;&quot;Alias for `FeatureSelector().__call__()`&quot;&quot;&quot;
+
+        return self(*args, **kwargs)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1955,7 +1995,13 @@ class FeatureSelector(Readable):
 <span class="normal">370</span>
 <span class="normal">371</span>
 <span class="normal">372</span>
-<span class="normal">373</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class FeatureSelector(Readable):
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class FeatureSelector(Readable):
 
     def __init__(self, model: Optional[LinearSurrogate] = None):
 
@@ -2255,7 +2301,7 @@ class FeatureSelector(Readable):
 
                  n_features: int = 10,
 
-                 method: str = None,
+                 method: Optional[str] = None,
 
                  alpha: Optional[float] = None) -&gt; np.ndarray:
 
@@ -2328,6 +2374,12 @@ class FeatureSelector(Readable):
         elif method == &#39;l1_reg&#39;:
 
             return self._l1_reg(X, y, n_features=n_features, alpha=alpha)
+
+    def select(self, *args, **kwargs):
+
+        &quot;&quot;&quot;Alias for `FeatureSelector().__call__()`&quot;&quot;&quot;
+
+        return self(*args, **kwargs)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -2336,6 +2388,32 @@ class FeatureSelector(Readable):
 <ul>
 <li>text_explainability.default.Readable</li>
 </ul>
+<h4 id="methods">Methods</h4>
+<h4 id="select">select</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">select</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>Alias for <code>FeatureSelector().__call__()</code></p>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def select(self, *args, **kwargs):
+
+        &quot;&quot;&quot;Alias for `FeatureSelector().__call__()`&quot;&quot;&quot;
+
+        return self(*args, **kwargs)
+</code></pre></div>
+</td></tr></table>
+</details>
                 
               
               

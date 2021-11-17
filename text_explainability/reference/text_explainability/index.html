@@ -749,23 +749,43 @@
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from text_explainability.global_explanation import (TokenFrequency, TokenInformation,
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from text_explainability.data import from_string, import_data, train_test_split
 
-                                                    KMedoids, LabelwiseKMedoids, MMDCritic, LabelwiseMMDCritic)
+from text_explainability.global_explanation import (KMedoids,
 
-from text_explainability.local_explanation import LIME, KernelSHAP, Anchor, LocalTree, LocalRules
+                                                    LabelwiseKMedoids,
 
-from text_explainability.utils import (default_tokenizer, default_detokenizer,
+                                                    LabelwiseMMDCritic,
 
-                                       word_tokenizer, word_detokenizer,
+                                                    MMDCritic, TokenFrequency,
 
-                                       character_tokenizer, character_detokenizer)
+                                                    TokenInformation)
 
-from text_explainability.data import from_string, import_data, train_test_split
+from text_explainability.local_explanation import (LIME, Anchor, KernelSHAP,
+
+                                                   LocalRules, LocalTree)
 
 from text_explainability.model import from_sklearn
 
-__version__ = &#39;0.5.2&#39;
+from text_explainability.utils import (character_detokenizer,
+
+                                       character_tokenizer,
+
+                                       default_detokenizer, default_tokenizer,
+
+                                       word_detokenizer, word_tokenizer)
+
+__version__ = &#39;0.5.4&#39;
 </code></pre></div>
 </td></tr></table>
 </details>

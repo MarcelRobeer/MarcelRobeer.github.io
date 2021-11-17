@@ -923,9 +923,9 @@ import re
 
 import string
 
-import numpy as np
+from typing import Iterable, Sequence
 
-from typing import Sequence, Iterable
+import numpy as np
 
 def word_tokenizer(input: str, exclude_curly_brackets: bool = False) -&gt; Sequence[str]:
 
