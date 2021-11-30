@@ -368,18 +368,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../default/" class="md-nav__link">
-        Default
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../global_explanation/" class="md-nav__link">
         Global Explanation
       </a>
@@ -404,32 +392,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../internationalization/" class="md-nav__link">
-        Internationalization
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../local_explanation/" class="md-nav__link">
         Local Explanation
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../locale/" class="md-nav__link">
-        Locale
       </a>
     </li>
   
@@ -520,14 +484,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" >
       
-      <label class="md-nav__link" for="__nav_5_1_10">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_10">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -607,14 +571,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_11" type="checkbox" id="__nav_5_1_11" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_8" type="checkbox" id="__nav_5_1_8" >
       
-      <label class="md-nav__link" for="__nav_5_1_11">
+      <label class="md-nav__link" for="__nav_5_1_8">
         Generation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Generation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_11">
+        <label class="md-nav__title" for="__nav_5_1_8">
           <span class="md-nav__icon md-icon"></span>
           Generation
         </label>
@@ -675,6 +639,57 @@
     <li class="md-nav__item">
       <a href="../generation/target_encoding/" class="md-nav__link">
         Target Encoding
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_9" type="checkbox" id="__nav_5_1_9" >
+      
+      <label class="md-nav__link" for="__nav_5_1_9">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_9">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui/notebook/" class="md-nav__link">
+        Notebook
       </a>
     </li>
   
@@ -757,105 +772,13 @@
                 
                 
                 <h1 id="module-text_explainabilitymodel">Module text_explainability.model</h1>
-<p>Wrap models using instancelib.</p>
 <p>None</p>
-<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Wrap models using instancelib.&quot;&quot;&quot;
+<p>None</p>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from genbase.model import from_sklearn
 
-from typing import Union
-
-from instancelib.environment.text import TextEnvironment
-
-from instancelib.instances.text import TextInstanceProvider
-
-from instancelib.machinelearning import (AbstractClassifier,
-
-                                         SkLearnDataClassifier)
-
-from .data import train_test_split
-
-def from_sklearn(model,
-
-                 environment: TextEnvironment,
-
-                 train: Union[float, int, TextInstanceProvider] = 0.7) -&gt; AbstractClassifier:
-
-    &quot;&quot;&quot;Wrap a scikit-learn model.
-
-    Args:
-
-        model ([type]): Model or pipeline from scikit-learn.
-
-        environment (TextEnvironment): Instancelib environment holding instances and corresponding ground-truth labels.
-
-        train (Union[float, int, TextInstanceProvider], optional): Training dataset (TextInstanceProvider),
-
-            fraction of training dataset size (float, [0, 1]) or instances in training set (int, &gt; 0). Defaults to 0.7.
-
-    Returns:
-
-        AbstractClassifier: Machine learning model able to be used by text_explainability.
-
-    &quot;&quot;&quot;
-
-    if isinstance(train, (float, int)):
-
-        train, _ = train_test_split(environment, train_size=train)
-
-    # TODO: go beyond classification
-
-    model = SkLearnDataClassifier.build(model, environment)
-
-    model.fit_provider(train, environment.labels)
-
-    return model
+__all__ = [&#39;from_sklearn&#39;]
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -867,8 +790,8 @@ def from_sklearn(model,
 <span class="normal">4</span>
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">from_sklearn</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
-    <span class="n">environment</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextEnvironment</span><span class="p">,</span>
-    <span class="n">train</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstanceProvider</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.7</span>
+    <span class="n">environment</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Environment</span><span class="p">,</span>
+    <span class="n">train</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.7</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span>
 </code></pre></div>
 </td></tr></table>
@@ -892,14 +815,14 @@ def from_sklearn(model,
 </tr>
 <tr>
 <td>environment</td>
-<td>TextEnvironment</td>
+<td>Environment</td>
 <td>Instancelib environment holding instances and corresponding ground-truth labels.</td>
 <td>None</td>
 </tr>
 <tr>
 <td>train</td>
-<td>Union[float, int, TextInstanceProvider]</td>
-<td>Training dataset (TextInstanceProvider),</td>
+<td>Union[float, int, InstanceProvider]</td>
+<td>Training dataset (InstanceProvider),</td>
 <td></td>
 </tr>
 <tr>
@@ -961,9 +884,9 @@ def from_sklearn(model,
 <span class="normal">34</span>
 <span class="normal">35</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def from_sklearn(model,
 
-                 environment: TextEnvironment,
+                 environment: Environment,
 
-                 train: Union[float, int, TextInstanceProvider] = 0.7) -&gt; AbstractClassifier:
+                 train: Union[float, int, InstanceProvider] = 0.7) -&gt; AbstractClassifier:
 
     &quot;&quot;&quot;Wrap a scikit-learn model.
 
@@ -971,9 +894,9 @@ def from_sklearn(model,
 
         model ([type]): Model or pipeline from scikit-learn.
 
-        environment (TextEnvironment): Instancelib environment holding instances and corresponding ground-truth labels.
+        environment (Environment): Instancelib environment holding instances and corresponding ground-truth labels.
 
-        train (Union[float, int, TextInstanceProvider], optional): Training dataset (TextInstanceProvider),
+        train (Union[float, int, InstanceProvider], optional): Training dataset (InstanceProvider),
 
             fraction of training dataset size (float, [0, 1]) or instances in training set (int, &gt; 0). Defaults to 0.7.
 
@@ -1016,7 +939,7 @@ def from_sklearn(model,
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../locale/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Locale" rel="prev">
+        <a href="../local_explanation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Local Explanation" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1025,7 +948,7 @@ def from_sklearn(model,
               <span class="md-footer__direction">
                 Previous
               </span>
-              Locale
+              Local Explanation
             </div>
           </div>
         </a>

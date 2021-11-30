@@ -368,18 +368,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../default/" class="md-nav__link">
-        Default
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../global_explanation/" class="md-nav__link">
         Global Explanation
       </a>
@@ -404,32 +392,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../internationalization/" class="md-nav__link">
-        Internationalization
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../local_explanation/" class="md-nav__link">
         Local Explanation
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../locale/" class="md-nav__link">
-        Locale
       </a>
     </li>
   
@@ -469,14 +433,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_10">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_10">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -595,6 +559,20 @@
           <li class="md-nav__item">
   <a href="#prototypes" class="md-nav__link">
     prototypes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset_seed" class="md-nav__link">
+    reset_seed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_seed" class="md-nav__link">
+    set_seed
   </a>
   
 </li>
@@ -855,14 +833,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_11" type="checkbox" id="__nav_5_1_11" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_8" type="checkbox" id="__nav_5_1_8" >
       
-      <label class="md-nav__link" for="__nav_5_1_11">
+      <label class="md-nav__link" for="__nav_5_1_8">
         Generation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Generation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_11">
+        <label class="md-nav__title" for="__nav_5_1_8">
           <span class="md-nav__icon md-icon"></span>
           Generation
         </label>
@@ -923,6 +901,57 @@
     <li class="md-nav__item">
       <a href="../../generation/target_encoding/" class="md-nav__link">
         Target Encoding
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_9" type="checkbox" id="__nav_5_1_9" >
+      
+      <label class="md-nav__link" for="__nav_5_1_9">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_9">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/notebook/" class="md-nav__link">
+        Notebook
       </a>
     </li>
   
@@ -1011,6 +1040,20 @@
           <li class="md-nav__item">
   <a href="#prototypes" class="md-nav__link">
     prototypes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset_seed" class="md-nav__link">
+    reset_seed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_seed" class="md-nav__link">
+    set_seed
   </a>
   
 </li>
@@ -1974,9 +2017,7 @@
 <span class="normal">712</span>
 <span class="normal">713</span>
 <span class="normal">714</span>
-<span class="normal">715</span>
-<span class="normal">716</span>
-<span class="normal">717</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
+<span class="normal">715</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
 
 Todo:
 
@@ -1992,17 +2033,15 @@ from typing import Callable, Dict, Optional, Sequence, Union
 
 import numpy as np
 
-from instancelib.instances.memory import MemoryBucketProvider
+from genbase import Readable, SeedMixin
 
-from instancelib.instances.text import MemoryTextInstance
+from instancelib.instances.memory import DataPoint, MemoryBucketProvider
 
 from instancelib.labels.base import LabelProvider
 
 from instancelib.labels.memory import MemoryLabelProvider
 
 from instancelib.machinelearning.base import AbstractClassifier
-
-from ..default import Readable
 
 from .embedding import Embedder, TfidfVectorizer
 
@@ -2040,13 +2079,13 @@ class PrototypeSampler(Readable):
 
         return np.stack(self.instances.bulk_get_vectors(list(self.instances))[-1])
 
-    def _select_from_provider(self, keys: Sequence[int]) -&gt; Sequence[MemoryTextInstance]:
+    def _select_from_provider(self, keys: Sequence[int]) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select instances from provider by keys.&quot;&quot;&quot;
 
         return [self.instances[i] for i in keys]
 
-    def prototypes(self, n: int = 5) -&gt; Sequence[MemoryTextInstance]:
+    def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes.
 
@@ -2056,7 +2095,7 @@ class PrototypeSampler(Readable):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         &quot;&quot;&quot;
 
@@ -2066,7 +2105,7 @@ class PrototypeSampler(Readable):
 
         return self.prototypes(*args, **kwargs)
 
-class KMedoids(PrototypeSampler):
+class KMedoids(PrototypeSampler, SeedMixin):
 
     def __init__(self,
 
@@ -2096,7 +2135,7 @@ class KMedoids(PrototypeSampler):
 
         super().__init__(instances, embedder)
 
-        self._seed = seed
+        self._seed = self._original_seed = seed
 
     def prototypes(self,
 
@@ -2104,7 +2143,7 @@ class KMedoids(PrototypeSampler):
 
                    metric: Union[str, Callable] = &#39;cosine&#39;,
 
-                   **kwargs) -&gt; Sequence[MemoryTextInstance]:
+                   **kwargs) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representative samples) using `k-Medoids`_.
 
@@ -2120,7 +2159,7 @@ class KMedoids(PrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         .. _k-Medoids:
 
@@ -2134,7 +2173,7 @@ class KMedoids(PrototypeSampler):
 
         from sklearn_extra.cluster import KMedoids
 
-        kmedoids = KMedoids(n_clusters=n, metric=metric, random_state=self._seed, **kwargs).fit(self.embedded)
+        kmedoids = KMedoids(n_clusters=n, metric=metric, random_state=self.seed, **kwargs).fit(self.embedded)
 
         return self._select_from_provider(kmedoids.medoid_indices_)
 
@@ -2184,7 +2223,7 @@ class MMDCritic(PrototypeSampler):
 
         self.colsum = np.sum(self.K, axis=0) / self.embedded.shape[1]
 
-    def prototypes(self, n: int = 5) -&gt; Sequence[MemoryTextInstance]:
+    def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances), using `MMD-critic implementation`_.
 
@@ -2198,7 +2237,7 @@ class MMDCritic(PrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         .. _MMD-critic implementation:
 
@@ -2254,7 +2293,7 @@ class MMDCritic(PrototypeSampler):
 
         return self._prototypes
 
-    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[MemoryTextInstance]:
+    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes), using `MMD-critic implementation`_.
 
@@ -2274,7 +2313,7 @@ class MMDCritic(PrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of criticism instances.
+            Sequence[DataPoint]: List of criticism instances.
 
         .. _MMD-critic implementation:
 
@@ -2382,7 +2421,7 @@ class MMDCritic(PrototypeSampler):
 
                  n_criticisms: int = 5,
 
-                 regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+                 regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Calculate prototypes and criticisms for the provided instances.
 
@@ -2398,7 +2437,7 @@ class MMDCritic(PrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary containing prototypes and criticisms.
+            Dict[str, Sequence[DataPoint]]: Dictionary containing prototypes and criticisms.
 
         &quot;&quot;&quot;
 
@@ -2508,7 +2547,7 @@ class LabelwisePrototypeSampler(Readable):
 
         self.samplers = self._samplers
 
-    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances).
 
@@ -2518,7 +2557,7 @@ class LabelwisePrototypeSampler(Readable):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary with labels and corresponding list of prototypes.
+            Dict[str, Sequence[DataPoint]]: Dictionary with labels and corresponding list of prototypes.
 
         &quot;&quot;&quot;
 
@@ -2528,7 +2567,7 @@ class LabelwisePrototypeSampler(Readable):
 
     def __call__(self,
 
-                 n: int = 5) -&gt; Dict[str, Dict[str, Sequence[MemoryTextInstance]]]:
+                 n: int = 5) -&gt; Dict[str, Dict[str, Sequence[DataPoint]]]:
 
         &quot;&quot;&quot;Generate prototypes for each label.
 
@@ -2538,7 +2577,7 @@ class LabelwisePrototypeSampler(Readable):
 
         Returns:
 
-            Dict[str, Dict[str, Sequence[MemoryTextInstance]]]: Dictionary with labels and corresponding dictionary
+            Dict[str, Dict[str, Sequence[DataPoint]]]: Dictionary with labels and corresponding dictionary
 
                 containing prototypes.
 
@@ -2636,7 +2675,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                          kernel=kernel)
 
-    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes).
 
@@ -2654,7 +2693,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary with labels and corresponding list of criticisms.
+            Dict[str, Sequence[DataPoint]]: Dictionary with labels and corresponding list of criticisms.
 
         &quot;&quot;&quot;
 
@@ -2668,7 +2707,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                  n_criticisms: int = 5,
 
-                 regularizer: Optional[str] = None) -&gt; Dict[str, Dict[str, Sequence[MemoryTextInstance]]]:
+                 regularizer: Optional[str] = None) -&gt; Dict[str, Dict[str, Sequence[DataPoint]]]:
 
         &quot;&quot;&quot;Generate prototypes and criticisms for each label.
 
@@ -2684,7 +2723,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Dict[str, Sequence[MemoryTextInstance]]]: Dictionary with labels and corresponding dictionary
+            Dict[str, Dict[str, Sequence[DataPoint]]]: Dictionary with labels and corresponding dictionary
 
                 containing prototypes and criticisms.
 
@@ -2779,7 +2818,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">68</span>
 <span class="normal">69</span>
 <span class="normal">70</span>
-<span class="normal">71</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class KMedoids(PrototypeSampler):
+<span class="normal">71</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class KMedoids(PrototypeSampler, SeedMixin):
 
     def __init__(self,
 
@@ -2809,7 +2848,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         super().__init__(instances, embedder)
 
-        self._seed = seed
+        self._seed = self._original_seed = seed
 
     def prototypes(self,
 
@@ -2817,7 +2856,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                    metric: Union[str, Callable] = &#39;cosine&#39;,
 
-                   **kwargs) -&gt; Sequence[MemoryTextInstance]:
+                   **kwargs) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representative samples) using `k-Medoids`_.
 
@@ -2833,7 +2872,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         .. _k-Medoids:
 
@@ -2847,7 +2886,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         from sklearn_extra.cluster import KMedoids
 
-        kmedoids = KMedoids(n_clusters=n, metric=metric, random_state=self._seed, **kwargs).fit(self.embedded)
+        kmedoids = KMedoids(n_clusters=n, metric=metric, random_state=self.seed, **kwargs).fit(self.embedded)
 
         return self._select_from_provider(kmedoids.medoid_indices_)
 </code></pre></div>
@@ -2857,10 +2896,14 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <h4 id="ancestors-in-mro">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.data.sampling.PrototypeSampler</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
 </ul>
 <h4 id="instance-variables">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">embedded</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
 </code></pre></div>
 </td></tr></table>
 <h4 id="methods">Methods</h4>
@@ -2875,7 +2918,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">metric</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cosine&#39;</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Select <code>n</code> prototypes (most representative samples) using <code>k-Medoids</code>_.</p>
@@ -2926,7 +2969,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </thead>
 <tbody>
 <tr>
-<td>Sequence[MemoryTextInstance]</td>
+<td>Sequence[DataPoint]</td>
 <td>List of prototype instances.</td>
 </tr>
 <tr>
@@ -2991,7 +3034,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                    metric: Union[str, Callable] = &#39;cosine&#39;,
 
-                   **kwargs) -&gt; Sequence[MemoryTextInstance]:
+                   **kwargs) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representative samples) using `k-Medoids`_.
 
@@ -3007,7 +3050,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         .. _k-Medoids:
 
@@ -3021,9 +3064,100 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         from sklearn_extra.cluster import KMedoids
 
-        kmedoids = KMedoids(n_clusters=n, metric=metric, random_state=self._seed, **kwargs).fit(self.embedded)
+        kmedoids = KMedoids(n_clusters=n, metric=metric, random_state=self.seed, **kwargs).fit(self.embedded)
 
         return self._select_from_provider(kmedoids.medoid_indices_)
+</code></pre></div>
+</td></tr></table>
+</details>
+<h4 id="reset_seed">reset_seed</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reset_seed</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>Reset the seed to the original seed value, and return self.</p>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def reset_seed(self):
+
+        &quot;&quot;&quot;Reset the seed to the original seed value, and return self.&quot;&quot;&quot;
+
+        self._seed = self._original_seed
+
+        return self
+</code></pre></div>
+</td></tr></table>
+</details>
+<h4 id="set_seed">set_seed</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>Set the current seed and original seed to a new value, and return self.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>seed</td>
+<td>Optional[int]</td>
+<td>Seed value. If None, select a random seed. Defaults to None.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def set_seed(self, seed: Optional[int] = None):
+
+        &quot;&quot;&quot;Set the current seed and original seed to a new value, and return self.
+
+        Args:
+
+            seed (Optional[int], optional): Seed value. If None, select a random seed. Defaults to None.
+
+        &quot;&quot;&quot;
+
+        if seed is None:
+
+            seed = np.random.randint(100000)
+
+        self._original_seed = seed
+
+        return self.reset_seed()
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -3133,7 +3267,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <h4 id="ancestors-in-mro_1">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.data.sampling.LabelwisePrototypeSampler</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="methods_1">Methods</h4>
 <h4 id="prototypes_1">prototypes</h4>
@@ -3143,7 +3277,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Select <code>n</code> prototypes (most representatitve instances).</p>
@@ -3176,7 +3310,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </thead>
 <tbody>
 <tr>
-<td>Dict[str, Sequence[MemoryTextInstance]]</td>
+<td>Dict[str, Sequence[DataPoint]]</td>
 <td>Dictionary with labels and corresponding list of prototypes.</td>
 </tr>
 </tbody>
@@ -3197,7 +3331,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances).
 
@@ -3207,7 +3341,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary with labels and corresponding list of prototypes.
+            Dict[str, Sequence[DataPoint]]: Dictionary with labels and corresponding list of prototypes.
 
         &quot;&quot;&quot;
 
@@ -3227,7 +3361,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">LabelProvider</span><span class="p">],</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16a968ca0</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x167c75d30</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -3375,7 +3509,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                          kernel=kernel)
 
-    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes).
 
@@ -3393,7 +3527,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary with labels and corresponding list of criticisms.
+            Dict[str, Sequence[DataPoint]]: Dictionary with labels and corresponding list of criticisms.
 
         &quot;&quot;&quot;
 
@@ -3407,7 +3541,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                  n_criticisms: int = 5,
 
-                 regularizer: Optional[str] = None) -&gt; Dict[str, Dict[str, Sequence[MemoryTextInstance]]]:
+                 regularizer: Optional[str] = None) -&gt; Dict[str, Dict[str, Sequence[DataPoint]]]:
 
         &quot;&quot;&quot;Generate prototypes and criticisms for each label.
 
@@ -3423,7 +3557,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Dict[str, Sequence[MemoryTextInstance]]]: Dictionary with labels and corresponding dictionary
+            Dict[str, Dict[str, Sequence[DataPoint]]]: Dictionary with labels and corresponding dictionary
 
                 containing prototypes and criticisms.
 
@@ -3439,7 +3573,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <h4 id="ancestors-in-mro_2">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.data.sampling.LabelwisePrototypeSampler</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="methods_2">Methods</h4>
 <h4 id="criticisms">criticisms</h4>
@@ -3451,7 +3585,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">regularizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Select <code>n</code> criticisms (instances not well represented by prototypes).</p>
@@ -3496,7 +3630,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </thead>
 <tbody>
 <tr>
-<td>Dict[str, Sequence[MemoryTextInstance]]</td>
+<td>Dict[str, Sequence[DataPoint]]</td>
 <td>Dictionary with labels and corresponding list of criticisms.</td>
 </tr>
 </tbody>
@@ -3540,7 +3674,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
-<span class="normal">25</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+<span class="normal">25</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes).
 
@@ -3558,7 +3692,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary with labels and corresponding list of criticisms.
+            Dict[str, Sequence[DataPoint]]: Dictionary with labels and corresponding list of criticisms.
 
         &quot;&quot;&quot;
 
@@ -3575,7 +3709,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Select <code>n</code> prototypes (most representatitve instances).</p>
@@ -3608,7 +3742,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </thead>
 <tbody>
 <tr>
-<td>Dict[str, Sequence[MemoryTextInstance]]</td>
+<td>Dict[str, Sequence[DataPoint]]</td>
 <td>Dictionary with labels and corresponding list of prototypes.</td>
 </tr>
 </tbody>
@@ -3629,7 +3763,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances).
 
@@ -3639,7 +3773,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary with labels and corresponding list of prototypes.
+            Dict[str, Sequence[DataPoint]]: Dictionary with labels and corresponding list of prototypes.
 
         &quot;&quot;&quot;
 
@@ -3907,7 +4041,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         self.samplers = self._samplers
 
-    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances).
 
@@ -3917,7 +4051,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary with labels and corresponding list of prototypes.
+            Dict[str, Sequence[DataPoint]]: Dictionary with labels and corresponding list of prototypes.
 
         &quot;&quot;&quot;
 
@@ -3927,7 +4061,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
     def __call__(self,
 
-                 n: int = 5) -&gt; Dict[str, Dict[str, Sequence[MemoryTextInstance]]]:
+                 n: int = 5) -&gt; Dict[str, Dict[str, Sequence[DataPoint]]]:
 
         &quot;&quot;&quot;Generate prototypes for each label.
 
@@ -3937,7 +4071,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Dict[str, Sequence[MemoryTextInstance]]]: Dictionary with labels and corresponding dictionary
+            Dict[str, Dict[str, Sequence[DataPoint]]]: Dictionary with labels and corresponding dictionary
 
                 containing prototypes.
 
@@ -3952,7 +4086,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <hr />
 <h4 id="ancestors-in-mro_3">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="descendants">Descendants</h4>
 <ul>
@@ -3967,7 +4101,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Select <code>n</code> prototypes (most representatitve instances).</p>
@@ -4000,7 +4134,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </thead>
 <tbody>
 <tr>
-<td>Dict[str, Sequence[MemoryTextInstance]]</td>
+<td>Dict[str, Sequence[DataPoint]]</td>
 <td>Dictionary with labels and corresponding list of prototypes.</td>
 </tr>
 </tbody>
@@ -4021,7 +4155,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances).
 
@@ -4031,7 +4165,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary with labels and corresponding list of prototypes.
+            Dict[str, Sequence[DataPoint]]: Dictionary with labels and corresponding list of prototypes.
 
         &quot;&quot;&quot;
 
@@ -4049,7 +4183,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MMDCritic</span><span class="p">(</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16a968ca0</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x167c75d30</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4365,7 +4499,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         self.colsum = np.sum(self.K, axis=0) / self.embedded.shape[1]
 
-    def prototypes(self, n: int = 5) -&gt; Sequence[MemoryTextInstance]:
+    def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances), using `MMD-critic implementation`_.
 
@@ -4379,7 +4513,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         .. _MMD-critic implementation:
 
@@ -4435,7 +4569,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         return self._prototypes
 
-    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[MemoryTextInstance]:
+    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes), using `MMD-critic implementation`_.
 
@@ -4455,7 +4589,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of criticism instances.
+            Sequence[DataPoint]: List of criticism instances.
 
         .. _MMD-critic implementation:
 
@@ -4563,7 +4697,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                  n_criticisms: int = 5,
 
-                 regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[MemoryTextInstance]]:
+                 regularizer: Optional[str] = None) -&gt; Dict[str, Sequence[DataPoint]]:
 
         &quot;&quot;&quot;Calculate prototypes and criticisms for the provided instances.
 
@@ -4579,7 +4713,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Dict[str, Sequence[MemoryTextInstance]]: Dictionary containing prototypes and criticisms.
+            Dict[str, Sequence[DataPoint]]: Dictionary containing prototypes and criticisms.
 
         &quot;&quot;&quot;
 
@@ -4593,7 +4727,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <h4 id="ancestors-in-mro_4">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.data.sampling.PrototypeSampler</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="instance-variables_1">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">embedded</span>
@@ -4609,7 +4743,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">regularizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Select <code>n</code> criticisms (instances not well represented by prototypes), using <code>MMD-critic implementation</code>_. </p>
@@ -4654,7 +4788,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </thead>
 <tbody>
 <tr>
-<td>Sequence[MemoryTextInstance]</td>
+<td>Sequence[DataPoint]</td>
 <td>List of criticism instances.</td>
 </tr>
 <tr>
@@ -4806,7 +4940,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">118</span>
 <span class="normal">119</span>
 <span class="normal">120</span>
-<span class="normal">121</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[MemoryTextInstance]:
+<span class="normal">121</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes), using `MMD-critic implementation`_.
 
@@ -4826,7 +4960,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of criticism instances.
+            Sequence[DataPoint]: List of criticism instances.
 
         .. _MMD-critic implementation:
 
@@ -4937,7 +5071,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Select <code>n</code> prototypes (most representatitve instances), using <code>MMD-critic implementation</code>_.</p>
@@ -4970,7 +5104,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </thead>
 <tbody>
 <tr>
-<td>Sequence[MemoryTextInstance]</td>
+<td>Sequence[DataPoint]</td>
 <td>List of prototype instances.</td>
 </tr>
 <tr>
@@ -5066,7 +5200,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">66</span>
 <span class="normal">67</span>
 <span class="normal">68</span>
-<span class="normal">69</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Sequence[MemoryTextInstance]:
+<span class="normal">69</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes (most representatitve instances), using `MMD-critic implementation`_.
 
@@ -5080,7 +5214,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         .. _MMD-critic implementation:
 
@@ -5236,13 +5370,13 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         return np.stack(self.instances.bulk_get_vectors(list(self.instances))[-1])
 
-    def _select_from_provider(self, keys: Sequence[int]) -&gt; Sequence[MemoryTextInstance]:
+    def _select_from_provider(self, keys: Sequence[int]) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select instances from provider by keys.&quot;&quot;&quot;
 
         return [self.instances[i] for i in keys]
 
-    def prototypes(self, n: int = 5) -&gt; Sequence[MemoryTextInstance]:
+    def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes.
 
@@ -5252,7 +5386,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         &quot;&quot;&quot;
 
@@ -5267,7 +5401,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <hr />
 <h4 id="ancestors-in-mro_5">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="descendants_1">Descendants</h4>
 <ul>
@@ -5286,7 +5420,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Select <code>n</code> prototypes.</p>
@@ -5319,7 +5453,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 </thead>
 <tbody>
 <tr>
-<td>Sequence[MemoryTextInstance]</td>
+<td>Sequence[DataPoint]</td>
 <td>List of prototype instances.</td>
 </tr>
 </tbody>
@@ -5338,7 +5472,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
-<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Sequence[MemoryTextInstance]:
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` prototypes.
 
@@ -5348,7 +5482,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         Returns:
 
-            Sequence[MemoryTextInstance]: List of prototype instances.
+            Sequence[DataPoint]: List of prototype instances.
 
         &quot;&quot;&quot;
 

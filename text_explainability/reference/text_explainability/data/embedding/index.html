@@ -368,18 +368,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../default/" class="md-nav__link">
-        Default
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../global_explanation/" class="md-nav__link">
         Global Explanation
       </a>
@@ -404,32 +392,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../internationalization/" class="md-nav__link">
-        Internationalization
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../local_explanation/" class="md-nav__link">
         Local Explanation
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../locale/" class="md-nav__link">
-        Locale
       </a>
     </li>
   
@@ -469,14 +433,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_10">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_10">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -779,14 +743,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_11" type="checkbox" id="__nav_5_1_11" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_8" type="checkbox" id="__nav_5_1_8" >
       
-      <label class="md-nav__link" for="__nav_5_1_11">
+      <label class="md-nav__link" for="__nav_5_1_8">
         Generation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Generation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_11">
+        <label class="md-nav__title" for="__nav_5_1_8">
           <span class="md-nav__icon md-icon"></span>
           Generation
         </label>
@@ -847,6 +811,57 @@
     <li class="md-nav__item">
       <a href="../../generation/target_encoding/" class="md-nav__link">
         Target Encoding
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_9" type="checkbox" id="__nav_5_1_9" >
+      
+      <label class="md-nav__link" for="__nav_5_1_9">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_9">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/notebook/" class="md-nav__link">
+        Notebook
       </a>
     </li>
   
@@ -1346,9 +1361,9 @@ from typing import Callable, Union
 
 import numpy as np
 
-from instancelib.instances.memory import MemoryBucketProvider
+from genbase import Readable
 
-from ..default import Readable
+from instancelib.instances.memory import MemoryBucketProvider
 
 def as_n_dimensional(vectors: Union[np.ndarray, list, MemoryBucketProvider],
 
@@ -1422,7 +1437,7 @@ def as_3d(vectors: Union[np.ndarray, list, MemoryBucketProvider], method: str = 
 
     &quot;&quot;&quot;Summarize vectors in 3 dimensions.&quot;&quot;&quot;
 
-    return as_n_dimensional(vectors=vectors, n=2, method=method, **kwargs)
+    return as_n_dimensional(vectors=vectors, n=3, method=method, **kwargs)
 
 class Embedder(Readable):
 
@@ -1615,7 +1630,7 @@ class TfidfVectorizer(Embedder):
 
     &quot;&quot;&quot;Summarize vectors in 3 dimensions.&quot;&quot;&quot;
 
-    return as_n_dimensional(vectors=vectors, n=2, method=method, **kwargs)
+    return as_n_dimensional(vectors=vectors, n=3, method=method, **kwargs)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1888,7 +1903,7 @@ class TfidfVectorizer(Embedder):
 <h4 id="ancestors-in-mro">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.data.embedding.Embedder</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="methods">Methods</h4>
 <h4 id="embed">embed</h4>
@@ -2163,7 +2178,7 @@ class TfidfVectorizer(Embedder):
 <hr />
 <h4 id="ancestors-in-mro_1">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="descendants">Descendants</h4>
 <ul>
@@ -2387,7 +2402,7 @@ class TfidfVectorizer(Embedder):
 <h4 id="ancestors-in-mro_2">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.data.embedding.Embedder</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="methods_2">Methods</h4>
 <h4 id="embed_2">embed</h4>
@@ -2579,7 +2594,7 @@ class TfidfVectorizer(Embedder):
 <h4 id="ancestors-in-mro_3">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.data.embedding.Embedder</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="methods_3">Methods</h4>
 <h4 id="embed_3">embed</h4>

@@ -368,18 +368,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../default/" class="md-nav__link">
-        Default
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../global_explanation/" class="md-nav__link">
         Global Explanation
       </a>
@@ -404,32 +392,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../internationalization/" class="md-nav__link">
-        Internationalization
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../local_explanation/" class="md-nav__link">
         Local Explanation
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../locale/" class="md-nav__link">
-        Locale
       </a>
     </li>
   
@@ -467,14 +431,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" >
       
-      <label class="md-nav__link" for="__nav_5_1_10">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_10">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -556,14 +520,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_11" type="checkbox" id="__nav_5_1_11" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_8" type="checkbox" id="__nav_5_1_8" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_11">
+      <label class="md-nav__link" for="__nav_5_1_8">
         Generation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Generation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_11">
+        <label class="md-nav__title" for="__nav_5_1_8">
           <span class="md-nav__icon md-icon"></span>
           Generation
         </label>
@@ -704,6 +668,57 @@
     <li class="md-nav__item">
       <a href="../target_encoding/" class="md-nav__link">
         Target Encoding
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_9" type="checkbox" id="__nav_5_1_9" >
+      
+      <label class="md-nav__link" for="__nav_5_1_9">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_9">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/notebook/" class="md-nav__link">
+        Notebook
       </a>
     </li>
   
@@ -1226,9 +1241,9 @@ from typing import Optional
 
 import numpy as np
 
-from sklearn.linear_model import Lasso, LassoLarsIC, lars_path
+from genbase import Readable
 
-from ..default import Readable
+from sklearn.linear_model import Lasso, LassoLarsIC, lars_path
 
 from .surrogate import LinearSurrogate
 
@@ -1324,7 +1339,7 @@ class FeatureSelector(Readable):
 
             used_features.append(best)
 
-        return np.array(used_features)
+        return np.sort(np.array(used_features))
 
     def _highest_weights(self, X: np.ndarray, y: np.ndarray,
 
@@ -1372,7 +1387,7 @@ class FeatureSelector(Readable):
 
             reverse=True)
 
-        return np.array([x[0] for x in feature_weights[:n_features]])
+        return np.sort(np.array([x[0] for x in feature_weights[:n_features]]))
 
     def _lasso_path(self, X: np.ndarray, y: np.ndarray,
 
@@ -1430,7 +1445,7 @@ class FeatureSelector(Readable):
 
         used_features = nonzero
 
-        return np.array(used_features)
+        return np.sort(np.array(used_features))
 
     def _information_criterion(self, X: np.ndarray, y: np.ndarray, criterion=&#39;aic&#39;) -&gt; np.ndarray:
 
@@ -1480,7 +1495,7 @@ class FeatureSelector(Readable):
 
             y = y[:, 0]
 
-        return np.nonzero(LassoLarsIC(criterion=criterion).fit(X, y).coef_)[0]
+        return np.sort(np.nonzero(LassoLarsIC(criterion=criterion).fit(X, y).coef_)[0])
 
     def _l1_reg(self, X: np.ndarray, y: np.ndarray,
 
@@ -1520,7 +1535,7 @@ class FeatureSelector(Readable):
 
             y = y[:, 0]
 
-        return lars_path(X, y, max_iter=n_features)[1]
+        return np.sort(lars_path(X, y, max_iter=n_features)[1])
 
     def __call__(self,
 
@@ -2093,7 +2108,7 @@ class FeatureSelector(Readable):
 
             used_features.append(best)
 
-        return np.array(used_features)
+        return np.sort(np.array(used_features))
 
     def _highest_weights(self, X: np.ndarray, y: np.ndarray,
 
@@ -2141,7 +2156,7 @@ class FeatureSelector(Readable):
 
             reverse=True)
 
-        return np.array([x[0] for x in feature_weights[:n_features]])
+        return np.sort(np.array([x[0] for x in feature_weights[:n_features]]))
 
     def _lasso_path(self, X: np.ndarray, y: np.ndarray,
 
@@ -2199,7 +2214,7 @@ class FeatureSelector(Readable):
 
         used_features = nonzero
 
-        return np.array(used_features)
+        return np.sort(np.array(used_features))
 
     def _information_criterion(self, X: np.ndarray, y: np.ndarray, criterion=&#39;aic&#39;) -&gt; np.ndarray:
 
@@ -2249,7 +2264,7 @@ class FeatureSelector(Readable):
 
             y = y[:, 0]
 
-        return np.nonzero(LassoLarsIC(criterion=criterion).fit(X, y).coef_)[0]
+        return np.sort(np.nonzero(LassoLarsIC(criterion=criterion).fit(X, y).coef_)[0])
 
     def _l1_reg(self, X: np.ndarray, y: np.ndarray,
 
@@ -2289,7 +2304,7 @@ class FeatureSelector(Readable):
 
             y = y[:, 0]
 
-        return lars_path(X, y, max_iter=n_features)[1]
+        return np.sort(lars_path(X, y, max_iter=n_features)[1])
 
     def __call__(self,
 
@@ -2386,7 +2401,7 @@ class FeatureSelector(Readable):
 <hr />
 <h4 id="ancestors-in-mro">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="methods">Methods</h4>
 <h4 id="select">select</h4>

@@ -368,18 +368,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../default/" class="md-nav__link">
-        Default
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../global_explanation/" class="md-nav__link">
         Global Explanation
       </a>
@@ -404,32 +392,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../internationalization/" class="md-nav__link">
-        Internationalization
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../local_explanation/" class="md-nav__link">
         Local Explanation
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../locale/" class="md-nav__link">
-        Locale
       </a>
     </li>
   
@@ -467,14 +431,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_10" type="checkbox" id="__nav_5_1_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" >
       
-      <label class="md-nav__link" for="__nav_5_1_10">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_10">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -556,14 +520,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_11" type="checkbox" id="__nav_5_1_11" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_8" type="checkbox" id="__nav_5_1_8" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_11">
+      <label class="md-nav__link" for="__nav_5_1_8">
         Generation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Generation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_11">
+        <label class="md-nav__title" for="__nav_5_1_8">
           <span class="md-nav__icon md-icon"></span>
           Generation
         </label>
@@ -925,6 +889,57 @@
     <li class="md-nav__item">
       <a href="../target_encoding/" class="md-nav__link">
         Target Encoding
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_9" type="checkbox" id="__nav_5_1_9" >
+      
+      <label class="md-nav__link" for="__nav_5_1_9">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_9">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/notebook/" class="md-nav__link">
+        Notebook
       </a>
     </li>
   
@@ -1498,9 +1513,9 @@ from typing import Optional, Sequence
 
 import numpy as np
 
-from sklearn.base import clone
+from genbase import Readable
 
-from text_explainability.default import Readable
+from sklearn.base import clone
 
 class BaseSurrogate(Readable):
 
@@ -1764,7 +1779,7 @@ class RuleSurrogate(BaseSurrogate):
 <hr />
 <h4 id="ancestors-in-mro">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="descendants">Descendants</h4>
 <ul>
@@ -1949,7 +1964,7 @@ class RuleSurrogate(BaseSurrogate):
 <h4 id="ancestors-in-mro_1">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.generation.surrogate.BaseSurrogate</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="instance-variables_1">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">coef</span>
@@ -2147,7 +2162,7 @@ class RuleSurrogate(BaseSurrogate):
 <h4 id="ancestors-in-mro_2">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.generation.surrogate.BaseSurrogate</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="instance-variables_2">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">feature_importances</span>
@@ -2406,7 +2421,7 @@ class RuleSurrogate(BaseSurrogate):
 <h4 id="ancestors-in-mro_3">Ancestors (in MRO)</h4>
 <ul>
 <li>text_explainability.generation.surrogate.BaseSurrogate</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="instance-variables_3">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">classes</span>
