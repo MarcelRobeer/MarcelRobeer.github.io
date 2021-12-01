@@ -2017,7 +2017,9 @@
 <span class="normal">712</span>
 <span class="normal">713</span>
 <span class="normal">714</span>
-<span class="normal">715</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
+<span class="normal">715</span>
+<span class="normal">716</span>
+<span class="normal">717</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
 
 Todo:
 
@@ -2083,7 +2085,9 @@ class PrototypeSampler(Readable):
 
         &quot;&quot;&quot;Select instances from provider by keys.&quot;&quot;&quot;
 
-        return [self.instances[i] for i in keys]
+        id_map = np.array(self.instances)
+
+        return [self.instances[id_map[i]] for i in keys]
 
     def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
@@ -2253,7 +2257,7 @@ class MMDCritic(PrototypeSampler):
 
         colsum = self.colsum.copy() * 2
 
-        sample_indices = np.array(list(self.instances))
+        sample_indices = np.arange(0, len(self.instances))
 
         is_selected = np.zeros_like(sample_indices)
 
@@ -3361,7 +3365,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">LabelProvider</span><span class="p">],</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x167c75d30</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16eee4d30</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4183,7 +4187,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MMDCritic</span><span class="p">(</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x167c75d30</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16eee4d30</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4529,7 +4533,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         colsum = self.colsum.copy() * 2
 
-        sample_indices = np.array(list(self.instances))
+        sample_indices = np.arange(0, len(self.instances))
 
         is_selected = np.zeros_like(sample_indices)
 
@@ -5230,7 +5234,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         colsum = self.colsum.copy() * 2
 
-        sample_indices = np.array(list(self.instances))
+        sample_indices = np.arange(0, len(self.instances))
 
         is_selected = np.zeros_like(sample_indices)
 
@@ -5338,7 +5342,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
-<span class="normal">57</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class PrototypeSampler(Readable):
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class PrototypeSampler(Readable):
 
     def __init__(self,
 
@@ -5374,7 +5380,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         &quot;&quot;&quot;Select instances from provider by keys.&quot;&quot;&quot;
 
-        return [self.instances[i] for i in keys]
+        id_map = np.array(self.instances)
+
+        return [self.instances[id_map[i]] for i in keys]
 
     def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
