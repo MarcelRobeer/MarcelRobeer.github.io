@@ -713,6 +713,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_meta_descriptors" class="md-nav__link">
+    get_meta_descriptors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#information_renderer" class="md-nav__link">
     information_renderer
   </a>
@@ -785,6 +792,13 @@
           <li class="md-nav__item">
   <a href="#css" class="md-nav__link">
     css
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom_tab" class="md-nav__link">
+    custom_tab
   </a>
   
 </li>
@@ -943,6 +957,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_meta_descriptors" class="md-nav__link">
+    get_meta_descriptors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#information_renderer" class="md-nav__link">
     information_renderer
   </a>
@@ -1015,6 +1036,13 @@
           <li class="md-nav__item">
   <a href="#css" class="md-nav__link">
     css
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom_tab" class="md-nav__link">
+    custom_tab
   </a>
   
 </li>
@@ -1424,13 +1452,9 @@
 <span class="normal">328</span>
 <span class="normal">329</span>
 <span class="normal">330</span>
-<span class="normal">331</span>
-<span class="normal">332</span>
-<span class="normal">333</span>
-<span class="normal">334</span>
-<span class="normal">335</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Extension of `genbase.ui.notebook` for custom rendering of `text_explainability.&quot;&quot;&quot;
+<span class="normal">331</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Extension of `genbase.ui.notebook` for custom rendering of `text_explainability.&quot;&quot;&quot;
 
-from typing import Optional
+from typing import Optional, Tuple
 
 import pandas as pd
 
@@ -1467,6 +1491,30 @@ def plotly_fallback(function):
         return function(*args, **kwargs) if not plotly_available() else default_renderer(*args, **kwargs)
 
     return function
+
+def get_meta_descriptors(meta: dict) -&gt; Tuple[str]:
+
+    &quot;&quot;&quot;Get type, subtype &amp; method from `meta`.
+
+    Args:
+
+        meta (dict): [description]
+
+    Returns:
+
+        Tuple[str]: type, subtype, method
+
+    &quot;&quot;&quot;
+
+    def fmt(x):
+
+        return str(x).strip().lower().replace(&#39; &#39;, &#39;_&#39;)
+
+    def get_from_meta(key: str) -&gt; str:
+
+        return fmt(meta[key]) if key in meta else &#39;&#39;
+
+    return get_from_meta(&#39;type&#39;), get_from_meta(&#39;subtype&#39;), get_from_meta(&#39;method&#39;)
 
 def feature_attribution_renderer(meta: dict, content, **renderargs) -&gt; str:
 
@@ -1662,19 +1710,7 @@ class Render(BaseRender):
 
     def get_renderer(self, meta: dict):
 
-        def fmt(x):
-
-            return str(x).strip().lower().replace(&#39; &#39;, &#39;_&#39;)
-
-        def get_from_meta(key: str) -&gt; str:
-
-            return fmt(meta[key]) if key in meta else &#39;&#39;
-
-        type = get_from_meta(&#39;type&#39;)
-
-        subtype = get_from_meta(&#39;subtype&#39;)
-
-        method = get_from_meta(&#39;method&#39;)  # noqa: F841
+        type, subtype, _ = get_meta_descriptors(meta)
 
         if type == &#39;global_explanation&#39;:
 
@@ -1704,27 +1740,17 @@ class Render(BaseRender):
 
     def render_subtitle(self, meta: dict, content, **renderargs) -&gt; str:
 
-        def fmt(x):
-
-            return str(x).strip().lower().replace(&#39; &#39;, &#39;_&#39;)
-
-        def get_from_meta(key: str) -&gt; str:
-
-            return fmt(meta[key]) if key in meta else &#39;&#39;
-
-        def fmt_method(name: str) -&gt; str:
-
-            name, url = TRANSLATION_DICT.pop(str.lower(name), (name, &#39;&#39;))
-
-            return f&#39;&lt;a href=&quot;{url}&quot; target=&quot;_blank&quot;&gt;{name}&lt;/a&gt;&#39; if url else name
-
-        type = get_from_meta(&#39;type&#39;)
-
-        subtype = get_from_meta(&#39;subtype&#39;)
+        type, subtype, _ = get_meta_descriptors(meta)
 
         labelwise = meta[&#39;labelwise&#39;] if &#39;labelwise&#39; in meta else False
 
         callargs = meta[&#39;callargs&#39;] if &#39;callargs&#39; in meta else &#39;&#39;
+
+        def fmt_method(name: str) -&gt; str:
+
+            name, url = TRANSLATION_DICT[str.lower(name)] if str.lower(name) in TRANSLATION_DICT else (name, &#39;&#39;)
+
+            return f&#39;&lt;a href=&quot;{url}&quot; target=&quot;_blank&quot;&gt;{name}&lt;/a&gt;&#39; if url else name
 
         html = []
 
@@ -1757,12 +1783,6 @@ class Render(BaseRender):
                 html.append(&#39;Grouped by label.&#39;)
 
         return self.format_subtitle(&#39;&lt;br&gt;&#39;.join(html)) if html else &#39;&#39;
-
-    def render_content(self, meta: dict, content, **renderargs) -&gt; str:
-
-        renderer = self.get_renderer(meta)
-
-        return renderer(meta, content, **renderargs)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -2050,6 +2070,97 @@ def featurelist_renderer(meta: dict,
 </code></pre></div>
 </td></tr></table>
 </details>
+<h3 id="get_meta_descriptors">get_meta_descriptors</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_meta_descriptors</span><span class="p">(</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</code></pre></div>
+</td></tr></table>
+<p>Get type, subtype &amp; method from <code>meta</code>.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>meta</td>
+<td>dict</td>
+<td>[description]</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tuple[str]</td>
+<td>type, subtype, method</td>
+</tr>
+</tbody>
+</table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def get_meta_descriptors(meta: dict) -&gt; Tuple[str]:
+
+    &quot;&quot;&quot;Get type, subtype &amp; method from `meta`.
+
+    Args:
+
+        meta (dict): [description]
+
+    Returns:
+
+        Tuple[str]: type, subtype, method
+
+    &quot;&quot;&quot;
+
+    def fmt(x):
+
+        return str(x).strip().lower().replace(&#39; &#39;, &#39;_&#39;)
+
+    def get_from_meta(key: str) -&gt; str:
+
+        return fmt(meta[key]) if key in meta else &#39;&#39;
+
+    return get_from_meta(&#39;type&#39;), get_from_meta(&#39;subtype&#39;), get_from_meta(&#39;method&#39;)
+</code></pre></div>
+</td></tr></table>
+</details>
 <h3 id="information_renderer">information_renderer</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -2305,35 +2416,7 @@ def featurelist_renderer(meta: dict,
 <span class="normal">120</span>
 <span class="normal">121</span>
 <span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class Render(BaseRender):
+<span class="normal">123</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class Render(BaseRender):
 
     def __init__(self, *configs):
 
@@ -2383,19 +2466,7 @@ def featurelist_renderer(meta: dict,
 
     def get_renderer(self, meta: dict):
 
-        def fmt(x):
-
-            return str(x).strip().lower().replace(&#39; &#39;, &#39;_&#39;)
-
-        def get_from_meta(key: str) -&gt; str:
-
-            return fmt(meta[key]) if key in meta else &#39;&#39;
-
-        type = get_from_meta(&#39;type&#39;)
-
-        subtype = get_from_meta(&#39;subtype&#39;)
-
-        method = get_from_meta(&#39;method&#39;)  # noqa: F841
+        type, subtype, _ = get_meta_descriptors(meta)
 
         if type == &#39;global_explanation&#39;:
 
@@ -2425,27 +2496,17 @@ def featurelist_renderer(meta: dict,
 
     def render_subtitle(self, meta: dict, content, **renderargs) -&gt; str:
 
-        def fmt(x):
-
-            return str(x).strip().lower().replace(&#39; &#39;, &#39;_&#39;)
-
-        def get_from_meta(key: str) -&gt; str:
-
-            return fmt(meta[key]) if key in meta else &#39;&#39;
-
-        def fmt_method(name: str) -&gt; str:
-
-            name, url = TRANSLATION_DICT.pop(str.lower(name), (name, &#39;&#39;))
-
-            return f&#39;&lt;a href=&quot;{url}&quot; target=&quot;_blank&quot;&gt;{name}&lt;/a&gt;&#39; if url else name
-
-        type = get_from_meta(&#39;type&#39;)
-
-        subtype = get_from_meta(&#39;subtype&#39;)
+        type, subtype, _ = get_meta_descriptors(meta)
 
         labelwise = meta[&#39;labelwise&#39;] if &#39;labelwise&#39; in meta else False
 
         callargs = meta[&#39;callargs&#39;] if &#39;callargs&#39; in meta else &#39;&#39;
+
+        def fmt_method(name: str) -&gt; str:
+
+            name, url = TRANSLATION_DICT[str.lower(name)] if str.lower(name) in TRANSLATION_DICT else (name, &#39;&#39;)
+
+            return f&#39;&lt;a href=&quot;{url}&quot; target=&quot;_blank&quot;&gt;{name}&lt;/a&gt;&#39; if url else name
 
         html = []
 
@@ -2478,12 +2539,6 @@ def featurelist_renderer(meta: dict,
                 html.append(&#39;Grouped by label.&#39;)
 
         return self.format_subtitle(&#39;&lt;br&gt;&#39;.join(html)) if html else &#39;&#39;
-
-    def render_content(self, meta: dict, content, **renderargs) -&gt; str:
-
-        renderer = self.get_renderer(meta)
-
-        return renderer(meta, content, **renderargs)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -2493,6 +2548,10 @@ def featurelist_renderer(meta: dict,
 <li>genbase.ui.notebook.Render</li>
 </ul>
 <h4 id="instance-variables">Instance variables</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">custom_tab_title</span>
+</code></pre></div>
+</td></tr></table>
+<p>Title of custom tab.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">package_name</span>
 </code></pre></div>
 </td></tr></table>
@@ -2674,7 +2733,23 @@ def featurelist_renderer(meta: dict,
 <span class="normal">126</span>
 <span class="normal">127</span>
 <span class="normal">128</span>
-<span class="normal">129</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def as_html(self, **renderargs) -&gt; str:
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def as_html(self, **renderargs) -&gt; str:
 
         &quot;&quot;&quot;Get HTML element for interactive environments (e.g. Jupyter notebook).
 
@@ -2714,11 +2789,25 @@ def featurelist_renderer(meta: dict,
 
         html = &#39;&#39;.join(self.render_elements(config, **renderargs) for config in self.configs)
 
-        tabs_id = f&#39;tabs-{str(uuid.uuid4())}&#39;
+        id = str(uuid.uuid4())
+
+        tabs_id = f&#39;tabs-{id}&#39;
+
+        ui_id = f&#39;ui-{id}&#39;
+
+        CUSTOM_TAB = &#39;&#39;.join(self.custom_tab(config, **renderargs) for config in self.configs)
+
+        if CUSTOM_TAB:
+
+            CUSTOM_TAB = f&quot;&quot;&quot;&lt;input type=&quot;radio&quot; name=&quot;{tabs_id}&quot; id=&quot;{tabs_id}-tab2&quot;/&gt;
+
+                             &lt;label class=&quot;wide&quot; for=&quot;{tabs_id}-tab2&quot;&gt;{self.custom_tab_title}&lt;/label&gt;
+
+                             &lt;div class=&quot;tab&quot;&gt;{CUSTOM_TAB}&lt;/div&gt;&quot;&quot;&quot;
 
         HTML = f&quot;&quot;&quot;
 
-        &lt;div class=&quot;ui&quot;&gt;
+        &lt;div id=&quot;{ui_id}&quot;&gt;
 
             &lt;section class=&quot;ui-wrapper&quot;&gt;
 
@@ -2726,7 +2815,7 @@ def featurelist_renderer(meta: dict,
 
                     &lt;div class=&quot;ui-block&quot;&gt;
 
-                        &lt;div class=&quot;{tabs_id}&quot;&gt;
+                        &lt;div id=&quot;{tabs_id}&quot;&gt;
 
                             &lt;input type=&quot;radio&quot; name=&quot;{tabs_id}&quot; id=&quot;{tabs_id}-tab1&quot; checked=&quot;checked&quot; /&gt;
 
@@ -2734,9 +2823,11 @@ def featurelist_renderer(meta: dict,
 
                             &lt;div class=&quot;tab&quot;&gt;{html}&lt;/div&gt;
 
-                            &lt;input type=&quot;radio&quot; name=&quot;{tabs_id}&quot; id=&quot;{tabs_id}-tab2&quot; /&gt;
+                            {CUSTOM_TAB}
 
-                            &lt;label for=&quot;{tabs_id}-tab2&quot;&gt;{self.config_title}&lt;/label&gt;
+                            &lt;input type=&quot;radio&quot; name=&quot;{tabs_id}&quot; id=&quot;{tabs_id}-tab{&#39;3&#39; if CUSTOM_TAB else &#39;2&#39;}&quot; /&gt;
+
+                            &lt;label for=&quot;{tabs_id}-tab{&#39;3&#39; if CUSTOM_TAB else &#39;2&#39;}&quot;&gt;{self.config_title}&lt;/label&gt;
 
                             &lt;div class=&quot;tab code&quot;&gt;
 
@@ -2798,7 +2889,7 @@ def featurelist_renderer(meta: dict,
 
         package_name = self.package_name
 
-        CSS = self.css(ui_color=main_color, tabs_id=tabs_id)
+        CSS = self.css(ui_color=main_color, ui_id=ui_id, tabs_id=tabs_id)
 
         FOOTER = f&#39;&lt;footer&gt;Generated with &lt;a href=&quot;{package}&quot; target=&quot;_blank&quot;&gt;{package_name}&lt;/a&gt;&lt;/footer&gt;&#39;
 
@@ -2833,6 +2924,26 @@ def featurelist_renderer(meta: dict,
             css_ = css_.replace(f&#39;--var({k})&#39;, v)
 
         return css_
+</code></pre></div>
+</td></tr></table>
+</details>
+<h4 id="custom_tab">custom_tab</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">custom_tab</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">renderargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</code></pre></div>
+</td></tr></table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def custom_tab(self, config: dict, **renderargs) -&gt; str:
+
+        return &#39;&#39;
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -2986,6 +3097,26 @@ def featurelist_renderer(meta: dict,
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+<p>Get a render function (Callable taking <code>meta</code>, <code>content</code> and <code>**renderargs</code> and returning a <code>str</code>).</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>meta</td>
+<td>dict</td>
+<td>Meta information to decide on appropriate renderer.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -3010,33 +3141,9 @@ def featurelist_renderer(meta: dict,
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def get_renderer(self, meta: dict):
+<span class="normal">25</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def get_renderer(self, meta: dict):
 
-        def fmt(x):
-
-            return str(x).strip().lower().replace(&#39; &#39;, &#39;_&#39;)
-
-        def get_from_meta(key: str) -&gt; str:
-
-            return fmt(meta[key]) if key in meta else &#39;&#39;
-
-        type = get_from_meta(&#39;type&#39;)
-
-        subtype = get_from_meta(&#39;subtype&#39;)
-
-        method = get_from_meta(&#39;method&#39;)  # noqa: F841
+        type, subtype, _ = get_meta_descriptors(meta)
 
         if type == &#39;global_explanation&#39;:
 
@@ -3071,7 +3178,7 @@ def featurelist_renderer(meta: dict,
 <span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">render_content</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="n">content</span><span class="p">,</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="o">**</span><span class="n">renderargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
@@ -3123,11 +3230,43 @@ def featurelist_renderer(meta: dict,
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def render_content(self, meta: dict, content, **renderargs) -&gt; str:
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def render_content(self, meta: dict, content: dict, **renderargs) -&gt; str:
+
+        &quot;&quot;&quot;Render content as HTML. Overwrite this when subclassing for your custom implementation.
+
+        Args:
+
+            meta (dict): Meta config.
+
+            content (dict): Content config.
+
+            **renderags: Optional arguments for rendering.
+
+        Returns:
+
+            str: Formatted content.
+
+        &quot;&quot;&quot;
 
         renderer = self.get_renderer(meta)
 
@@ -3294,39 +3433,19 @@ def featurelist_renderer(meta: dict,
 <span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def render_subtitle(self, meta: dict, content, **renderargs) -&gt; str:
+<span class="normal">45</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def render_subtitle(self, meta: dict, content, **renderargs) -&gt; str:
 
-        def fmt(x):
-
-            return str(x).strip().lower().replace(&#39; &#39;, &#39;_&#39;)
-
-        def get_from_meta(key: str) -&gt; str:
-
-            return fmt(meta[key]) if key in meta else &#39;&#39;
-
-        def fmt_method(name: str) -&gt; str:
-
-            name, url = TRANSLATION_DICT.pop(str.lower(name), (name, &#39;&#39;))
-
-            return f&#39;&lt;a href=&quot;{url}&quot; target=&quot;_blank&quot;&gt;{name}&lt;/a&gt;&#39; if url else name
-
-        type = get_from_meta(&#39;type&#39;)
-
-        subtype = get_from_meta(&#39;subtype&#39;)
+        type, subtype, _ = get_meta_descriptors(meta)
 
         labelwise = meta[&#39;labelwise&#39;] if &#39;labelwise&#39; in meta else False
 
         callargs = meta[&#39;callargs&#39;] if &#39;callargs&#39; in meta else &#39;&#39;
+
+        def fmt_method(name: str) -&gt; str:
+
+            name, url = TRANSLATION_DICT[str.lower(name)] if str.lower(name) in TRANSLATION_DICT else (name, &#39;&#39;)
+
+            return f&#39;&lt;a href=&quot;{url}&quot; target=&quot;_blank&quot;&gt;{name}&lt;/a&gt;&#39; if url else name
 
         html = []
 

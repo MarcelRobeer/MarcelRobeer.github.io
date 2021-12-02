@@ -2853,7 +2853,9 @@
 <span class="normal">656</span>
 <span class="normal">657</span>
 <span class="normal">658</span>
-<span class="normal">659</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;General return types for global/local explanations.
+<span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;General return types for global/local explanations.
 
 Todo:
 
@@ -2917,7 +2919,9 @@ class BaseReturnType(MetaInfo):
 
         &quot;&quot;&quot;
 
-        super().__init__(type=type, subtype=subtype, callargs=callargs, renderer=Render, **kwargs)
+        renderer = kwargs.pop(&#39;renderer&#39;, Render)
+
+        super().__init__(type=type, subtype=subtype, callargs=callargs, renderer=renderer, **kwargs)
 
         self._labels = labels
 
@@ -3630,7 +3634,9 @@ class Instances(BaseReturnType):
 <span class="normal">94</span>
 <span class="normal">95</span>
 <span class="normal">96</span>
-<span class="normal">97</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class BaseReturnType(MetaInfo):
+<span class="normal">97</span>
+<span class="normal">98</span>
+<span class="normal">99</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class BaseReturnType(MetaInfo):
 
     def __init__(self,
 
@@ -3666,7 +3672,9 @@ class Instances(BaseReturnType):
 
         &quot;&quot;&quot;
 
-        super().__init__(type=type, subtype=subtype, callargs=callargs, renderer=Render, **kwargs)
+        renderer = kwargs.pop(&#39;renderer&#39;, Render)
+
+        super().__init__(type=type, subtype=subtype, callargs=callargs, renderer=renderer, **kwargs)
 
         self._labels = labels
 

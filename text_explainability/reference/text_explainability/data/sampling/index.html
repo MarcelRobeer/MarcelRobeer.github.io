@@ -2019,7 +2019,9 @@
 <span class="normal">714</span>
 <span class="normal">715</span>
 <span class="normal">716</span>
-<span class="normal">717</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
+<span class="normal">717</span>
+<span class="normal">718</span>
+<span class="normal">719</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
 
 Todo:
 
@@ -2341,7 +2343,9 @@ class MMDCritic(PrototypeSampler):
 
                              f&#39;({len(self.instances) - len(self._prototypes)})&#39;)
 
-        prototypes = np.array([p.identifier for p in self._prototypes])
+        id_map = {instance: id for id, instance in enumerate(self.instances)}
+
+        prototypes = np.array([id_map[p.identifier] for p in self._prototypes])
 
         K = self.K
 
@@ -2375,7 +2379,7 @@ class MMDCritic(PrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K + 1)[candidate_indices]  # TODO: look at hotfix
+                diag = np.diagonal(K + 1)[candidate_indices]
 
                 if inverse_of_prev_selected is not None:
 
@@ -3365,7 +3369,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">LabelProvider</span><span class="p">],</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16eee4d30</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16b7e2f70</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4187,7 +4191,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MMDCritic</span><span class="p">(</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16eee4d30</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16b7e2f70</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4457,7 +4461,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">264</span>
 <span class="normal">265</span>
 <span class="normal">266</span>
-<span class="normal">267</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class MMDCritic(PrototypeSampler):
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class MMDCritic(PrototypeSampler):
 
     def __init__(self,
 
@@ -4617,7 +4623,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                              f&#39;({len(self.instances) - len(self._prototypes)})&#39;)
 
-        prototypes = np.array([p.identifier for p in self._prototypes])
+        id_map = {instance: id for id, instance in enumerate(self.instances)}
+
+        prototypes = np.array([id_map[p.identifier] for p in self._prototypes])
 
         K = self.K
 
@@ -4651,7 +4659,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K + 1)[candidate_indices]  # TODO: look at hotfix
+                diag = np.diagonal(K + 1)[candidate_indices]
 
                 if inverse_of_prev_selected is not None:
 
@@ -4944,7 +4952,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">118</span>
 <span class="normal">119</span>
 <span class="normal">120</span>
-<span class="normal">121</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[DataPoint]:
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes), using `MMD-critic implementation`_.
 
@@ -4988,7 +4998,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                              f&#39;({len(self.instances) - len(self._prototypes)})&#39;)
 
-        prototypes = np.array([p.identifier for p in self._prototypes])
+        id_map = {instance: id for id, instance in enumerate(self.instances)}
+
+        prototypes = np.array([id_map[p.identifier] for p in self._prototypes])
 
         K = self.K
 
@@ -5022,7 +5034,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K + 1)[candidate_indices]  # TODO: look at hotfix
+                diag = np.diagonal(K + 1)[candidate_indices]
 
                 if inverse_of_prev_selected is not None:
 
