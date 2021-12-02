@@ -368,8 +368,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../internationalization/" class="md-nav__link">
-        Internationalization
+      <a href="../return_types/" class="md-nav__link">
+        Return Types
       </a>
     </li>
   
@@ -463,20 +463,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#input_space_robustness" class="md-nav__link">
-    input_space_robustness
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#invariance" class="md-nav__link">
-    invariance
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#mean_score" class="md-nav__link">
     mean_score
   </a>
@@ -516,18 +502,6 @@
           Data
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../data/base/" class="md-nav__link">
-        Base
-      </a>
-    </li>
-  
-
           
             
   
@@ -585,14 +559,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_6" type="checkbox" id="__nav_5_1_4_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_5" type="checkbox" id="__nav_5_1_4_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_6">
+      <label class="md-nav__link" for="__nav_5_1_4_5">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_6">
+        <label class="md-nav__title" for="__nav_5_1_4_5">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
@@ -733,6 +707,57 @@
   
 
           
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
+      
+      <label class="md-nav__link" for="__nav_5_1_6">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_6">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui/notebook/" class="md-nav__link">
+        Notebook
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
         </ul>
       </nav>
     </li>
@@ -816,20 +841,6 @@
           <li class="md-nav__item">
   <a href="#equal_ground_truth" class="md-nav__link">
     equal_ground_truth
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#input_space_robustness" class="md-nav__link">
-    input_space_robustness
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#invariance" class="md-nav__link">
-    invariance
   </a>
   
 </li>
@@ -1258,11 +1269,47 @@
 <span class="normal">394</span>
 <span class="normal">395</span>
 <span class="normal">396</span>
-<span class="normal">397</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sensitivity testing, for fairness and robustness.&quot;&quot;&quot;
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sensitivity testing, for fairness and robustness.&quot;&quot;&quot;
 
 from typing import Iterator, List, Optional, Tuple, Union
 
 import numpy as np
+
+from genbase import add_callargs
 
 from instancelib.analysis.base import (BinaryModelMetrics,
 
@@ -1287,6 +1334,8 @@ from text_sensitivity.data.random.string import (RandomString,
                                                  combine_generators)
 
 from text_sensitivity.perturbation.base import Perturbation
+
+from text_sensitivity.return_types import SuccessTest
 
 def apply_perturbation(dataset: Union[InstanceProvider, TextEnvironment],
 
@@ -1468,6 +1517,8 @@ def compare_recall(*args, **kwargs):
 
                         columns=[&#39;label&#39;, &#39;attribute&#39;, &#39;recall&#39;])
 
+@add_callargs
+
 def input_space_robustness(model: AbstractClassifier,
 
                            generators: List[RandomString],
@@ -1478,7 +1529,9 @@ def input_space_robustness(model: AbstractClassifier,
 
                            max_length: int = 100,
 
-                           seed: Optional[int] = 0) -&gt; Tuple[float, List[MemoryTextInstance]]:
+                           seed: Optional[int] = 0,
+
+                           **kwargs) -&gt; SuccessTest:
 
     &quot;&quot;&quot;Test the robustness of a machine learning model to different input types.
 
@@ -1516,9 +1569,11 @@ def input_space_robustness(model: AbstractClassifier,
 
     Returns:
 
-        Tuple[float, List[MemoryTextInstance]]: Percentage of success cases, list of failed instances
+        SuccessTest: Percentage of success cases, list of succeeded/failed instances
 
     &quot;&quot;&quot;
+
+    callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
     # Combine all generators into one
 
@@ -1528,9 +1583,11 @@ def input_space_robustness(model: AbstractClassifier,
 
     instances = generator.generate(n=n_samples, min_length=min_length, max_length=max_length)
 
-    # Percentage success, instances that failed
+    # Percentage success, instances that succeeded, instances that failed
 
     success: int = 0
+
+    successes: List[List[str]] = []
 
     failures: List[List[str]] = []
 
@@ -1544,15 +1601,25 @@ def input_space_robustness(model: AbstractClassifier,
 
             success += 1
 
-        except Exception as e:
+            successes.append(instances[i])
 
-            print(e)
+        except Exception:
 
             failures.append(instances[i])
 
-    success = 1.0 if len(instances) == 0 else success / len(instances)
+    return SuccessTest(1.0 if len(instances) == 0 else success / len(instances),
 
-    return success, failures
+                       successes,
+
+                       failures,
+
+                       type=&#39;robustness&#39;,
+
+                       subtype=&#39;input_space&#39;,
+
+                       callargs=callargs)
+
+@add_callargs
 
 def invariance(pattern: str,
 
@@ -1562,7 +1629,7 @@ def invariance(pattern: str,
 
                **kwargs,
 
-               ) -&gt; Tuple[float, List[MemoryTextInstance], List[MemoryTextInstance], MemoryLabelProvider]:
+               ) -&gt; SuccessTest:
 
     &quot;&quot;&quot;Test for the failure rate under invariance.
 
@@ -1578,13 +1645,13 @@ def invariance(pattern: str,
 
     Returns:
 
-        Tuple[float, List[MemoryTextInstance], List[MemoryTextInstance], MemoryLabelProvider]: Failure rate
-
-            (percentage), list of correctly invariant instances, list of wrong instances (variant), and perturbation
-
-            labels for subset selection.
+        SuccessTest: Percentage of success cases, list of succeeded (invariant)/failed (variant) instances
 
     &quot;&quot;&quot;
+
+    callargs = kwargs.pop(&#39;__callargs__&#39;, None)
+
+    # Generate instances from pattern and predict
 
     instances, _ = from_pattern(pattern, **kwargs)
 
@@ -1606,7 +1673,19 @@ def invariance(pattern: str,
 
     wrong = [instances[id] for id, label in predictions if label != expectation]
 
-    return len(wrong) / len(predictions), correct, wrong
+    return SuccessTest(1.0 if len(predictions) == 0 else len(correct) / len(predictions),
+
+                       correct,
+
+                       wrong,
+
+                       predictions=predictions,
+
+                       type=&#39;sensitivity&#39;,
+
+                       subtype=&#39;invariance&#39;,
+
+                       callargs=callargs)
 
 def mean_score(pattern: str,
 
@@ -2188,444 +2267,6 @@ def mean_score(pattern: str,
 </code></pre></div>
 </td></tr></table>
 </details>
-<h3 id="input_space_robustness">input_space_robustness</h3>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">input_space_robustness</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
-    <span class="n">generators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">text_sensitivity</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">RandomString</span><span class="p">],</span>
-    <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">]]</span>
-</code></pre></div>
-</td></tr></table>
-<p>Test the robustness of a machine learning model to different input types.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>model</td>
-<td>AbstractClassifier</td>
-<td>Machine learning model to test.</td>
-<td>None</td>
-</tr>
-<tr>
-<td>generators</td>
-<td>List[RandomString]</td>
-<td>Random character generators.</td>
-<td>None</td>
-</tr>
-<tr>
-<td>n_samples</td>
-<td>int</td>
-<td>Number of test samples. Defaults to 100.</td>
-<td>100</td>
-</tr>
-<tr>
-<td>min_length</td>
-<td>int</td>
-<td>Input minimum length. Defaults to 0.</td>
-<td>0</td>
-</tr>
-<tr>
-<td>max_length</td>
-<td>int</td>
-<td>Input maximum length. Defaults to 100.</td>
-<td>100</td>
-</tr>
-<tr>
-<td>seed</td>
-<td>Optional[int]</td>
-<td>Seed for reproducibility purposes. Defaults to 0.</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Tuple[float, List[MemoryTextInstance]]</td>
-<td>Percentage of success cases, list of failed instances</td>
-</tr>
-</tbody>
-</table>
-<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def input_space_robustness(model: AbstractClassifier,
-
-                           generators: List[RandomString],
-
-                           n_samples: int = 100,
-
-                           min_length: int = 0,
-
-                           max_length: int = 100,
-
-                           seed: Optional[int] = 0) -&gt; Tuple[float, List[MemoryTextInstance]]:
-
-    &quot;&quot;&quot;Test the robustness of a machine learning model to different input types.
-
-    Example:
-
-        Test a pretrained black-box `model` for its robustness to 1000 random strings (length 0 to 500),
-
-        containing whitespace characters, ASCII (upper, lower and numbers), emojis and Russian Cyrillic characters:
-
-        &gt;&gt;&gt; from text_sensitivity.data.random.string import RandomAscii, RandomCyrillic, RandomEmojis, RandomWhitespace
-
-        &gt;&gt;&gt; input_space_robustness(model,
-
-        &gt;&gt;&gt;                        [RandomWhitespace(), RandomAscii(), RandomEmojis(base=True), RandomCyrillic(&#39;ru&#39;)],
-
-        &gt;&gt;&gt;                        n_samples=1000,
-
-        &gt;&gt;&gt;                        min_length=0,
-
-        &gt;&gt;&gt;                        max_length=500)
-
-    Args:
-
-        model (AbstractClassifier): Machine learning model to test.
-
-        generators (List[RandomString]): Random character generators.
-
-        n_samples (int, optional): Number of test samples. Defaults to 100.
-
-        min_length (int, optional): Input minimum length. Defaults to 0.
-
-        max_length (int, optional): Input maximum length. Defaults to 100.
-
-        seed (Optional[int], optional): Seed for reproducibility purposes. Defaults to 0.
-
-    Returns:
-
-        Tuple[float, List[MemoryTextInstance]]: Percentage of success cases, list of failed instances
-
-    &quot;&quot;&quot;
-
-    # Combine all generators into one
-
-    generator = combine_generators(*generators, seed=seed)
-
-    # Generate instances
-
-    instances = generator.generate(n=n_samples, min_length=min_length, max_length=max_length)
-
-    # Percentage success, instances that failed
-
-    success: int = 0
-
-    failures: List[List[str]] = []
-
-    # Do not perform it batchwise but per instance, in order to return the error-throwing failures
-
-    for i in instances:
-
-        try:
-
-            model.predict([instances[i]])
-
-            success += 1
-
-        except Exception as e:
-
-            print(e)
-
-            failures.append(instances[i])
-
-    success = 1.0 if len(instances) == 0 else success / len(instances)
-
-    return success, failures
-</code></pre></div>
-</td></tr></table>
-</details>
-<h3 id="invariance">invariance</h3>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">invariance</span><span class="p">(</span>
-    <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
-    <span class="n">expectation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">],</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryLabelProvider</span><span class="p">]</span>
-</code></pre></div>
-</td></tr></table>
-<p>Test for the failure rate under invariance.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>pattern</td>
-<td>str</td>
-<td>String pattern to generate examples from.</td>
-<td>None</td>
-</tr>
-<tr>
-<td>model</td>
-<td>AbstractClassifier</td>
-<td>Model to test.</td>
-<td>None</td>
-</tr>
-<tr>
-<td>expectation</td>
-<td>Optional[LT]</td>
-<td>Expected outcome values. Defaults to None.</td>
-<td>None</td>
-</tr>
-<tr>
-<td>**kwargs</td>
-<td>None</td>
-<td>Optional arguments passed onto the <code>data.generate.from_pattern()</code> function.</td>
-<td>None</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Tuple[float, List[MemoryTextInstance], List[MemoryTextInstance], MemoryLabelProvider]</td>
-<td>Failure rate</td>
-</tr>
-<tr>
-<td>(percentage), list of correctly invariant instances, list of wrong instances (variant), and perturbation</td>
-<td></td>
-</tr>
-<tr>
-<td>labels for subset selection.</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def invariance(pattern: str,
-
-               model: AbstractClassifier,
-
-               expectation: Optional[LT] = None,
-
-               **kwargs,
-
-               ) -&gt; Tuple[float, List[MemoryTextInstance], List[MemoryTextInstance], MemoryLabelProvider]:
-
-    &quot;&quot;&quot;Test for the failure rate under invariance.
-
-    Args:
-
-        pattern (str): String pattern to generate examples from.
-
-        model (AbstractClassifier): Model to test.
-
-        expectation (Optional[LT], optional): Expected outcome values. Defaults to None.
-
-        **kwargs: Optional arguments passed onto the `data.generate.from_pattern()` function.
-
-    Returns:
-
-        Tuple[float, List[MemoryTextInstance], List[MemoryTextInstance], MemoryLabelProvider]: Failure rate
-
-            (percentage), list of correctly invariant instances, list of wrong instances (variant), and perturbation
-
-            labels for subset selection.
-
-    &quot;&quot;&quot;
-
-    instances, _ = from_pattern(pattern, **kwargs)
-
-    predictions = model.predict(instances)
-
-    if expectation is None:
-
-        if len(predictions) == 0:
-
-            return 0.0, [], []
-
-        expectation = predictions[0][-1]
-
-    if not isinstance(expectation, frozenset):
-
-        expectation = frozenset({expectation})
-
-    correct = [instances[id] for id, label in predictions if label == expectation]
-
-    wrong = [instances[id] for id, label in predictions if label != expectation]
-
-    return len(wrong) / len(predictions), correct, wrong
-</code></pre></div>
-</td></tr></table>
-</details>
 <h3 id="mean_score">mean_score</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -2808,7 +2449,7 @@ def mean_score(pattern: str,
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../internationalization/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Internationalization" rel="prev">
+        <a href="../return_types/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Return Types" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2817,20 +2458,20 @@ def mean_score(pattern: str,
               <span class="md-footer__direction">
                 Previous
               </span>
-              Internationalization
+              Return Types
             </div>
           </div>
         </a>
       
       
         
-        <a href="../data/base/" class="md-footer__link md-footer__link--next" aria-label="Next: Base" rel="next">
+        <a href="../data/generate/" class="md-footer__link md-footer__link--next" aria-label="Next: Generate" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Base
+              Generate
             </div>
           </div>
           <div class="md-footer__button md-icon">

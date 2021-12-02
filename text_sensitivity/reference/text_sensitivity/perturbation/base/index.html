@@ -368,8 +368,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../internationalization/" class="md-nav__link">
-        Internationalization
+      <a href="../../return_types/" class="md-nav__link">
+        Return Types
       </a>
     </li>
   
@@ -407,18 +407,6 @@
           Data
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../data/base/" class="md-nav__link">
-        Base
-      </a>
-    </li>
-  
-
           
             
   
@@ -476,14 +464,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_6" type="checkbox" id="__nav_5_1_4_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_5" type="checkbox" id="__nav_5_1_4_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_6">
+      <label class="md-nav__link" for="__nav_5_1_4_5">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_6">
+        <label class="md-nav__title" for="__nav_5_1_4_5">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
@@ -972,6 +960,57 @@
     <li class="md-nav__item">
       <a href="../words/" class="md-nav__link">
         Words
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
+      
+      <label class="md-nav__link" for="__nav_5_1_6">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_6">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/notebook/" class="md-nav__link">
+        Notebook
       </a>
     </li>
   
@@ -2342,6 +2381,8 @@ from typing import (Callable, Dict, Iterable, List, Optional, Sequence, Tuple,
 
 import numpy as np
 
+from genbase import Readable
+
 from instancelib.instances.text import MemoryTextInstance, TextInstance
 
 from instancelib.typehints import KT, LT
@@ -2349,8 +2390,6 @@ from instancelib.typehints import KT, LT
 from nlpaug.base_augmenter import Augmenter
 
 from text_explainability.decorators import text_instance
-
-from text_explainability.default import Readable
 
 from text_explainability.utils import default_detokenizer, default_tokenizer
 
@@ -2602,7 +2641,7 @@ class OneToOnePerturbation(Perturbation):
 
             &gt;&gt;&gt; from text_explainability import character_tokenizer, character_detokenizer
 
-            &gt;&gt;&gt; OneToOnePerturbation.from_dictionary({&#39;.&#39;, &#39;!&#39;},
+            &gt;&gt;&gt; OneToOnePerturbation.from_dictionary({&#39;.&#39;: &#39;!&#39;},
 
             &gt;&gt;&gt;                                      label_from=&#39;not_excited&#39;,
 
@@ -4094,7 +4133,7 @@ class OneToManyPerturbation(Perturbation):
 <h4 id="ancestors-in-mro">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.perturbation.base.Perturbation</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="static-methods">Static methods</h4>
 <h4 id="from_dict">from_dict</h4>
@@ -4137,8 +4176,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16d273b80</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16d273ca0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x1628b5f70</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x1628bb310</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -5489,7 +5528,7 @@ class OneToManyPerturbation(Perturbation):
 
             &gt;&gt;&gt; from text_explainability import character_tokenizer, character_detokenizer
 
-            &gt;&gt;&gt; OneToOnePerturbation.from_dictionary({&#39;.&#39;, &#39;!&#39;},
+            &gt;&gt;&gt; OneToOnePerturbation.from_dictionary({&#39;.&#39;: &#39;!&#39;},
 
             &gt;&gt;&gt;                                      label_from=&#39;not_excited&#39;,
 
@@ -5937,7 +5976,7 @@ class OneToManyPerturbation(Perturbation):
 <h4 id="ancestors-in-mro_1">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.perturbation.base.Perturbation</li>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="static-methods_1">Static methods</h4>
 <h4 id="from_dict_1">from_dict</h4>
@@ -5978,8 +6017,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">dictionary</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16d273b80</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16d273ca0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x1628b5f70</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x1628bb310</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -6157,7 +6196,7 @@ class OneToManyPerturbation(Perturbation):
 
             &gt;&gt;&gt; from text_explainability import character_tokenizer, character_detokenizer
 
-            &gt;&gt;&gt; OneToOnePerturbation.from_dictionary({&#39;.&#39;, &#39;!&#39;},
+            &gt;&gt;&gt; OneToOnePerturbation.from_dictionary({&#39;.&#39;: &#39;!&#39;},
 
             &gt;&gt;&gt;                                      label_from=&#39;not_excited&#39;,
 
@@ -6348,8 +6387,8 @@ class OneToManyPerturbation(Perturbation):
     <span class="n">mapping_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span> <span class="o">=</span> <span class="s1">&#39;original&#39;</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span> <span class="o">=</span> <span class="s1">&#39;perturbed&#39;</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16d273b80</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16d273ca0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x1628b5f70</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x1628bb310</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -7091,8 +7130,8 @@ in the list.</p>
     <span class="n">tuples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
     <span class="n">label_from</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
     <span class="n">label_to</span><span class="p">:</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16d273b80</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16d273ca0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x1628b5f70</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x1628bb310</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -7728,7 +7767,7 @@ result it aims to perform the mapping from the tokens on the RHS to the LHS.</p>
 <hr />
 <h4 id="ancestors-in-mro_2">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="descendants">Descendants</h4>
 <ul>

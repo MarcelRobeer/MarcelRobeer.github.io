@@ -368,8 +368,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../internationalization/" class="md-nav__link">
-        Internationalization
+      <a href="../../return_types/" class="md-nav__link">
+        Return Types
       </a>
     </li>
   
@@ -409,18 +409,6 @@
           Data
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../base/" class="md-nav__link">
-        Base
-      </a>
-    </li>
-  
-
           
             
   
@@ -760,14 +748,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_6" type="checkbox" id="__nav_5_1_4_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_5" type="checkbox" id="__nav_5_1_4_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_6">
+      <label class="md-nav__link" for="__nav_5_1_4_5">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_6">
+        <label class="md-nav__title" for="__nav_5_1_4_5">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
@@ -897,6 +885,57 @@
     <li class="md-nav__item">
       <a href="../../perturbation/words/" class="md-nav__link">
         Words
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
+      
+      <label class="md-nav__link" for="__nav_5_1_6">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_6">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/notebook/" class="md-nav__link">
+        Notebook
       </a>
     </li>
   
@@ -1410,9 +1449,7 @@
 <span class="normal">198</span>
 <span class="normal">199</span>
 <span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from functools import lru_cache
+<span class="normal">201</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from functools import lru_cache
 
 from typing import Dict, List, Optional, Union
 
@@ -1420,9 +1457,7 @@ import numpy as np
 
 import pandas as pd
 
-from text_explainability.default import Readable
-
-from text_sensitivity.data.base import CaseMixin, SeedMixin
+from genbase import CaseMixin, Readable, SeedMixin
 
 Label = Union[str, int]
 
@@ -1974,9 +2009,9 @@ class WordListGetterMixin:
 <hr />
 <h4 id="ancestors-in-mro">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="static-methods">Static methods</h4>
 <h4 id="from_csv">from_csv</h4>

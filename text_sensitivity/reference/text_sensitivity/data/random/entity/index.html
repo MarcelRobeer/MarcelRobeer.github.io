@@ -368,8 +368,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../internationalization/" class="md-nav__link">
-        Internationalization
+      <a href="../../../return_types/" class="md-nav__link">
+        Return Types
       </a>
     </li>
   
@@ -409,18 +409,6 @@
           Data
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../base/" class="md-nav__link">
-        Base
-      </a>
-    </li>
-  
-
           
             
   
@@ -480,14 +468,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_6" type="checkbox" id="__nav_5_1_4_6" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_5" type="checkbox" id="__nav_5_1_4_5" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_4_6">
+      <label class="md-nav__link" for="__nav_5_1_4_5">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_6">
+        <label class="md-nav__title" for="__nav_5_1_4_5">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
@@ -2542,6 +2530,57 @@
     <li class="md-nav__item">
       <a href="../../../perturbation/words/" class="md-nav__link">
         Words
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
+      
+      <label class="md-nav__link" for="__nav_5_1_6">
+        Ui
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Ui" data-md-level="3">
+        <label class="md-nav__title" for="__nav_5_1_6">
+          <span class="md-nav__icon md-icon"></span>
+          Ui
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ui/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ui/notebook/" class="md-nav__link">
+        Notebook
       </a>
     </li>
   
@@ -5078,11 +5117,7 @@
 <span class="normal">578</span>
 <span class="normal">579</span>
 <span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from typing import Callable, Dict, List, Optional, Tuple, Union
+<span class="normal">581</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from typing import Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
@@ -5090,15 +5125,11 @@ from faker.factory import Factory
 
 from faker.generator import Generator
 
+from genbase import LOCALE_MAP, CaseMixin, Readable, SeedMixin, get_locale
+
 from instancelib.instances.text import TextInstanceProvider
 
 from instancelib.labels.memory import MemoryLabelProvider
-
-from text_explainability.default import Readable
-
-from text_sensitivity.data.base import CaseMixin, SeedMixin
-
-from text_sensitivity.internationalization import LOCALE_MAP, get_locale
 
 class RandomEntity(Readable, SeedMixin, CaseMixin):
 
@@ -5846,7 +5877,7 @@ class RandomLicensePlate(RandomEntity):
 <hr />
 <h4 id="ancestors-in-mro">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
+<li>genbase.Readable</li>
 </ul>
 <h4 id="descendants">Descendants</h4>
 <ul>
@@ -6126,9 +6157,9 @@ class RandomLicensePlate(RandomEntity):
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
 <li>text_sensitivity.data.random.entity.CityByPopulationMixin</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="static-methods_1">Static methods</h4>
 <h4 id="cities_by_population_1">cities_by_population</h4>
@@ -7070,9 +7101,9 @@ class RandomLicensePlate(RandomEntity):
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
 <li>text_sensitivity.data.random.entity.CityByPopulationMixin</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="static-methods_2">Static methods</h4>
 <h4 id="cities_by_population_2">cities_by_population</h4>
@@ -7999,9 +8030,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_3">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_2">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -8725,9 +8756,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_4">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_3">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -9451,9 +9482,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_5">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_4">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -10177,9 +10208,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_6">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_5">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -10909,9 +10940,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_7">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_6">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -11641,9 +11672,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_8">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_7">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -12698,9 +12729,9 @@ class RandomLicensePlate(RandomEntity):
 <hr />
 <h4 id="ancestors-in-mro_9">Ancestors (in MRO)</h4>
 <ul>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="descendants_1">Descendants</h4>
 <ul>
@@ -13471,9 +13502,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_10">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_9">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -14203,9 +14234,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_11">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_10">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -14929,9 +14960,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_12">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_11">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -15661,9 +15692,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_13">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_12">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -16415,9 +16446,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_14">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_13">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -17147,9 +17178,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_15">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_14">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -17879,9 +17910,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_16">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_15">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
@@ -18605,9 +18636,9 @@ class RandomLicensePlate(RandomEntity):
 <h4 id="ancestors-in-mro_17">Ancestors (in MRO)</h4>
 <ul>
 <li>text_sensitivity.data.random.entity.RandomEntity</li>
-<li>text_explainability.default.Readable</li>
-<li>text_sensitivity.data.base.SeedMixin</li>
-<li>text_sensitivity.data.base.CaseMixin</li>
+<li>genbase.Readable</li>
+<li>genbase.mixin.SeedMixin</li>
+<li>genbase.mixin.CaseMixin</li>
 </ul>
 <h4 id="instance-variables_16">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">seed</span>
