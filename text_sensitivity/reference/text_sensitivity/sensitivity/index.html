@@ -435,13 +435,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#compare_metric" class="md-nav__link">
-    compare_metric
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#compare_precision" class="md-nav__link">
     compare_precision
   </a>
@@ -458,13 +451,6 @@
           <li class="md-nav__item">
   <a href="#equal_ground_truth" class="md-nav__link">
     equal_ground_truth
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mean_score" class="md-nav__link">
-    mean_score
   </a>
   
 </li>
@@ -818,13 +804,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#compare_metric" class="md-nav__link">
-    compare_metric
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#compare_precision" class="md-nav__link">
     compare_precision
   </a>
@@ -841,13 +820,6 @@
           <li class="md-nav__item">
   <a href="#equal_ground_truth" class="md-nav__link">
     equal_ground_truth
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mean_score" class="md-nav__link">
-    mean_score
   </a>
   
 </li>
@@ -1303,23 +1275,35 @@
 <span class="normal">428</span>
 <span class="normal">429</span>
 <span class="normal">430</span>
-<span class="normal">431</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sensitivity testing, for fairness and robustness.&quot;&quot;&quot;
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sensitivity testing, for fairness and robustness.&quot;&quot;&quot;
 
-from typing import Iterator, List, Optional, Tuple, Union
-
-import numpy as np
+from typing import List, Optional, Tuple, Union
 
 from genbase import add_callargs
 
-from instancelib.analysis.base import (BinaryModelMetrics,
-
-                                       MulticlassModelMetrics, label_metrics)
+from instancelib.analysis.base import label_metrics
 
 from instancelib.environment.text import TextEnvironment
 
 from instancelib.instances.base import InstanceProvider
 
-from instancelib.instances.text import MemoryTextInstance, TextInstanceProvider
+from instancelib.instances.text import TextInstanceProvider
 
 from instancelib.labels.memory import MemoryLabelProvider
 
@@ -1335,7 +1319,7 @@ from text_sensitivity.data.random.string import (RandomString,
 
 from text_sensitivity.perturbation.base import Perturbation
 
-from text_sensitivity.return_types import SuccessTest
+from text_sensitivity.return_types import LabelMetrics, MeanScore, SuccessTest
 
 def apply_perturbation(dataset: Union[InstanceProvider, TextEnvironment],
 
@@ -1393,7 +1377,7 @@ def apply_perturbation(dataset: Union[InstanceProvider, TextEnvironment],
 
     instanceprovider = TextInstanceProvider(new_data)
 
-    instanceprovider.add_range(*dataset.dataset.get_all())
+    instanceprovider.add_range(*dataset.get_all())
 
     labelprovider = MemoryLabelProvider.from_tuples(attributes)
 
@@ -1411,13 +1395,15 @@ def equal_ground_truth(ground_truth, instances):
 
         yield (key, ground_truth._labeldict[parent_key])
 
+@add_callargs
+
 def compare_metric(env: TextEnvironment,
 
                    model: AbstractClassifier,
 
-                   perturbation: Perturbation
+                   perturbation: Perturbation,
 
-                   ) -&gt; Iterator[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]:
+                   **kwargs) -&gt; LabelMetrics:
 
     &quot;&quot;&quot;Get metrics for each ground-truth label and attribute.
 
@@ -1447,13 +1433,15 @@ def compare_metric(env: TextEnvironment,
 
         perturbation (Perturbation): Peturbation to apply.
 
-    Yields:
+    Returns:
 
-        Iterator[Sequence[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]]: Original label (before
+        LabelMetrics: Original label (before perturbation), perturbed label (after perturbation)
 
-            perturbation), perturbed label (after perturbation) and metrics for label-attribute pair.
+        and metrics for label-attribute pair.
 
     &quot;&quot;&quot;
+
+    callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
     # Apply perturbations and get attributes
 
@@ -1467,19 +1455,23 @@ def compare_metric(env: TextEnvironment,
 
     ground_truth = MemoryLabelProvider.from_tuples(list(equal_ground_truth(env.labels, instances)))
 
-    for label in list(model_predictions.labelset):
+    lm = [(label, attribute, label_metrics(model_predictions,
 
-        for attribute in list(attributes.labelset):
+                                           ground_truth,
 
-            metrics = label_metrics(model_predictions,
+                                           attributes.get_instances_by_label(attribute),
 
-                                    ground_truth,
+                                           label))
 
-                                    attributes.get_instances_by_label(attribute),
+                    for attribute in list(attributes.labelset)
 
-                                    label)
+                    for label in list(model_predictions.labelset)]
 
-            yield label, attribute, metrics
+    return LabelMetrics(instances=instances,
+
+                        label_metrics=lm,
+
+                        callargs=callargs)
 
 def compare_accuracy(*args, **kwargs):
 
@@ -1687,13 +1679,15 @@ def invariance(pattern: str,
 
                        callargs=callargs)
 
+@add_callargs
+
 def mean_score(pattern: str,
 
                model: AbstractClassifier,
 
                selected_label: Optional[LT] = None,
 
-               **kwargs) -&gt; Tuple[float, List[Tuple[MemoryTextInstance, float]]]:
+               **kwargs) -&gt; MeanScore:
 
     &quot;&quot;&quot;Calculate mean (probability) score for a given label, for data generated from a pattern.
 
@@ -1709,9 +1703,11 @@ def mean_score(pattern: str,
 
     Returns:
 
-        Tuple[float, List[Tuple[LT, float]]]: Mean score for the selected label, generated instances and label scores.
+        MeanScore: Mean score for the selected label, generated instances and label scores.
 
     &quot;&quot;&quot;
+
+    callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
     instances, _ = from_pattern(pattern, **kwargs)
 
@@ -1733,7 +1729,15 @@ def mean_score(pattern: str,
 
                             for id, probas in predictions]
 
-    return np.mean([p for id, p in predictions_by_label]), predictions_by_label
+    return MeanScore(scores=[p for _, p in predictions_by_label],
+
+                     label=selected_label,
+
+                     instances=instances,
+
+                     callargs=callargs,
+
+                     **kwargs)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1911,7 +1915,7 @@ def mean_score(pattern: str,
 
     instanceprovider = TextInstanceProvider(new_data)
 
-    instanceprovider.add_range(*dataset.dataset.get_all())
+    instanceprovider.add_range(*dataset.get_all())
 
     labelprovider = MemoryLabelProvider.from_tuples(attributes)
 
@@ -1951,215 +1955,6 @@ def mean_score(pattern: str,
                          for label, attribute, metrics in compare_metric(*args, **kwargs)],
 
                         columns=[&#39;label&#39;, &#39;attribute&#39;, &#39;accuracy&#39;])
-</code></pre></div>
-</td></tr></table>
-</details>
-<h3 id="compare_metric">compare_metric</h3>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compare_metric</span><span class="p">(</span>
-    <span class="n">env</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextEnvironment</span><span class="p">,</span>
-    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
-    <span class="n">perturbation</span><span class="p">:</span> <span class="n">text_sensitivity</span><span class="o">.</span><span class="n">perturbation</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Perturbation</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">,</span> <span class="o">~</span><span class="n">LT</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">BinaryModelMetrics</span><span class="p">,</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">MulticlassModelMetrics</span><span class="p">]]]</span>
-</code></pre></div>
-</td></tr></table>
-<p>Get metrics for each ground-truth label and attribute.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>env</td>
-<td>TextEnvironment</td>
-<td>Environment containing original instances (<code>.dataset</code>)</td>
-<td></td>
-</tr>
-<tr>
-<td>and ground-truth labels (<code>.labels</code>).</td>
-<td>None</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>model</td>
-<td>AbstractClassifier</td>
-<td>Black-box model to compare metrics on.</td>
-<td>None</td>
-</tr>
-<tr>
-<td>perturbation</td>
-<td>Perturbation</td>
-<td>Peturbation to apply.</td>
-<td>None</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Yields:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Iterator[Sequence[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]]</td>
-<td>Original label (before</td>
-</tr>
-<tr>
-<td>perturbation), perturbed label (after perturbation) and metrics for label-attribute pair.</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def compare_metric(env: TextEnvironment,
-
-                   model: AbstractClassifier,
-
-                   perturbation: Perturbation
-
-                   ) -&gt; Iterator[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]:
-
-    &quot;&quot;&quot;Get metrics for each ground-truth label and attribute.
-
-    Examples:
-
-        Compare metric of `model` performance (e.g. accuracy, precision) before and after mapping each instance in a
-
-        dataset to uppercase.
-
-        &gt;&gt;&gt; from text_sensitivity.perturbation.sentences import to_upper
-
-        &gt;&gt;&gt; compare_metric(env, model, to_upper)
-
-        Compare metric when randomly adding 10 perturbed instances with typos to each instance in a dataset.
-
-        &gt;&gt;&gt; from text_sensitivity.perturbation.characters import add_typos
-
-        &gt;&gt;&gt; compare_metric(env, model, add_typos(n=10))
-
-    Args:
-
-        env (TextEnvironment): Environment containing original instances (`.dataset`)
-
-            and ground-truth labels (`.labels`).
-
-        model (AbstractClassifier): Black-box model to compare metrics on.
-
-        perturbation (Perturbation): Peturbation to apply.
-
-    Yields:
-
-        Iterator[Sequence[Tuple[LT, LT, Union[BinaryModelMetrics, MulticlassModelMetrics]]]]: Original label (before
-
-            perturbation), perturbed label (after perturbation) and metrics for label-attribute pair.
-
-    &quot;&quot;&quot;
-
-    # Apply perturbations and get attributes
-
-    instances, attributes = apply_perturbation(env, perturbation)
-
-    # Perform prediction on original instances and perturbed instances
-
-    model_predictions = MemoryLabelProvider.from_tuples(model.predict(instances))
-
-    # Expectation (for now that labels should remain equal)
-
-    ground_truth = MemoryLabelProvider.from_tuples(list(equal_ground_truth(env.labels, instances)))
-
-    for label in list(model_predictions.labelset):
-
-        for attribute in list(attributes.labelset):
-
-            metrics = label_metrics(model_predictions,
-
-                                    ground_truth,
-
-                                    attributes.get_instances_by_label(attribute),
-
-                                    label)
-
-            yield label, attribute, metrics
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -2264,169 +2059,6 @@ def mean_score(pattern: str,
         parent_key = int(parent_key) if parent_key.isdigit() else parent_key
 
         yield (key, ground_truth._labeldict[parent_key])
-</code></pre></div>
-</td></tr></table>
-</details>
-<h3 id="mean_score">mean_score</h3>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mean_score</span><span class="p">(</span>
-    <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
-    <span class="n">selected_label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]]</span>
-</code></pre></div>
-</td></tr></table>
-<p>Calculate mean (probability) score for a given label, for data generated from a pattern.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>pattern</td>
-<td>str</td>
-<td></td>
-<td>None</td>
-</tr>
-<tr>
-<td>model</td>
-<td>AbstractClassifier</td>
-<td>Model to generate scores from.</td>
-<td>None</td>
-</tr>
-<tr>
-<td>selected_label</td>
-<td>Optional[LT]</td>
-<td>Label name to select. If None is replaced by the first label.</td>
-<td></td>
-</tr>
-<tr>
-<td>Defaults to None.</td>
-<td>None</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Tuple[float, List[Tuple[LT, float]]]</td>
-<td>Mean score for the selected label, generated instances and label scores.</td>
-</tr>
-</tbody>
-</table>
-<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def mean_score(pattern: str,
-
-               model: AbstractClassifier,
-
-               selected_label: Optional[LT] = None,
-
-               **kwargs) -&gt; Tuple[float, List[Tuple[MemoryTextInstance, float]]]:
-
-    &quot;&quot;&quot;Calculate mean (probability) score for a given label, for data generated from a pattern.
-
-    Args:
-
-        pattern (str):
-
-        model (AbstractClassifier): Model to generate scores from.
-
-        selected_label (Optional[LT], optional): Label name to select. If None is replaced by the first label.
-
-            Defaults to None.
-
-    Returns:
-
-        Tuple[float, List[Tuple[LT, float]]]: Mean score for the selected label, generated instances and label scores.
-
-    &quot;&quot;&quot;
-
-    instances, _ = from_pattern(pattern, **kwargs)
-
-    predictions = model.predict_proba_provider(instances)
-
-    if selected_label is None:
-
-        if len(predictions) == 0:
-
-            return
-
-        selected_label = list(model.encoder.labelset)[0]
-
-    if isinstance(selected_label, frozenset):
-
-        selected_label = list(selected_label)[0]
-
-    predictions_by_label = [(instances[id], [proba for label, proba in list(probas) if label == selected_label][0])
-
-                            for id, probas in predictions]
-
-    return np.mean([p for id, p in predictions_by_label]), predictions_by_label
 </code></pre></div>
 </td></tr></table>
 </details>
