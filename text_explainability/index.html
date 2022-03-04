@@ -916,7 +916,7 @@ A generic explainability architecture for explaining text machine learning model
 <hr />
 <p><code>text_explainability</code> provides a <strong>generic architecture</strong> from which well-known state-of-the-art explainability approaches for text can be composed. This modular architecture allows components to be swapped out and combined, to <strong>quickly develop new types of explainability approaches</strong> for (natural language) text, or to <strong>improve a plethora of approaches by improving a single module</strong>.</p>
 <p>Several example methods are included, which provide <strong>local explanations</strong> (<em>explaining the prediction of a single instance</em>, e.g. <code>LIME</code> and <code>SHAP</code>) or <strong>global explanations</strong> (<em>explaining the dataset, or model behavior on the dataset</em>, e.g. <code>TokenFrequency</code> and <code>MMDCritic</code>). By replacing the default modules (e.g. local data generation, global data sampling or improved embedding methods), these methods can be improved upon or new methods can be introduced.</p>
-<p>&copy; Marcel Robeer, 2021</p>
+<p>&copy; Marcel Robeer, 2021-2022</p>
 <h2 id="quick-tour">Quick tour</h2>
 <p><strong>Local explanation</strong>: explain a models' prediction on a given sample, self-provided or from a dataset.
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -963,7 +963,7 @@ A generic explainability architecture for explaining text machine learning model
 </code></pre></div>
 </td></tr></table></p>
 <h2 id="installation">Installation</h2>
-<p>See <a href="docs/installation/">installation.md</a> for an extended installation guide.</p>
+<p>See the <a href="docs/installation/">installation</a> instructions for an extended installation guide.</p>
 <table>
 <thead>
 <tr>
@@ -974,7 +974,7 @@ A generic explainability architecture for explaining text machine learning model
 <tbody>
 <tr>
 <td><code>pip</code></td>
-<td>Install from <a href="https://pypi.org/project/text-explainability/">PyPI</a> via <code>pip3 install text_explainability</code>.</td>
+<td>Install from <a href="https://pypi.org/project/text-explainability/">PyPI</a> via <code>pip3 install text_explainability</code>. To speed up the explanation generation process use <code>pip3 install text_explainability[fast]</code>.</td>
 </tr>
 <tr>
 <td>Local</td>
@@ -985,7 +985,7 @@ A generic explainability architecture for explaining text machine learning model
 <h2 id="documentation">Documentation</h2>
 <p>Full documentation of the latest version is provided at <a href="https://marcelrobeer.github.io/text_explainability/">https://marcelrobeer.github.io/text_explainability/</a>.</p>
 <h2 id="example-usage">Example usage</h2>
-<p>See <a href="example_usage/">example_usage.md</a> to see an example of how the package can be used, or run the lines in <code>example_usage.py</code> to do explore it interactively.</p>
+<p>See <a href="example_usage/">example usage</a> to see an example of how the package can be used, or run the lines in <code>example_usage.py</code> to do explore it interactively.</p>
 <h2 id="explanation-methods-included">Explanation methods included</h2>
 <p><code>text_explainability</code> includes methods for model-agnostic <em>local explanation</em> and <em>global explanation</em>. Each of these methods can be fully customized to fit the explainees' needs.</p>
 <table>
@@ -1152,7 +1152,7 @@ A generic explainability architecture for explaining text machine learning model
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer
+            Copyright &copy; 2021-2022 Marcel Robeer
           </div>
         
         

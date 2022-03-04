@@ -840,7 +840,7 @@
 <p><code>text_explainability</code> uses instances and machine learning models wrapped with the <a href="https://pypi.org/project/instancelib/">InstanceLib</a> library. For your convenience, we wrap some <code>instancelib</code> functions in <code>text_explainability.data</code> and <code>explainability.model</code>.
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">text_explainability.data</span> <span class="kn">import</span> <span class="n">import_data</span><span class="p">,</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">from_string</span>
-<span class="kn">from</span> <span class="nn">text_explainability.model</span> <span class="kn">import</span> <span class="n">from_sklearn</span>
+<span class="kn">from</span> <span class="nn">text_explainability.model</span> <span class="kn">import</span> <span class="n">import_model</span>
 </code></pre></div>
 </td></tr></table></p>
 <h2 id="dataset-and-model">Dataset and model</h2>
@@ -858,22 +858,20 @@
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
 <span class="c1"># Create train/test dataset</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">import_data</span><span class="p">(</span><span class="s1">&#39;./datasets/test.csv&#39;</span><span class="p">,</span> <span class="n">data_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fulltext&#39;</span><span class="p">],</span> <span class="n">label_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.70</span><span class="p">)</span>
-<span class="n">labelprovider</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">labels</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">import_data</span><span class="p">(</span><span class="s1">&#39;./datasets/test.csv&#39;</span><span class="p">,</span> <span class="n">data_cols</span><span class="o">=</span><span class="s1">&#39;fulltext&#39;</span><span class="p">,</span> <span class="n">label_cols</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.70</span><span class="p">)</span>
 
 <span class="c1"># Create sklearn model with pipeline</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;tfidf&#39;</span><span class="p">,</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">use_idf</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
                      <span class="p">(</span><span class="s1">&#39;rf&#39;</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">))])</span>
 
 <span class="c1"># Build and fit (train) model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">from_sklearn</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">import_model</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h2 id="using-text-explainability">Using Text Explainability</h2>
@@ -943,14 +941,14 @@
 
 <span class="c1"># Global word frequency explanation on ground-truth labels</span>
 <span class="n">tf</span> <span class="o">=</span> <span class="n">TokenFrequency</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
-<span class="n">tf</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">labelprovider</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">scores</span>
+<span class="n">tf</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">scores</span>
 
 <span class="c1"># Global word frequency explanation on model predictions</span>
 <span class="n">tf</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">filter_words</span><span class="o">=</span><span class="n">PUNCTUATION</span><span class="p">)</span>
 
 <span class="c1"># Token information for dataset</span>
 <span class="n">ti</span> <span class="o">=</span> <span class="n">TokenInformation</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
-<span class="n">ti</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">labelprovider</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">scores</span>
+<span class="n">ti</span><span class="p">(</span><span class="n">labelprovider</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">scores</span>
 
 <span class="c1"># Token information for model</span>
 <span class="n">ti</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">explain_model</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">filter_words</span><span class="o">=</span><span class="n">PUNCTUATION</span><span class="p">)</span>
@@ -1041,7 +1039,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer
+            Copyright &copy; 2021-2022 Marcel Robeer
           </div>
         
         

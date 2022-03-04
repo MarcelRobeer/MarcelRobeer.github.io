@@ -3851,7 +3851,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(json_or_path):
 
-            cls.read_json(json_or_path, **read_args)
+            return cls.read_json(json_or_path, **read_args)
 
         return cls.from_config(srsly.json_loads(json_or_path))
 </code></pre></div>
@@ -3915,7 +3915,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(yaml_or_path):
 
-            return cls.from_config(cls.read_yaml(yaml_or_path))
+            return cls.read_yaml(yaml_or_path)
 
         return cls.from_config(srsly.yaml_loads(yaml_or_path))
 </code></pre></div>
@@ -4061,7 +4061,7 @@ class Instances(BaseReturnType):
 
         &quot;&quot;&quot;
 
-        return srsly.read_yaml(path)
+        return cls.from_config(srsly.read_yaml(path))
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -4971,7 +4971,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(json_or_path):
 
-            cls.read_json(json_or_path, **read_args)
+            return cls.read_json(json_or_path, **read_args)
 
         return cls.from_config(srsly.json_loads(json_or_path))
 </code></pre></div>
@@ -5035,7 +5035,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(yaml_or_path):
 
-            return cls.from_config(cls.read_yaml(yaml_or_path))
+            return cls.read_yaml(yaml_or_path)
 
         return cls.from_config(srsly.yaml_loads(yaml_or_path))
 </code></pre></div>
@@ -5181,7 +5181,7 @@ class Instances(BaseReturnType):
 
         &quot;&quot;&quot;
 
-        return srsly.read_yaml(path)
+        return cls.from_config(srsly.read_yaml(path))
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -6407,7 +6407,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(json_or_path):
 
-            cls.read_json(json_or_path, **read_args)
+            return cls.read_json(json_or_path, **read_args)
 
         return cls.from_config(srsly.json_loads(json_or_path))
 </code></pre></div>
@@ -6471,7 +6471,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(yaml_or_path):
 
-            return cls.from_config(cls.read_yaml(yaml_or_path))
+            return cls.read_yaml(yaml_or_path)
 
         return cls.from_config(srsly.yaml_loads(yaml_or_path))
 </code></pre></div>
@@ -6617,7 +6617,7 @@ class Instances(BaseReturnType):
 
         &quot;&quot;&quot;
 
-        return srsly.read_yaml(path)
+        return cls.from_config(srsly.read_yaml(path))
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -7580,7 +7580,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(json_or_path):
 
-            cls.read_json(json_or_path, **read_args)
+            return cls.read_json(json_or_path, **read_args)
 
         return cls.from_config(srsly.json_loads(json_or_path))
 </code></pre></div>
@@ -7644,7 +7644,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(yaml_or_path):
 
-            return cls.from_config(cls.read_yaml(yaml_or_path))
+            return cls.read_yaml(yaml_or_path)
 
         return cls.from_config(srsly.yaml_loads(yaml_or_path))
 </code></pre></div>
@@ -7790,7 +7790,7 @@ class Instances(BaseReturnType):
 
         &quot;&quot;&quot;
 
-        return srsly.read_yaml(path)
+        return cls.from_config(srsly.read_yaml(path))
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -8944,7 +8944,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(json_or_path):
 
-            cls.read_json(json_or_path, **read_args)
+            return cls.read_json(json_or_path, **read_args)
 
         return cls.from_config(srsly.json_loads(json_or_path))
 </code></pre></div>
@@ -9008,7 +9008,7 @@ class Instances(BaseReturnType):
 
         if Path.is_file(yaml_or_path):
 
-            return cls.from_config(cls.read_yaml(yaml_or_path))
+            return cls.read_yaml(yaml_or_path)
 
         return cls.from_config(srsly.yaml_loads(yaml_or_path))
 </code></pre></div>
@@ -9154,7 +9154,7 @@ class Instances(BaseReturnType):
 
         &quot;&quot;&quot;
 
-        return srsly.read_yaml(path)
+        return cls.from_config(srsly.read_yaml(path))
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -9801,7 +9801,7 @@ class Instances(BaseReturnType):
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer
+            Copyright &copy; 2021-2022 Marcel Robeer
           </div>
         
         

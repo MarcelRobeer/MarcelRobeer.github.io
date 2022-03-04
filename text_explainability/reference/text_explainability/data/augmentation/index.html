@@ -1717,19 +1717,7 @@
 <span class="normal">418</span>
 <span class="normal">419</span>
 <span class="normal">420</span>
-<span class="normal">421</span>
-<span class="normal">422</span>
-<span class="normal">423</span>
-<span class="normal">424</span>
-<span class="normal">425</span>
-<span class="normal">426</span>
-<span class="normal">427</span>
-<span class="normal">428</span>
-<span class="normal">429</span>
-<span class="normal">430</span>
-<span class="normal">431</span>
-<span class="normal">432</span>
-<span class="normal">433</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Augment a single instance to generate neighborhood data.
+<span class="normal">421</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Augment a single instance to generate neighborhood data.
 
 Todo:
 
@@ -1855,19 +1843,11 @@ class LocalTokenPertubator(MultiplePertubator[TextInstance],
 
             **kwargs: Keyword arguments to be passed on to `perturb()` function.
 
-        Raises:
-
-            ValueError: &#39;Tokenize your instance before applying a perturbation&#39;
-
         Yields:
 
             Iterator[Sequence[TextInstance]]: Neighborhood data instances.
 
         &quot;&quot;&quot;
-
-        if not hasattr(instance, &#39;tokenized&#39;):
-
-            raise ValueError(&#39;Tokenize your instance before applying a perturbation&#39;)
 
         if instance.data not in self.env.all_instances.all_data():
 
@@ -2051,10 +2031,6 @@ class TokenReplacement(LocalTokenPertubator, SeedMixin):
 
         max_changes = min(instance_len, max_changes)
 
-        if min_changes &gt; max_changes:
-
-            raise ValueError(f&#39;Unable to produce any perturbations since {min_changes=} and {max_changes=}&#39;)
-
         rand = np.random.RandomState(self.seed)
 
         def get_inactive(inactive_range):
@@ -2081,7 +2057,7 @@ class TokenReplacement(LocalTokenPertubator, SeedMixin):
 
                     else:
 
-                        for start in rand.choice(instance_len - size + 1, replace=False):
+                        for start in rand.choice(instance_len - size + 1, size=n_samples, replace=False):
 
                             yield get_inactive(range(start, start + size))
 
@@ -2173,7 +2149,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">4</span>
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LeaveOut</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16b0030d0</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16753c3a0</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2308,7 +2284,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">parent</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Get the children of a given parent.</p>
@@ -2601,11 +2577,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
+<span class="normal">153</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
 
                 tokenized_instance: Iterable[str],
 
@@ -2675,10 +2647,6 @@ class LeaveOut(TokenReplacement):
 
         max_changes = min(instance_len, max_changes)
 
-        if min_changes &gt; max_changes:
-
-            raise ValueError(f&#39;Unable to produce any perturbations since {min_changes=} and {max_changes=}&#39;)
-
         rand = np.random.RandomState(self.seed)
 
         def get_inactive(inactive_range):
@@ -2705,7 +2673,7 @@ class LeaveOut(TokenReplacement):
 
                     else:
 
-                        for start in rand.choice(instance_len - size + 1, replace=False):
+                        for start in rand.choice(instance_len - size + 1, size=n_samples, replace=False):
 
                             yield get_inactive(range(start, start + size))
 
@@ -2882,7 +2850,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LocalTokenPertubator</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16b0030d0</span><span class="o">&gt;</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16753c3a0</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -3008,15 +2976,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">120</span>
 <span class="normal">121</span>
 <span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalTokenPertubator(MultiplePertubator[TextInstance],
+<span class="normal">123</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalTokenPertubator(MultiplePertubator[TextInstance],
 
                            ChildGenerator[TextInstance],
 
@@ -3102,19 +3062,11 @@ class LeaveOut(TokenReplacement):
 
             **kwargs: Keyword arguments to be passed on to `perturb()` function.
 
-        Raises:
-
-            ValueError: &#39;Tokenize your instance before applying a perturbation&#39;
-
         Yields:
 
             Iterator[Sequence[TextInstance]]: Neighborhood data instances.
 
         &quot;&quot;&quot;
-
-        if not hasattr(instance, &#39;tokenized&#39;):
-
-            raise ValueError(&#39;Tokenize your instance before applying a perturbation&#39;)
 
         if instance.data not in self.env.all_instances.all_data():
 
@@ -3229,7 +3181,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">parent</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Get the children of a given parent.</p>
@@ -3299,7 +3251,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">5</span>
 <span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TokenReplacement</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractEnvironment</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16b0030d0</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">detokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_detokenizer</span> <span class="n">at</span> <span class="mh">0x16753c3a0</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">replacement</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;UNKWRDZ&#39;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
@@ -3537,11 +3489,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">230</span>
 <span class="normal">231</span>
 <span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
-<span class="normal">235</span>
-<span class="normal">236</span>
-<span class="normal">237</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class TokenReplacement(LocalTokenPertubator, SeedMixin):
+<span class="normal">233</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class TokenReplacement(LocalTokenPertubator, SeedMixin):
 
     def __init__(self,
 
@@ -3691,10 +3639,6 @@ class LeaveOut(TokenReplacement):
 
         max_changes = min(instance_len, max_changes)
 
-        if min_changes &gt; max_changes:
-
-            raise ValueError(f&#39;Unable to produce any perturbations since {min_changes=} and {max_changes=}&#39;)
-
         rand = np.random.RandomState(self.seed)
 
         def get_inactive(inactive_range):
@@ -3721,7 +3665,7 @@ class LeaveOut(TokenReplacement):
 
                     else:
 
-                        for start in rand.choice(instance_len - size + 1, replace=False):
+                        for start in rand.choice(instance_len - size + 1, size=n_samples, replace=False):
 
                             yield get_inactive(range(start, start + size))
 
@@ -3866,7 +3810,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">parent</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
 <p>Get the children of a given parent.</p>
@@ -4159,11 +4103,7 @@ class LeaveOut(TokenReplacement):
 <span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
+<span class="normal">153</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def perturb(self,
 
                 tokenized_instance: Iterable[str],
 
@@ -4233,10 +4173,6 @@ class LeaveOut(TokenReplacement):
 
         max_changes = min(instance_len, max_changes)
 
-        if min_changes &gt; max_changes:
-
-            raise ValueError(f&#39;Unable to produce any perturbations since {min_changes=} and {max_changes=}&#39;)
-
         rand = np.random.RandomState(self.seed)
 
         def get_inactive(inactive_range):
@@ -4263,7 +4199,7 @@ class LeaveOut(TokenReplacement):
 
                     else:
 
-                        for start in rand.choice(instance_len - size + 1, replace=False):
+                        for start in rand.choice(instance_len - size + 1, size=n_samples, replace=False):
 
                             yield get_inactive(range(start, start + size))
 
@@ -4490,7 +4426,7 @@ class LeaveOut(TokenReplacement):
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer
+            Copyright &copy; 2021-2022 Marcel Robeer
           </div>
         
         

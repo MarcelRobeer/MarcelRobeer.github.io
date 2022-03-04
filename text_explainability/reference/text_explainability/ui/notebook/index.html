@@ -769,6 +769,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#class-variables" class="md-nav__link">
+    Class variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#instance-variables" class="md-nav__link">
     Instance variables
   </a>
@@ -1008,6 +1015,13 @@
           <li class="md-nav__item">
   <a href="#ancestors-in-mro" class="md-nav__link">
     Ancestors (in MRO)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-variables" class="md-nav__link">
+    Class variables
   </a>
   
 </li>
@@ -2547,6 +2561,16 @@ def featurelist_renderer(meta: dict,
 <ul>
 <li>genbase.ui.notebook.Render</li>
 </ul>
+<h4 id="class-variables">Class variables</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">extra_css</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">main_color</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">package_link</span>
+</code></pre></div>
+</td></tr></table>
 <h4 id="instance-variables">Instance variables</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">custom_tab_title</span>
 </code></pre></div>
@@ -2835,11 +2859,11 @@ def featurelist_renderer(meta: dict,
 
                                     &lt;div class=&quot;pre-buttons&quot;&gt;
 
-                                        &lt;a onclick=&quot;copy(&#39;json-output&#39;)&quot; href=&quot;#&quot; title=&quot;Copy JSON to clipboard&quot;&gt;
+                                &lt;a class=&#39;copy&#39; onclick=&quot;copy(&#39;json-output&#39;)&quot; href=&quot;#&quot; title=&quot;Copy JSON to clipboard&quot;&gt;
 
-                                            {CLONE_SVG}
+                                    {CLONE_SVG}
 
-                                        &lt;/a&gt;
+                                &lt;/a&gt;
 
                                     &lt;/div&gt;
 
@@ -2853,11 +2877,11 @@ def featurelist_renderer(meta: dict,
 
                                     &lt;div class=&quot;pre-buttons&quot;&gt;
 
-                                        &lt;a onclick=&quot;copy(&#39;yaml-output&#39;)&quot; href=&quot;#&quot; title=&quot;Copy YAML to clipboard&quot;&gt;
+                                &lt;a class=&#39;copy&#39; onclick=&quot;copy(&#39;yaml-output&#39;)&quot; href=&quot;#&quot; title=&quot;Copy YAML to clipboard&quot;&gt;
 
-                                            {CLONE_SVG}
+                                    {CLONE_SVG}
 
-                                        &lt;/a&gt;
+                                &lt;/a&gt;
 
                                     &lt;/div&gt;
 
@@ -3655,7 +3679,7 @@ def featurelist_renderer(meta: dict,
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer
+            Copyright &copy; 2021-2022 Marcel Robeer
           </div>
         
         

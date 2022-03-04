@@ -2171,7 +2171,17 @@
 <span class="normal">468</span>
 <span class="normal">469</span>
 <span class="normal">470</span>
-<span class="normal">471</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Global explanations explain the whole dataset or model behavior on that dataset.
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Global explanations explain the whole dataset or model behavior on that dataset.
 
 Todo:
 
@@ -2186,8 +2196,6 @@ Todo:
 from typing import Any, FrozenSet, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
-
-from fastcountvectorizer import FastCountVectorizer
 
 from genbase import Readable, SeedMixin, add_callargs, translate_list
 
@@ -2212,6 +2220,18 @@ from .data.sampling import MMDCritic as _MMDCritic
 from .data.sampling import PrototypeSampler
 
 from .generation.return_types import FeatureList, Instances
+
+try:
+
+    from fastcountvectorizer import \
+
+        FastCountVectorizer as \
+
+        CountVectorizer  # use fastcountvectorizer if available
+
+except ImportError:
+
+    from sklearn.feature_extraction.text import CountVectorizer
 
 class GlobalExplanation(Readable, SeedMixin):
 
@@ -2315,7 +2335,7 @@ class GlobalExplanation(Readable, SeedMixin):
 
         if len(labels) &gt; 0 and isinstance(labels[0], tuple) and isinstance(labels[0][-1], frozenset):
 
-            labels = [&#39;-&#39;.join(list(x)) for id, x in labels]
+            labels = [&#39;-&#39;.join(list(x)) for _, x in labels]
 
         return instances, np.array(labels)
 
@@ -2365,7 +2385,7 @@ class TokenFrequency(GlobalExplanation):
 
             lower (bool, optional): Whether to make all tokens lowercase. Defaults to True.
 
-            **count_vectorizer_kwargs: Optional arguments passed to `FastCountVectorizer`.
+            **count_vectorizer_kwargs: Optional arguments passed to `CountVectorizer`/`FastCountVectorizer`.
 
         Returns:
 
@@ -2381,7 +2401,7 @@ class TokenFrequency(GlobalExplanation):
 
         def top_k_counts(instances_to_fit):
 
-            cv = FastCountVectorizer(**count_vectorizer_kwargs)
+            cv = CountVectorizer(**count_vectorizer_kwargs)
 
             counts = cv.fit_transform([str.lower(d) for d in instances_to_fit] if lower else instances_to_fit)
 
@@ -2393,17 +2413,17 @@ class TokenFrequency(GlobalExplanation):
 
         if labelwise:  # TO-DO improve beyond classification, e.g. buckets for regression?
 
-            labels = np.unique(labels)
+            label_names = np.unique(labels)
 
-            label_ids = [i for i, _ in enumerate(labels)]
+            label_ids = [i for i, _ in enumerate(label_names)]
 
             def counts_by_label(label):
 
                 return zip(*top_k_counts([instances[instances.key_list[idx]].data
 
-                                          for idx in np.where(labels == label)[0]]))
+                                         for idx in np.where(labels == label)[0]]))
 
-            used_features, scores = zip(*[counts_by_label(label) for label in labels])
+            used_features, scores = zip(*[counts_by_label(label) for label in label_names])
 
             return FeatureList(labels=label_ids,
 
@@ -2471,7 +2491,7 @@ class TokenInformation(GlobalExplanation):
 
             lower (bool, optional): Whether to make all tokens lowercase. Defaults to True.
 
-            **count_vectorizer_kwargs: Keyword arguments to pass onto `FastCountVectorizer`.
+            **count_vectorizer_kwargs: Keyword arguments to pass onto `CountVectorizer`/`FastCountVectorizer`.
 
         Returns:
 
@@ -2485,7 +2505,7 @@ class TokenInformation(GlobalExplanation):
 
         instances, labels = self.get_instances_labels(model, labelprovider, explain_model=explain_model)
 
-        cv = FastCountVectorizer(**count_vectorizer_kwargs)
+        cv = CountVectorizer(**count_vectorizer_kwargs)
 
         counts = cv.fit_transform([str.lower(d) for d in instances.all_data()] if lower else instances.all_data())
 
@@ -2651,7 +2671,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">GlobalExplanation</span><span class="p">(</span>
-    <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span>
+    <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2866,7 +2886,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
         if len(labels) &gt; 0 and isinstance(labels[0], tuple) and isinstance(labels[0][-1], frozenset):
 
-            labels = [&#39;-&#39;.join(list(x)) for id, x in labels]
+            labels = [&#39;-&#39;.join(list(x)) for _, x in labels]
 
         return instances, np.array(labels)
 
@@ -3145,7 +3165,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
         if len(labels) &gt; 0 and isinstance(labels[0], tuple) and isinstance(labels[0][-1], frozenset):
 
-            labels = [&#39;-&#39;.join(list(x)) for id, x in labels]
+            labels = [&#39;-&#39;.join(list(x)) for _, x in labels]
 
         return instances, np.array(labels)
 </code></pre></div>
@@ -4571,7 +4591,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TokenFrequency</span><span class="p">(</span>
-    <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span>
+    <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4724,7 +4744,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
             lower (bool, optional): Whether to make all tokens lowercase. Defaults to True.
 
-            **count_vectorizer_kwargs: Optional arguments passed to `FastCountVectorizer`.
+            **count_vectorizer_kwargs: Optional arguments passed to `CountVectorizer`/`FastCountVectorizer`.
 
         Returns:
 
@@ -4740,7 +4760,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
         def top_k_counts(instances_to_fit):
 
-            cv = FastCountVectorizer(**count_vectorizer_kwargs)
+            cv = CountVectorizer(**count_vectorizer_kwargs)
 
             counts = cv.fit_transform([str.lower(d) for d in instances_to_fit] if lower else instances_to_fit)
 
@@ -4752,17 +4772,17 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
         if labelwise:  # TO-DO improve beyond classification, e.g. buckets for regression?
 
-            labels = np.unique(labels)
+            label_names = np.unique(labels)
 
-            label_ids = [i for i, _ in enumerate(labels)]
+            label_ids = [i for i, _ in enumerate(label_names)]
 
             def counts_by_label(label):
 
                 return zip(*top_k_counts([instances[instances.key_list[idx]].data
 
-                                          for idx in np.where(labels == label)[0]]))
+                                         for idx in np.where(labels == label)[0]]))
 
-            used_features, scores = zip(*[counts_by_label(label) for label in labels])
+            used_features, scores = zip(*[counts_by_label(label) for label in label_names])
 
             return FeatureList(labels=label_ids,
 
@@ -5057,7 +5077,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
         if len(labels) &gt; 0 and isinstance(labels[0], tuple) and isinstance(labels[0][-1], frozenset):
 
-            labels = [&#39;-&#39;.join(list(x)) for id, x in labels]
+            labels = [&#39;-&#39;.join(list(x)) for _, x in labels]
 
         return instances, np.array(labels)
 </code></pre></div>
@@ -5236,7 +5256,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">TokenInformation</span><span class="p">(</span>
-    <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span>
+    <span class="n">provider</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -5367,7 +5387,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
             lower (bool, optional): Whether to make all tokens lowercase. Defaults to True.
 
-            **count_vectorizer_kwargs: Keyword arguments to pass onto `FastCountVectorizer`.
+            **count_vectorizer_kwargs: Keyword arguments to pass onto `CountVectorizer`/`FastCountVectorizer`.
 
         Returns:
 
@@ -5381,7 +5401,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
         instances, labels = self.get_instances_labels(model, labelprovider, explain_model=explain_model)
 
-        cv = FastCountVectorizer(**count_vectorizer_kwargs)
+        cv = CountVectorizer(**count_vectorizer_kwargs)
 
         counts = cv.fit_transform([str.lower(d) for d in instances.all_data()] if lower else instances.all_data())
 
@@ -5682,7 +5702,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
         if len(labels) &gt; 0 and isinstance(labels[0], tuple) and isinstance(labels[0][-1], frozenset):
 
-            labels = [&#39;-&#39;.join(list(x)) for id, x in labels]
+            labels = [&#39;-&#39;.join(list(x)) for _, x in labels]
 
         return instances, np.array(labels)
 </code></pre></div>
@@ -5912,7 +5932,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2021 Marcel Robeer
+            Copyright &copy; 2021-2022 Marcel Robeer
           </div>
         
         
