@@ -368,6 +368,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../metrics/" class="md-nav__link">
+        Metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../return_types/" class="md-nav__link">
         Return Types
       </a>
@@ -395,14 +407,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4" type="checkbox" id="__nav_5_1_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5" type="checkbox" id="__nav_5_1_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4">
+      <label class="md-nav__link" for="__nav_5_1_5">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_4">
+        <label class="md-nav__title" for="__nav_5_1_5">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -464,14 +476,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_5" type="checkbox" id="__nav_5_1_4_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5_5" type="checkbox" id="__nav_5_1_5_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_5">
+      <label class="md-nav__link" for="__nav_5_1_5_5">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_5">
+        <label class="md-nav__title" for="__nav_5_1_5_5">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
@@ -533,14 +545,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5" type="checkbox" id="__nav_5_1_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
       
-      <label class="md-nav__link" for="__nav_5_1_5">
+      <label class="md-nav__link" for="__nav_5_1_6">
         Perturbation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Perturbation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_5">
+        <label class="md-nav__title" for="__nav_5_1_6">
           <span class="md-nav__icon md-icon"></span>
           Perturbation
         </label>
@@ -622,14 +634,14 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" checked>
       
-      <label class="md-nav__link" for="__nav_5_1_6">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Ui
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Ui" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_6">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Ui
         </label>
@@ -1339,7 +1351,23 @@
 <span class="normal">242</span>
 <span class="normal">243</span>
 <span class="normal">244</span>
-<span class="normal">245</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Extension of `genbase.ui.notebook` for custom rendering of `text_sensitivity.&quot;&quot;&quot;
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Extension of `genbase.ui.notebook` for custom rendering of `text_sensitivity.&quot;&quot;&quot;
 
 import copy
 
@@ -1434,6 +1462,14 @@ def success_test_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
     return html
 
 def metrics_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
+
+    for label in [&#39;confusion_matrix&#39;, &#39;pos_label&#39;, &#39;neg_label&#39;]:
+
+        content[&#39;metrics&#39;].remove(label)
+
+        for m in content[&#39;label_metrics&#39;]:
+
+            _ = m[&#39;metrics&#39;].pop(label, None)
 
     html = h(&#39;Metrics included&#39;)
 
@@ -1563,17 +1599,25 @@ class Render(BaseRender):
 
                 return &#39;&lt;ul&gt;&#39; + &#39;&#39;.join([f&#39;&lt;li&gt;{fmt(k, v_)}&lt;/li&gt;&#39; for v_ in v]) + &#39;&lt;/ul&gt;&#39;
 
-            elif isinstance(v, dict) and &#39;__class__&#39; in v:
+            elif isinstance(v, dict):
 
-                if v[&#39;__class__&#39;].startswith(&#39;text_sensitivity.data.random.string&#39;):
+                if &#39;dataset&#39; in v and &#39;labels&#39; in v:
 
-                    options = v[&#39;options&#39;]
+                    html = f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt;&#39; if &#39;__class__&#39; in v else &#39;&#39;
 
-                    if isinstance(options, str):
+                    return html + format_instances(v[&#39;dataset&#39;], label=v[&#39;labels&#39;])
 
-                        options = f&#39;&quot;{options}&quot;&#39;
+                if &#39;__class__&#39; in v:
 
-                    return f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt; ({options})&#39;
+                    if v[&#39;__class__&#39;].startswith(&#39;text_sensitivity.data.random.string&#39;):
+
+                        options = v[&#39;options&#39;]
+
+                        if isinstance(options, str):
+
+                            options = f&#39;&quot;{options}&quot;&#39;
+
+                        return f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt; ({options})&#39;
 
             elif str.lower(k) == &#39;expectation&#39;:
 
@@ -1654,7 +1698,23 @@ class Render(BaseRender):
 <span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span>
-<span class="normal">29</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def metrics_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def metrics_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
+
+    for label in [&#39;confusion_matrix&#39;, &#39;pos_label&#39;, &#39;neg_label&#39;]:
+
+        content[&#39;metrics&#39;].remove(label)
+
+        for m in content[&#39;label_metrics&#39;]:
+
+            _ = m[&#39;metrics&#39;].pop(label, None)
 
     html = h(&#39;Metrics included&#39;)
 
@@ -1929,7 +1989,15 @@ class Render(BaseRender):
 <span class="normal">104</span>
 <span class="normal">105</span>
 <span class="normal">106</span>
-<span class="normal">107</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class Render(BaseRender):
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class Render(BaseRender):
 
     def __init__(self, *configs):
 
@@ -2015,17 +2083,25 @@ class Render(BaseRender):
 
                 return &#39;&lt;ul&gt;&#39; + &#39;&#39;.join([f&#39;&lt;li&gt;{fmt(k, v_)}&lt;/li&gt;&#39; for v_ in v]) + &#39;&lt;/ul&gt;&#39;
 
-            elif isinstance(v, dict) and &#39;__class__&#39; in v:
+            elif isinstance(v, dict):
 
-                if v[&#39;__class__&#39;].startswith(&#39;text_sensitivity.data.random.string&#39;):
+                if &#39;dataset&#39; in v and &#39;labels&#39; in v:
 
-                    options = v[&#39;options&#39;]
+                    html = f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt;&#39; if &#39;__class__&#39; in v else &#39;&#39;
 
-                    if isinstance(options, str):
+                    return html + format_instances(v[&#39;dataset&#39;], label=v[&#39;labels&#39;])
 
-                        options = f&#39;&quot;{options}&quot;&#39;
+                if &#39;__class__&#39; in v:
 
-                    return f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt; ({options})&#39;
+                    if v[&#39;__class__&#39;].startswith(&#39;text_sensitivity.data.random.string&#39;):
+
+                        options = v[&#39;options&#39;]
+
+                        if isinstance(options, str):
+
+                            options = f&#39;&quot;{options}&quot;&#39;
+
+                        return f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt; ({options})&#39;
 
             elif str.lower(k) == &#39;expectation&#39;:
 
@@ -2492,7 +2568,15 @@ class Render(BaseRender):
 <span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
-<span class="normal">49</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def custom_tab(self, config: dict, **renderargs) -&gt; str:
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def custom_tab(self, config: dict, **renderargs) -&gt; str:
 
         meta = config[&quot;META&quot;]
 
@@ -2520,17 +2604,25 @@ class Render(BaseRender):
 
                 return &#39;&lt;ul&gt;&#39; + &#39;&#39;.join([f&#39;&lt;li&gt;{fmt(k, v_)}&lt;/li&gt;&#39; for v_ in v]) + &#39;&lt;/ul&gt;&#39;
 
-            elif isinstance(v, dict) and &#39;__class__&#39; in v:
+            elif isinstance(v, dict):
 
-                if v[&#39;__class__&#39;].startswith(&#39;text_sensitivity.data.random.string&#39;):
+                if &#39;dataset&#39; in v and &#39;labels&#39; in v:
 
-                    options = v[&#39;options&#39;]
+                    html = f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt;&#39; if &#39;__class__&#39; in v else &#39;&#39;
 
-                    if isinstance(options, str):
+                    return html + format_instances(v[&#39;dataset&#39;], label=v[&#39;labels&#39;])
 
-                        options = f&#39;&quot;{options}&quot;&#39;
+                if &#39;__class__&#39; in v:
 
-                    return f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt; ({options})&#39;
+                    if v[&#39;__class__&#39;].startswith(&#39;text_sensitivity.data.random.string&#39;):
+
+                        options = v[&#39;options&#39;]
+
+                        if isinstance(options, str):
+
+                            options = f&#39;&quot;{options}&quot;&#39;
+
+                        return f&#39;&lt;kbd&gt;{v[&quot;__class__&quot;]}&lt;/kbd&gt; ({options})&#39;
 
             elif str.lower(k) == &#39;expectation&#39;:
 

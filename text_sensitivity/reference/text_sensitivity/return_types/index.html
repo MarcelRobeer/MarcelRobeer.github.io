@@ -366,6 +366,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../metrics/" class="md-nav__link">
+        Metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -802,14 +814,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4" type="checkbox" id="__nav_5_1_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5" type="checkbox" id="__nav_5_1_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4">
+      <label class="md-nav__link" for="__nav_5_1_5">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_4">
+        <label class="md-nav__title" for="__nav_5_1_5">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -871,14 +883,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_5" type="checkbox" id="__nav_5_1_4_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5_5" type="checkbox" id="__nav_5_1_5_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_5">
+      <label class="md-nav__link" for="__nav_5_1_5_5">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_5">
+        <label class="md-nav__title" for="__nav_5_1_5_5">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
@@ -940,14 +952,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5" type="checkbox" id="__nav_5_1_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
       
-      <label class="md-nav__link" for="__nav_5_1_5">
+      <label class="md-nav__link" for="__nav_5_1_6">
         Perturbation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Perturbation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_5">
+        <label class="md-nav__title" for="__nav_5_1_6">
           <span class="md-nav__icon md-icon"></span>
           Perturbation
         </label>
@@ -1027,14 +1039,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" >
       
-      <label class="md-nav__link" for="__nav_5_1_6">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Ui
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Ui" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_6">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Ui
         </label>
@@ -2129,7 +2141,7 @@ class MeanScore(Instances):
 
         if Path.is_file(json_or_path):
 
-            cls.read_json(json_or_path, **read_args)
+            return cls.read_json(json_or_path, **read_args)
 
         return cls.from_config(srsly.json_loads(json_or_path))
 </code></pre></div>
@@ -2193,7 +2205,7 @@ class MeanScore(Instances):
 
         if Path.is_file(yaml_or_path):
 
-            return cls.from_config(cls.read_yaml(yaml_or_path))
+            return cls.read_yaml(yaml_or_path)
 
         return cls.from_config(srsly.yaml_loads(yaml_or_path))
 </code></pre></div>
@@ -2339,7 +2351,7 @@ class MeanScore(Instances):
 
         &quot;&quot;&quot;
 
-        return srsly.read_yaml(path)
+        return cls.from_config(srsly.read_yaml(path))
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -3131,7 +3143,7 @@ class MeanScore(Instances):
 
         if Path.is_file(json_or_path):
 
-            cls.read_json(json_or_path, **read_args)
+            return cls.read_json(json_or_path, **read_args)
 
         return cls.from_config(srsly.json_loads(json_or_path))
 </code></pre></div>
@@ -3195,7 +3207,7 @@ class MeanScore(Instances):
 
         if Path.is_file(yaml_or_path):
 
-            return cls.from_config(cls.read_yaml(yaml_or_path))
+            return cls.read_yaml(yaml_or_path)
 
         return cls.from_config(srsly.yaml_loads(yaml_or_path))
 </code></pre></div>
@@ -3341,7 +3353,7 @@ class MeanScore(Instances):
 
         &quot;&quot;&quot;
 
-        return srsly.read_yaml(path)
+        return cls.from_config(srsly.read_yaml(path))
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -4129,7 +4141,7 @@ class MeanScore(Instances):
 
         if Path.is_file(json_or_path):
 
-            cls.read_json(json_or_path, **read_args)
+            return cls.read_json(json_or_path, **read_args)
 
         return cls.from_config(srsly.json_loads(json_or_path))
 </code></pre></div>
@@ -4193,7 +4205,7 @@ class MeanScore(Instances):
 
         if Path.is_file(yaml_or_path):
 
-            return cls.from_config(cls.read_yaml(yaml_or_path))
+            return cls.read_yaml(yaml_or_path)
 
         return cls.from_config(srsly.yaml_loads(yaml_or_path))
 </code></pre></div>
@@ -4339,7 +4351,7 @@ class MeanScore(Instances):
 
         &quot;&quot;&quot;
 
-        return srsly.read_yaml(path)
+        return cls.from_config(srsly.read_yaml(path))
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -4883,7 +4895,7 @@ class MeanScore(Instances):
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Index" rel="prev">
+        <a href="../metrics/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Metrics" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -4892,7 +4904,7 @@ class MeanScore(Instances):
               <span class="md-footer__direction">
                 Previous
               </span>
-              Index
+              Metrics
             </div>
           </div>
         </a>

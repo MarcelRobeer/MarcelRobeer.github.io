@@ -478,6 +478,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../reference/text_sensitivity/metrics/" class="md-nav__link">
+        Metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../reference/text_sensitivity/return_types/" class="md-nav__link">
         Return Types
       </a>
@@ -505,14 +517,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4" type="checkbox" id="__nav_5_1_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5" type="checkbox" id="__nav_5_1_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4">
+      <label class="md-nav__link" for="__nav_5_1_5">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_4">
+        <label class="md-nav__title" for="__nav_5_1_5">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -574,14 +586,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_5" type="checkbox" id="__nav_5_1_4_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5_5" type="checkbox" id="__nav_5_1_5_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_5">
+      <label class="md-nav__link" for="__nav_5_1_5_5">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_5">
+        <label class="md-nav__title" for="__nav_5_1_5_5">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
@@ -643,14 +655,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5" type="checkbox" id="__nav_5_1_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
       
-      <label class="md-nav__link" for="__nav_5_1_5">
+      <label class="md-nav__link" for="__nav_5_1_6">
         Perturbation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Perturbation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_5">
+        <label class="md-nav__title" for="__nav_5_1_6">
           <span class="md-nav__icon md-icon"></span>
           Perturbation
         </label>
@@ -730,14 +742,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" >
       
-      <label class="md-nav__link" for="__nav_5_1_6">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Ui
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Ui" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_6">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Ui
         </label>
@@ -935,9 +947,7 @@
 <span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Create a simple dataset (classify whether strings contain punctuation or not)</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Create a simple dataset (classify whether strings contain punctuation or not)</span>
 <span class="kn">from</span> <span class="nn">instancelib.environment.text</span> <span class="kn">import</span> <span class="n">TextEnvironment</span>
 
 <span class="n">instances</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;This is his example instance, not HERS!&#39;</span><span class="p">,</span>
@@ -962,10 +972,8 @@
               <span class="p">(</span><span class="s1">&#39;rf&#39;</span><span class="p">,</span> <span class="n">MultinomialNB</span><span class="p">())])</span>
 
 <span class="c1"># Wrap sklearn model</span>
-<span class="kn">from</span> <span class="nn">instancelib.machinelearning</span> <span class="kn">import</span> <span class="n">SkLearnDataClassifier</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">SkLearnDataClassifier</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit_provider</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">text_explainability</span> <span class="kn">import</span> <span class="n">import_model</span>
+<span class="n">import_model</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h2 id="using-text-sensitivity">Using Text Sensitivity</h2>

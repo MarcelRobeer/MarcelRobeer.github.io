@@ -467,6 +467,18 @@
   
   
     <li class="md-nav__item">
+      <a href="reference/text_sensitivity/metrics/" class="md-nav__link">
+        Metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="reference/text_sensitivity/return_types/" class="md-nav__link">
         Return Types
       </a>
@@ -494,14 +506,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4" type="checkbox" id="__nav_5_1_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5" type="checkbox" id="__nav_5_1_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4">
+      <label class="md-nav__link" for="__nav_5_1_5">
         Data
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Data" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_4">
+        <label class="md-nav__title" for="__nav_5_1_5">
           <span class="md-nav__icon md-icon"></span>
           Data
         </label>
@@ -563,14 +575,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_4_5" type="checkbox" id="__nav_5_1_4_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5_5" type="checkbox" id="__nav_5_1_5_5" >
       
-      <label class="md-nav__link" for="__nav_5_1_4_5">
+      <label class="md-nav__link" for="__nav_5_1_5_5">
         Random
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Random" data-md-level="4">
-        <label class="md-nav__title" for="__nav_5_1_4_5">
+        <label class="md-nav__title" for="__nav_5_1_5_5">
           <span class="md-nav__icon md-icon"></span>
           Random
         </label>
@@ -632,14 +644,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_5" type="checkbox" id="__nav_5_1_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
       
-      <label class="md-nav__link" for="__nav_5_1_5">
+      <label class="md-nav__link" for="__nav_5_1_6">
         Perturbation
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Perturbation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_5">
+        <label class="md-nav__title" for="__nav_5_1_6">
           <span class="md-nav__icon md-icon"></span>
           Perturbation
         </label>
@@ -719,14 +731,14 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_6" type="checkbox" id="__nav_5_1_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1_7" type="checkbox" id="__nav_5_1_7" >
       
-      <label class="md-nav__link" for="__nav_5_1_6">
+      <label class="md-nav__link" for="__nav_5_1_7">
         Ui
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Ui" data-md-level="3">
-        <label class="md-nav__title" for="__nav_5_1_6">
+        <label class="md-nav__title" for="__nav_5_1_7">
           <span class="md-nav__icon md-icon"></span>
           Ui
         </label>
@@ -905,7 +917,7 @@ Sensitivity testing (fairness &amp; robustness) for text machine learning models
 <p>Extension of <a href="https://git.science.uu.nl/m.j.robeer/text_explainability">text_explainability</a></p>
 </blockquote>
 <p>Uses the <strong>generic architecture</strong> of <code>text_explainability</code> to also include tests of <strong>robustness</strong> (<em>how generalizable the model is in production</em>, e.g. ability to handle input characters, stability when adding typos, or the effect of adding random unrelated data) and <strong>fairness</strong> (<em>if equal individuals are treated equally by the model</em>, e.g. subgroup fairness on sex and nationality).</p>
-<p>&copy; Marcel Robeer, 2021</p>
+<p>&copy; Marcel Robeer, 2021-2022</p>
 <h2 id="quick-tour">Quick tour</h2>
 <p><strong>Robustness</strong>: test whether your model is able to handle different data types...</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -991,7 +1003,7 @@ Sensitivity testing (fairness &amp; robustness) for text machine learning models
 <h2 id="example-usage">Example usage</h2>
 <p>See <a href="example_usage/">example_usage.md</a> to see an example of how the package can be used, or run the lines in <code>example_usage.py</code> to do explore it interactively.</p>
 <h2 id="releases">Releases</h2>
-<p><code>text_explainability</code> is officially released through <a href="https://pypi.org/project/text-sensitivity/">PyPI</a>.</p>
+<p><code>text_sensitivity</code> is officially released through <a href="https://pypi.org/project/text-sensitivity/">PyPI</a>.</p>
 <p>See <a href="CHANGELOG/">CHANGELOG.md</a> for a full overview of the changes for each version.</p>
 <h2 id="citation">Citation</h2>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1018,7 +1030,6 @@ Sensitivity testing (fairness &amp; robustness) for text machine learning models
 <ul>
 <li>Word-level perturbations</li>
 <li>Add fairness-specific metrics:<ul>
-<li>Subgroup fairness</li>
 <li>Counterfactual fairness</li>
 </ul>
 </li>
