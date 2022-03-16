@@ -3209,7 +3209,9 @@
 <span class="normal">1188</span>
 <span class="normal">1189</span>
 <span class="normal">1190</span>
-<span class="normal">1191</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Local explanations explain why a model made a prediction for a single instance.
+<span class="normal">1191</span>
+<span class="normal">1192</span>
+<span class="normal">1193</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Local explanations explain why a model made a prediction for a single instance.
 
 Todo:
 
@@ -3363,7 +3365,9 @@ class LocalExplanation(Readable, SeedMixin):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 
@@ -5094,7 +5098,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sample</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
@@ -5103,7 +5108,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
     <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">add_background_instance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">predict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
@@ -5294,7 +5300,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -5312,7 +5320,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 
@@ -5873,7 +5883,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sample</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
@@ -5882,7 +5893,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
     <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">add_background_instance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">predict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
@@ -6073,7 +6085,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -6091,7 +6105,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 
@@ -7015,7 +7031,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sample</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
@@ -7024,7 +7041,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
     <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">add_background_instance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">predict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
@@ -7215,7 +7233,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -7233,7 +7253,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 
@@ -7902,7 +7924,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sample</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
@@ -7911,7 +7934,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
     <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">add_background_instance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">predict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
@@ -8102,7 +8126,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -8120,7 +8146,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 
@@ -8529,7 +8557,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">162</span>
 <span class="normal">163</span>
 <span class="normal">164</span>
-<span class="normal">165</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalExplanation(Readable, SeedMixin):
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LocalExplanation(Readable, SeedMixin):
 
     def __init__(self,
 
@@ -8603,7 +8633,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 
@@ -8728,7 +8760,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sample</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
@@ -8737,7 +8770,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
     <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">add_background_instance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">predict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
@@ -8928,7 +8962,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -8946,7 +8982,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 
@@ -9386,7 +9424,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sample</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
@@ -9395,7 +9434,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
     <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">add_background_instance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">predict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
@@ -9586,7 +9626,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -9604,7 +9646,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 
@@ -10095,7 +10139,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">augment_sample</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sample</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextInstance</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
@@ -10104,7 +10149,8 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
     <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">add_background_instance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">predict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">avoid_proba</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">InstanceProvider</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
 </code></pre></div>
 </td></tr></table>
@@ -10295,7 +10341,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 <span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
-<span class="normal">105</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @text_instance(tokenize=True)
 
     def augment_sample(self,
 
@@ -10313,7 +10361,9 @@ class LocalRules(FactFoilMixin, LocalExplanation, WeightedExplanation):
 
                        predict: bool = True,
 
-                       avoid_proba: bool = False
+                       avoid_proba: bool = False,
+
+                       **kwargs,
 
                        ) -&gt; Union[Tuple[InstanceProvider, np.ndarray],
 

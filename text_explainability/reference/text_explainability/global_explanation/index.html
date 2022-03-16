@@ -2427,7 +2427,7 @@ class TokenFrequency(GlobalExplanation):
 
             return FeatureList(labels=label_ids,
 
-                               labelset=labels,
+                               labelset=label_names,
 
                                used_features=dict(zip(label_ids, used_features)),
 
@@ -4786,7 +4786,7 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 
             return FeatureList(labels=label_ids,
 
-                               labelset=labels,
+                               labelset=label_names,
 
                                used_features=dict(zip(label_ids, used_features)),
 

@@ -1121,7 +1121,7 @@ __all__ = [&#39;import_data&#39;, &#39;from_list&#39;, &#39;from_string&#39;, &#
 <span class="normal">3</span>
 <span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span>
     <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x165497ee0</span><span class="o">&gt;</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">word_tokenizer</span> <span class="n">at</span> <span class="mh">0x16c90d4c0</span><span class="o">&gt;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">MemoryTextInstance</span>
 </code></pre></div>
 </td></tr></table>
@@ -1228,10 +1228,12 @@ __all__ = [&#39;import_data&#39;, &#39;from_list&#39;, &#39;from_string&#39;, &#
 <span class="normal">5</span>
 <span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">import_data</span><span class="p">(</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">import_data</span><span class="p">(</span>
     <span class="n">dataset</span><span class="p">,</span>
     <span class="n">data_cols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="o">~</span><span class="n">KT</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="o">~</span><span class="n">KT</span><span class="p">]],</span>
     <span class="n">label_cols</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="o">~</span><span class="n">KT</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="o">~</span><span class="n">KT</span><span class="p">]],</span>
+    <span class="n">label_map</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;infer&#39;</span><span class="p">,</span> <span class="s1">&#39;glob&#39;</span><span class="p">,</span> <span class="s1">&#39;pandas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;infer&#39;</span><span class="p">,</span>
     <span class="n">_to_instancelib</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="o">**</span><span class="n">read_kwargs</span>
@@ -1266,6 +1268,12 @@ __all__ = [&#39;import_data&#39;, &#39;from_list&#39;, &#39;from_string&#39;, &#
 <td>label_cols</td>
 <td>Union[KT, List[KT]]</td>
 <td>Name of column(s) containing labels.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>label_map</td>
+<td>Optional[Union[Callable, dict]]</td>
+<td>Label renaming dictionary/function. Defaults to None.</td>
 <td>None</td>
 </tr>
 <tr>
@@ -1532,11 +1540,23 @@ __all__ = [&#39;import_data&#39;, &#39;from_list&#39;, &#39;from_string&#39;, &#
 <span class="normal">198</span>
 <span class="normal">199</span>
 <span class="normal">200</span>
-<span class="normal">201</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def import_data(dataset,
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def import_data(dataset,
 
                 data_cols: Union[KT, List[KT]],
 
                 label_cols: Union[KT, List[KT]],
+
+                label_map: Optional[Union[Callable, dict]] = None,
 
                 method: Method = &#39;infer&#39;,
 
@@ -1590,6 +1610,8 @@ __all__ = [&#39;import_data&#39;, &#39;from_list&#39;, &#39;from_string&#39;, &#
 
         label_cols (Union[KT, List[KT]]): Name of column(s) containing labels.
 
+        label_map (Optional[Union[Callable, dict]], optional): Label renaming dictionary/function. Defaults to None.
+
         method (Method, optional): Method used to import data. Choose from &#39;infer&#39;, &#39;glob&#39;, &#39;pandas&#39;.
 
             Defaults to &#39;infer&#39;.
@@ -1642,6 +1664,8 @@ __all__ = [&#39;import_data&#39;, &#39;from_list&#39;, &#39;from_string&#39;, &#
 
                                       label_cols=label_cols,
 
+                                      label_map=label_map,
+
                                       method=method,
 
                                       **read_kwargs)
@@ -1669,6 +1693,8 @@ __all__ = [&#39;import_data&#39;, &#39;from_list&#39;, &#39;from_string&#39;, &#
                                       data_cols=data_cols,
 
                                       label_cols=label_cols,
+
+                                      label_map=label_map,
 
                                       method=method,
 
@@ -1726,11 +1752,13 @@ __all__ = [&#39;import_data&#39;, &#39;from_list&#39;, &#39;from_string&#39;, &#
 
                                       label_cols=label_cols,
 
+                                      label_map=label_map,
+
                                       **read_kwargs)
 
     if _to_instancelib:
 
-        return pandas_to_instancelib(dataset, data_cols=data_cols, label_cols=label_cols)
+        return pandas_to_instancelib(dataset, data_cols=data_cols, label_cols=label_cols, label_map=label_map)
 
     return dataset
 </code></pre></div>

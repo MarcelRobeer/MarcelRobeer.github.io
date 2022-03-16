@@ -1065,7 +1065,11 @@ __all__ = [&#39;import_model&#39;]
 <span class="normal">182</span>
 <span class="normal">183</span>
 <span class="normal">184</span>
-<span class="normal">185</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def import_model(model,
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def import_model(model,
 
                  environment: Optional[Environment] = None,
 
@@ -1134,6 +1138,10 @@ __all__ = [&#39;import_model&#39;]
     if label_map is None and environment is not None:
 
         label_map = list(environment.labels.labelset)
+
+    if isinstance(label_map, dict):
+
+        label_map = {str(k): v for k, v in label_map.items()}
 
     if isinstance(model, str):
 

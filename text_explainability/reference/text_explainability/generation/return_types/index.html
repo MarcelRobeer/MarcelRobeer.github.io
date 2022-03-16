@@ -3113,7 +3113,7 @@ class FeatureList(BaseReturnType, UsedFeaturesMixin):
 
                     for feature, score_ in zip(self.used_features, all_scores)]}
 
-        elif isinstance(self.used_features, dict):
+        if isinstance(self.used_features, dict):
 
             return {self.label_by_index(label): [(feature, score_)
 
@@ -5459,7 +5459,7 @@ class Instances(BaseReturnType):
 
                     for feature, score_ in zip(self.used_features, all_scores)]}
 
-        elif isinstance(self.used_features, dict):
+        if isinstance(self.used_features, dict):
 
             return {self.label_by_index(label): [(feature, score_)
 
@@ -6260,7 +6260,7 @@ class Instances(BaseReturnType):
 
                     for feature, score_ in zip(self.used_features, all_scores)]}
 
-        elif isinstance(self.used_features, dict):
+        if isinstance(self.used_features, dict):
 
             return {self.label_by_index(label): [(feature, score_)
 
@@ -6879,7 +6879,7 @@ class Instances(BaseReturnType):
 
                     for feature, score_ in zip(self.used_features, all_scores)]}
 
-        elif isinstance(self.used_features, dict):
+        if isinstance(self.used_features, dict):
 
             return {self.label_by_index(label): [(feature, score_)
 
