@@ -492,13 +492,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#extract_metrics" class="md-nav__link">
-    extract_metrics
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#label_by_index" class="md-nav__link">
     label_by_index
   </a>
@@ -1199,13 +1192,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#extract_metrics" class="md-nav__link">
-    extract_metrics
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#label_by_index" class="md-nav__link">
     label_by_index
   </a>
@@ -1663,35 +1649,11 @@
 <span class="normal">152</span>
 <span class="normal">153</span>
 <span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
-<span class="normal">167</span>
-<span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Return types for sensitivity (tests).&quot;&quot;&quot;
+<span class="normal">155</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Return types for sensitivity (tests).&quot;&quot;&quot;
 
 from typing import List, Optional, Union
+
+from genbase.utils import extract_metrics
 
 from instancelib.labels import LabelProvider, MemoryLabelProvider
 
@@ -1791,35 +1753,7 @@ class LabelMetrics(Instances):
 
         self.__metrics = {k: m for k, (_, _, m) in enumerate(label_metrics)}
 
-        self.metrics, self.properties = self.extract_metrics(self.__metrics)
-
-    def extract_metrics(self, metrics: dict):
-
-        # Get all unique property names
-
-        properties = []
-
-        for v in metrics.values():
-
-            for p in dir(v):
-
-                if not p.startswith(&#39;_&#39;) and not callable(getattr(v, p)) and p not in properties:
-
-                    properties.append(p)
-
-        # Extract property values
-
-        def extract_property(m, p):
-
-            res = getattr(m, p, None)
-
-            if isinstance(res, frozenset):
-
-                res = len(res)
-
-            return res
-
-        return {k: {p: extract_property(v, p) for p in properties} for k, v in metrics.items()}, properties
+        self.metrics, self.properties = extract_metrics(self.__metrics)
 
     @property
 
@@ -1932,35 +1866,7 @@ class MeanScore(Instances):
 <span class="normal">38</span>
 <span class="normal">39</span>
 <span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LabelMetrics(Instances):
+<span class="normal">41</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class LabelMetrics(Instances):
 
     def __init__(self,
 
@@ -1986,35 +1892,7 @@ class MeanScore(Instances):
 
         self.__metrics = {k: m for k, (_, _, m) in enumerate(label_metrics)}
 
-        self.metrics, self.properties = self.extract_metrics(self.__metrics)
-
-    def extract_metrics(self, metrics: dict):
-
-        # Get all unique property names
-
-        properties = []
-
-        for v in metrics.values():
-
-            for p in dir(v):
-
-                if not p.startswith(&#39;_&#39;) and not callable(getattr(v, p)) and p not in properties:
-
-                    properties.append(p)
-
-        # Extract property values
-
-        def extract_property(m, p):
-
-            res = getattr(m, p, None)
-
-            if isinstance(res, frozenset):
-
-                res = len(res)
-
-            return res
-
-        return {k: {p: extract_property(v, p) for p in properties} for k, v in metrics.items()}, properties
+        self.metrics, self.properties = extract_metrics(self.__metrics)
 
     @property
 
@@ -2383,72 +2261,6 @@ class MeanScore(Instances):
 </code></pre></div>
 </td></tr></table>
 <h4 id="methods">Methods</h4>
-<h4 id="extract_metrics">extract_metrics</h4>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">extract_metrics</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">metrics</span><span class="p">:</span> <span class="nb">dict</span>
-<span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
-<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def extract_metrics(self, metrics: dict):
-
-        # Get all unique property names
-
-        properties = []
-
-        for v in metrics.values():
-
-            for p in dir(v):
-
-                if not p.startswith(&#39;_&#39;) and not callable(getattr(v, p)) and p not in properties:
-
-                    properties.append(p)
-
-        # Extract property values
-
-        def extract_property(m, p):
-
-            res = getattr(m, p, None)
-
-            if isinstance(res, frozenset):
-
-                res = len(res)
-
-            return res
-
-        return {k: {p: extract_property(v, p) for p in properties} for k, v in metrics.items()}, properties
-</code></pre></div>
-</td></tr></table>
-</details>
 <h4 id="label_by_index">label_by_index</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>

@@ -1367,7 +1367,49 @@
 <span class="normal">258</span>
 <span class="normal">259</span>
 <span class="normal">260</span>
-<span class="normal">261</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Extension of `genbase.ui.notebook` for custom rendering of `text_sensitivity.&quot;&quot;&quot;
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Extension of `genbase.ui.notebook` for custom rendering of `text_sensitivity.&quot;&quot;&quot;
 
 import copy
 
@@ -1463,7 +1505,7 @@ def success_test_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
 
 def metrics_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
 
-    for label in [&#39;confusion_matrix&#39;, &#39;pos_label&#39;, &#39;neg_label&#39;]:
+    for label in [&#39;confusion_matrix&#39;, &#39;pos_label&#39;, &#39;neg_label&#39;, &#39;wss&#39;]:
 
         content[&#39;metrics&#39;].remove(label)
 
@@ -1471,11 +1513,61 @@ def metrics_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
 
             _ = m[&#39;metrics&#39;].pop(label, None)
 
-    html = h(&#39;Metrics included&#39;)
+    html = h(&#39;Results&#39;)
+
+    has_attribute = all(&#39;attribute&#39; in row for row in content[&#39;label_metrics&#39;])
+
+    from collections import defaultdict
+
+    METRICS_ORDER = defaultdict(default_factory=lambda x: x,
+
+                                accuracy=0,
+
+                                precision=1,
+
+                                recall=2,
+
+                                f1=3,
+
+                                true_positives=4,
+
+                                false_positives=5,
+
+                                true_negatives=6,
+
+                                false_negatives=7)
+
+    # Sort metrics
+
+    metrics = sorted(content[&#39;metrics&#39;], key=METRICS_ORDER.get)
+
+    header_ext = [&#39;Predicted Label&#39;, &#39;Attribute&#39;] if has_attribute else [&#39;Predicted Label&#39;]
+
+    header = &#39;&#39;.join([f&#39;&lt;th&gt;{h}&lt;/th&gt;&#39; for h in header_ext + [METRIC_MAP.get(m, [m, m])[1] for m in metrics]])
+
+    def get_label(row):
+
+        label = [f&#39;&lt;kbd&gt;{row[&quot;label&quot;]}&lt;/kbd&gt;&#39;]
+
+        return label + [f&#39;&lt;kbd&gt;{row[&quot;attribute&quot;]}&lt;/kbd&gt;&#39;] if has_attribute else label
+
+    label_metrics = [get_label(row) + [f&#39;{row[&quot;metrics&quot;][m]:.2%}&#39;
+
+                                       if str.lower(m) in PERC and isinstance(row[&#39;metrics&#39;][m], (int, float))
+
+                                       else f&#39;{row[&quot;metrics&quot;][m]}&#39; for m in metrics if m in row[&#39;metrics&#39;]]
+
+                                       for row in content[&#39;label_metrics&#39;]]
+
+    table_content = &#39;&#39;.join(&#39;&lt;tr&gt;&#39; + &#39;&#39;.join(f&#39;&lt;td&gt;{metric}&lt;/td&gt;&#39; for metric in lm) + &#39;&lt;/tr&gt;&#39; for lm in label_metrics)
+
+    html += f&#39;&lt;div class=&quot;table-wrapper&quot;&gt;&lt;table&gt;&lt;tr&gt;{header}&lt;/tr&gt;{table_content}&lt;/table&gt;&lt;/div&gt;&#39;
+
+    html += h(&#39;Metrics included&#39;)
 
     html += &#39;&lt;ul&gt;&#39;
 
-    for m in content[&#39;metrics&#39;]:
+    for m in metrics:
 
         html += f&#39;&lt;li&gt;&lt;a href=&quot;{METRIC_MAP[m][-1]}&quot; target=&quot;_blank&quot;&gt;{METRIC_MAP[m][0]}&lt;/a&gt;&lt;/li&gt;&#39; if m in METRIC_MAP \
 
@@ -1483,21 +1575,7 @@ def metrics_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
 
     html += &#39;&lt;/ul&gt;&#39;
 
-    html += h(&#39;Results&#39;)
-
-    header = &#39;&#39;.join([f&#39;&lt;th&gt;{h}&lt;/th&gt;&#39; for h in [&#39;Predicted Label&#39;, &#39;Attribute&#39;] +
-
-                     [METRIC_MAP.get(m, [m, m])[1] for m in content[&#39;metrics&#39;]]])
-
-    label_metrics = [[f&#39;&lt;kbd&gt;{row[&quot;label&quot;]}&lt;/kbd&gt;&#39;, f&#39;&lt;kbd&gt;{row[&quot;attribute&quot;]}&lt;/kbd&gt;&#39;] +
-
-                     [f&#39;{v:.2%}&#39; if str.lower(k) in PERC else f&#39;{v}&#39; for k, v in row[&#39;metrics&#39;].items()]
-
-                     for row in content[&#39;label_metrics&#39;]]
-
-    content = &#39;&#39;.join(&#39;&lt;tr&gt;&#39; + &#39;&#39;.join(f&#39;&lt;td&gt;{metric}&lt;/td&gt;&#39; for metric in lm) + &#39;&lt;/tr&gt;&#39; for lm in label_metrics)
-
-    return html + f&#39;&lt;div class=&quot;table-wrapper&quot;&gt;&lt;table&gt;&lt;tr&gt;{header}&lt;/tr&gt;{content}&lt;/table&gt;&lt;/div&gt;&#39;
+    return html
 
 def score_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
 
@@ -1579,7 +1657,13 @@ class Render(BaseRender):
 
             return &#39;&#39;
 
-        callargs = copy.deepcopy(meta[&#39;callargs&#39;])
+        try:
+
+            callargs = copy.deepcopy(meta[&#39;callargs&#39;])
+
+        except TypeError:
+
+            callargs = copy.copy(meta[&#39;callargs&#39;])
 
         _ = callargs.pop(&#39;__name__&#39;)
 
@@ -1706,9 +1790,45 @@ class Render(BaseRender):
 <span class="normal">34</span>
 <span class="normal">35</span>
 <span class="normal">36</span>
-<span class="normal">37</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def metrics_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>def metrics_renderer(meta: dict, content: dict, **renderargs) -&gt; str:
 
-    for label in [&#39;confusion_matrix&#39;, &#39;pos_label&#39;, &#39;neg_label&#39;]:
+    for label in [&#39;confusion_matrix&#39;, &#39;pos_label&#39;, &#39;neg_label&#39;, &#39;wss&#39;]:
 
         content[&#39;metrics&#39;].remove(label)
 
@@ -1716,11 +1836,61 @@ class Render(BaseRender):
 
             _ = m[&#39;metrics&#39;].pop(label, None)
 
-    html = h(&#39;Metrics included&#39;)
+    html = h(&#39;Results&#39;)
+
+    has_attribute = all(&#39;attribute&#39; in row for row in content[&#39;label_metrics&#39;])
+
+    from collections import defaultdict
+
+    METRICS_ORDER = defaultdict(default_factory=lambda x: x,
+
+                                accuracy=0,
+
+                                precision=1,
+
+                                recall=2,
+
+                                f1=3,
+
+                                true_positives=4,
+
+                                false_positives=5,
+
+                                true_negatives=6,
+
+                                false_negatives=7)
+
+    # Sort metrics
+
+    metrics = sorted(content[&#39;metrics&#39;], key=METRICS_ORDER.get)
+
+    header_ext = [&#39;Predicted Label&#39;, &#39;Attribute&#39;] if has_attribute else [&#39;Predicted Label&#39;]
+
+    header = &#39;&#39;.join([f&#39;&lt;th&gt;{h}&lt;/th&gt;&#39; for h in header_ext + [METRIC_MAP.get(m, [m, m])[1] for m in metrics]])
+
+    def get_label(row):
+
+        label = [f&#39;&lt;kbd&gt;{row[&quot;label&quot;]}&lt;/kbd&gt;&#39;]
+
+        return label + [f&#39;&lt;kbd&gt;{row[&quot;attribute&quot;]}&lt;/kbd&gt;&#39;] if has_attribute else label
+
+    label_metrics = [get_label(row) + [f&#39;{row[&quot;metrics&quot;][m]:.2%}&#39;
+
+                                       if str.lower(m) in PERC and isinstance(row[&#39;metrics&#39;][m], (int, float))
+
+                                       else f&#39;{row[&quot;metrics&quot;][m]}&#39; for m in metrics if m in row[&#39;metrics&#39;]]
+
+                                       for row in content[&#39;label_metrics&#39;]]
+
+    table_content = &#39;&#39;.join(&#39;&lt;tr&gt;&#39; + &#39;&#39;.join(f&#39;&lt;td&gt;{metric}&lt;/td&gt;&#39; for metric in lm) + &#39;&lt;/tr&gt;&#39; for lm in label_metrics)
+
+    html += f&#39;&lt;div class=&quot;table-wrapper&quot;&gt;&lt;table&gt;&lt;tr&gt;{header}&lt;/tr&gt;{table_content}&lt;/table&gt;&lt;/div&gt;&#39;
+
+    html += h(&#39;Metrics included&#39;)
 
     html += &#39;&lt;ul&gt;&#39;
 
-    for m in content[&#39;metrics&#39;]:
+    for m in metrics:
 
         html += f&#39;&lt;li&gt;&lt;a href=&quot;{METRIC_MAP[m][-1]}&quot; target=&quot;_blank&quot;&gt;{METRIC_MAP[m][0]}&lt;/a&gt;&lt;/li&gt;&#39; if m in METRIC_MAP \
 
@@ -1728,21 +1898,7 @@ class Render(BaseRender):
 
     html += &#39;&lt;/ul&gt;&#39;
 
-    html += h(&#39;Results&#39;)
-
-    header = &#39;&#39;.join([f&#39;&lt;th&gt;{h}&lt;/th&gt;&#39; for h in [&#39;Predicted Label&#39;, &#39;Attribute&#39;] +
-
-                     [METRIC_MAP.get(m, [m, m])[1] for m in content[&#39;metrics&#39;]]])
-
-    label_metrics = [[f&#39;&lt;kbd&gt;{row[&quot;label&quot;]}&lt;/kbd&gt;&#39;, f&#39;&lt;kbd&gt;{row[&quot;attribute&quot;]}&lt;/kbd&gt;&#39;] +
-
-                     [f&#39;{v:.2%}&#39; if str.lower(k) in PERC else f&#39;{v}&#39; for k, v in row[&#39;metrics&#39;].items()]
-
-                     for row in content[&#39;label_metrics&#39;]]
-
-    content = &#39;&#39;.join(&#39;&lt;tr&gt;&#39; + &#39;&#39;.join(f&#39;&lt;td&gt;{metric}&lt;/td&gt;&#39; for metric in lm) + &#39;&lt;/tr&gt;&#39; for lm in label_metrics)
-
-    return html + f&#39;&lt;div class=&quot;table-wrapper&quot;&gt;&lt;table&gt;&lt;tr&gt;{header}&lt;/tr&gt;{content}&lt;/table&gt;&lt;/div&gt;&#39;
+    return html
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1997,7 +2153,13 @@ class Render(BaseRender):
 <span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
-<span class="normal">115</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class Render(BaseRender):
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class Render(BaseRender):
 
     def __init__(self, *configs):
 
@@ -2063,7 +2225,13 @@ class Render(BaseRender):
 
             return &#39;&#39;
 
-        callargs = copy.deepcopy(meta[&#39;callargs&#39;])
+        try:
+
+            callargs = copy.deepcopy(meta[&#39;callargs&#39;])
+
+        except TypeError:
+
+            callargs = copy.copy(meta[&#39;callargs&#39;])
 
         _ = callargs.pop(&#39;__name__&#39;)
 
@@ -2576,7 +2744,13 @@ class Render(BaseRender):
 <span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
-<span class="normal">57</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def custom_tab(self, config: dict, **renderargs) -&gt; str:
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def custom_tab(self, config: dict, **renderargs) -&gt; str:
 
         meta = config[&quot;META&quot;]
 
@@ -2584,7 +2758,13 @@ class Render(BaseRender):
 
             return &#39;&#39;
 
-        callargs = copy.deepcopy(meta[&#39;callargs&#39;])
+        try:
+
+            callargs = copy.deepcopy(meta[&#39;callargs&#39;])
+
+        except TypeError:
+
+            callargs = copy.copy(meta[&#39;callargs&#39;])
 
         _ = callargs.pop(&#39;__name__&#39;)
 

@@ -827,7 +827,9 @@
 <span class="normal">50</span>
 <span class="normal">51</span>
 <span class="normal">52</span>
-<span class="normal">53</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from text_sensitivity.data.generate import default_patterns, from_pattern
+<span class="normal">53</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>from text_sensitivity._version import __version__, __version_info__
+
+from text_sensitivity.data.generate import default_patterns, from_pattern
 
 from text_sensitivity.data.random.entity import (RandomAddress, RandomCity,
 
@@ -878,8 +880,6 @@ from text_sensitivity.sensitivity import (compare_accuracy, compare_metric,
                                           input_space_robustness, invariance,
 
                                           mean_score)
-
-__version__ = &#39;0.3.0&#39;
 </code></pre></div>
 </td></tr></table>
 </details>

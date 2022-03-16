@@ -1199,7 +1199,7 @@ def random_lower(n: int = 1) -&gt; Perturbation:
 
     &quot;&quot;&quot;
 
-    return _function(lambda x: __random_character_fn(x, str.lower), label_to=&#39;random_upper&#39;, n=n)
+    return _function(lambda x: __random_character_fn(x, str.lower), label_to=&#39;random_lower&#39;, n=n)
 
 def random_case_swap(n: int = 1) -&gt; Perturbation:
 
@@ -1215,7 +1215,7 @@ def random_case_swap(n: int = 1) -&gt; Perturbation:
 
     &quot;&quot;&quot;
 
-    return _function(lambda x: __random_character_fn(x, str.swapcase), label_to=&#39;random_upper&#39;, n=n)
+    return _function(lambda x: __random_character_fn(x, str.swapcase), label_to=&#39;random_case_swap&#39;, n=n)
 
 def random_spaces(n: int = 1, **kwargs) -&gt; Perturbation:
 
@@ -1599,7 +1599,7 @@ def delete_random(n: int = 1, **kwargs) -&gt; Perturbation:
 
     &quot;&quot;&quot;
 
-    return _function(lambda x: __random_character_fn(x, str.swapcase), label_to=&#39;random_upper&#39;, n=n)
+    return _function(lambda x: __random_character_fn(x, str.swapcase), label_to=&#39;random_case_swap&#39;, n=n)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -1674,7 +1674,7 @@ def delete_random(n: int = 1, **kwargs) -&gt; Perturbation:
 
     &quot;&quot;&quot;
 
-    return _function(lambda x: __random_character_fn(x, str.lower), label_to=&#39;random_upper&#39;, n=n)
+    return _function(lambda x: __random_character_fn(x, str.lower), label_to=&#39;random_lower&#39;, n=n)
 </code></pre></div>
 </td></tr></table>
 </details>
