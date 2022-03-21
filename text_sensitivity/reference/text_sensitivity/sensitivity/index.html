@@ -447,6 +447,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#compare_metric" class="md-nav__link">
+    compare_metric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#compare_precision" class="md-nav__link">
     compare_precision
   </a>
@@ -463,6 +470,27 @@
           <li class="md-nav__item">
   <a href="#equal_ground_truth" class="md-nav__link">
     equal_ground_truth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input_space_robustness" class="md-nav__link">
+    input_space_robustness
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invariance" class="md-nav__link">
+    invariance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mean_score" class="md-nav__link">
+    mean_score
   </a>
   
 </li>
@@ -816,6 +844,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#compare_metric" class="md-nav__link">
+    compare_metric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#compare_precision" class="md-nav__link">
     compare_precision
   </a>
@@ -832,6 +867,27 @@
           <li class="md-nav__item">
   <a href="#equal_ground_truth" class="md-nav__link">
     equal_ground_truth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input_space_robustness" class="md-nav__link">
+    input_space_robustness
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invariance" class="md-nav__link">
+    invariance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mean_score" class="md-nav__link">
+    mean_score
   </a>
   
 </li>
@@ -1970,6 +2026,233 @@ def mean_score(pattern: str,
 </code></pre></div>
 </td></tr></table>
 </details>
+<h3 id="compare_metric">compare_metric</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compare_metric</span><span class="p">(</span>
+    <span class="n">env</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">TextEnvironment</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
+    <span class="n">perturbation</span><span class="p">:</span> <span class="n">text_sensitivity</span><span class="o">.</span><span class="n">perturbation</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Perturbation</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_sensitivity</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">LabelMetrics</span>
+</code></pre></div>
+</td></tr></table>
+<p>Get metrics for each ground-truth label and attribute.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>env</td>
+<td>TextEnvironment</td>
+<td>Environment containing original instances (<code>.dataset</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>and ground-truth labels (<code>.labels</code>).</td>
+<td>None</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>model</td>
+<td>AbstractClassifier</td>
+<td>Black-box model to compare metrics on.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>perturbation</td>
+<td>Perturbation</td>
+<td>Peturbation to apply.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LabelMetrics</td>
+<td>Original label (before perturbation), perturbed label (after perturbation)</td>
+</tr>
+<tr>
+<td>and metrics for label-attribute pair.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>@add_callargs
+
+def compare_metric(env: TextEnvironment,
+
+                   model: AbstractClassifier,
+
+                   perturbation: Perturbation,
+
+                   **kwargs) -&gt; LabelMetrics:
+
+    &quot;&quot;&quot;Get metrics for each ground-truth label and attribute.
+
+    Examples:
+
+        Compare metric of `model` performance (e.g. accuracy, precision) before and after mapping each instance in a
+
+        dataset to uppercase.
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation.sentences import to_upper
+
+        &gt;&gt;&gt; compare_metric(env, model, to_upper)
+
+        Compare metric when randomly adding 10 perturbed instances with typos to each instance in a dataset.
+
+        &gt;&gt;&gt; from text_sensitivity.perturbation.characters import add_typos
+
+        &gt;&gt;&gt; compare_metric(env, model, add_typos(n=10))
+
+    Args:
+
+        env (TextEnvironment): Environment containing original instances (`.dataset`)
+
+            and ground-truth labels (`.labels`).
+
+        model (AbstractClassifier): Black-box model to compare metrics on.
+
+        perturbation (Perturbation): Peturbation to apply.
+
+    Returns:
+
+        LabelMetrics: Original label (before perturbation), perturbed label (after perturbation)
+
+        and metrics for label-attribute pair.
+
+    &quot;&quot;&quot;
+
+    callargs = kwargs.pop(&#39;__callargs__&#39;, None)
+
+    # Apply perturbations and get attributes
+
+    instances, attributes = apply_perturbation(env, perturbation)
+
+    # Perform prediction on original instances and perturbed instances
+
+    model_predictions = MemoryLabelProvider.from_tuples(model.predict(instances))
+
+    # Expectation (for now that labels should remain equal)
+
+    ground_truth = MemoryLabelProvider.from_tuples(list(equal_ground_truth(env.labels, instances)))
+
+    lm = [(label, attribute, label_metrics(model_predictions,
+
+                                           ground_truth,
+
+                                           attributes.get_instances_by_label(attribute),
+
+                                           label))
+
+                    for attribute in list(attributes.labelset)
+
+                    for label in list(model_predictions.labelset)]
+
+    return LabelMetrics(instances=instances,
+
+                        label_metrics=lm,
+
+                        callargs=callargs)
+</code></pre></div>
+</td></tr></table>
+</details>
 <h3 id="compare_precision">compare_precision</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -2071,6 +2354,685 @@ def mean_score(pattern: str,
         parent_key = int(parent_key) if parent_key.isdigit() else parent_key
 
         yield (key, ground_truth._labeldict[parent_key])
+</code></pre></div>
+</td></tr></table>
+</details>
+<h3 id="input_space_robustness">input_space_robustness</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">input_space_robustness</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
+    <span class="n">generators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">text_sensitivity</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">RandomString</span><span class="p">],</span>
+    <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_sensitivity</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">SuccessTest</span>
+</code></pre></div>
+</td></tr></table>
+<p>Test the robustness of a machine learning model to different input types.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>model</td>
+<td>AbstractClassifier</td>
+<td>Machine learning model to test.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>generators</td>
+<td>List[RandomString]</td>
+<td>Random character generators.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>n_samples</td>
+<td>int</td>
+<td>Number of test samples. Defaults to 100.</td>
+<td>100</td>
+</tr>
+<tr>
+<td>min_length</td>
+<td>int</td>
+<td>Input minimum length. Defaults to 0.</td>
+<td>0</td>
+</tr>
+<tr>
+<td>max_length</td>
+<td>int</td>
+<td>Input maximum length. Defaults to 100.</td>
+<td>100</td>
+</tr>
+<tr>
+<td>seed</td>
+<td>Optional[int]</td>
+<td>Seed for reproducibility purposes. Defaults to 0.</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SuccessTest</td>
+<td>Percentage of success cases, list of succeeded/failed instances</td>
+</tr>
+</tbody>
+</table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>@add_callargs
+
+def input_space_robustness(model: AbstractClassifier,
+
+                           generators: List[RandomString],
+
+                           n_samples: int = 100,
+
+                           min_length: int = 0,
+
+                           max_length: int = 100,
+
+                           seed: Optional[int] = 0,
+
+                           **kwargs) -&gt; SuccessTest:
+
+    &quot;&quot;&quot;Test the robustness of a machine learning model to different input types.
+
+    Example:
+
+        Test a pretrained black-box `model` for its robustness to 1000 random strings (length 0 to 500),
+
+        containing whitespace characters, ASCII (upper, lower and numbers), emojis and Russian Cyrillic characters:
+
+        &gt;&gt;&gt; from text_sensitivity.data.random.string import RandomAscii, RandomCyrillic, RandomEmojis, RandomWhitespace
+
+        &gt;&gt;&gt; input_space_robustness(model,
+
+        &gt;&gt;&gt;                        [RandomWhitespace(), RandomAscii(), RandomEmojis(base=True), RandomCyrillic(&#39;ru&#39;)],
+
+        &gt;&gt;&gt;                        n_samples=1000,
+
+        &gt;&gt;&gt;                        min_length=0,
+
+        &gt;&gt;&gt;                        max_length=500)
+
+    Args:
+
+        model (AbstractClassifier): Machine learning model to test.
+
+        generators (List[RandomString]): Random character generators.
+
+        n_samples (int, optional): Number of test samples. Defaults to 100.
+
+        min_length (int, optional): Input minimum length. Defaults to 0.
+
+        max_length (int, optional): Input maximum length. Defaults to 100.
+
+        seed (Optional[int], optional): Seed for reproducibility purposes. Defaults to 0.
+
+    Returns:
+
+        SuccessTest: Percentage of success cases, list of succeeded/failed instances
+
+    &quot;&quot;&quot;
+
+    callargs = kwargs.pop(&#39;__callargs__&#39;, None)
+
+    # Combine all generators into one
+
+    generator = combine_generators(*generators, seed=seed)
+
+    # Generate instances
+
+    instances = generator.generate(n=n_samples, min_length=min_length, max_length=max_length)
+
+    # Percentage success, instances that succeeded, instances that failed
+
+    success: int = 0
+
+    successes: List[List[str]] = []
+
+    failures: List[List[str]] = []
+
+    # Do not perform it batchwise but per instance, in order to return the error-throwing failures
+
+    for i in instances:
+
+        try:
+
+            model.predict([instances[i]])
+
+            success += 1
+
+            successes.append(instances[i])
+
+        except Exception:
+
+            failures.append(instances[i])
+
+    return SuccessTest(1.0 if len(instances) == 0 else success / len(instances),
+
+                       successes,
+
+                       failures,
+
+                       type=&#39;robustness&#39;,
+
+                       subtype=&#39;input_space&#39;,
+
+                       callargs=callargs)
+</code></pre></div>
+</td></tr></table>
+</details>
+<h3 id="invariance">invariance</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">invariance</span><span class="p">(</span>
+    <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
+    <span class="n">expectation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_sensitivity</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">SuccessTest</span>
+</code></pre></div>
+</td></tr></table>
+<p>Test for the failure rate under invariance.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pattern</td>
+<td>str</td>
+<td>String pattern to generate examples from.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>model</td>
+<td>AbstractClassifier</td>
+<td>Model to test.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>expectation</td>
+<td>Optional[LT]</td>
+<td>Expected outcome values. Defaults to None.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>**kwargs</td>
+<td>None</td>
+<td>Optional arguments passed onto the <code>data.generate.from_pattern()</code> function.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SuccessTest</td>
+<td>Percentage of success cases, list of succeeded (invariant)/failed (variant) instances</td>
+</tr>
+</tbody>
+</table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>@add_callargs
+
+def invariance(pattern: str,
+
+               model: AbstractClassifier,
+
+               expectation: Optional[LT] = None,
+
+               **kwargs,
+
+               ) -&gt; SuccessTest:
+
+    &quot;&quot;&quot;Test for the failure rate under invariance.
+
+    Args:
+
+        pattern (str): String pattern to generate examples from.
+
+        model (AbstractClassifier): Model to test.
+
+        expectation (Optional[LT], optional): Expected outcome values. Defaults to None.
+
+        **kwargs: Optional arguments passed onto the `data.generate.from_pattern()` function.
+
+    Returns:
+
+        SuccessTest: Percentage of success cases, list of succeeded (invariant)/failed (variant) instances
+
+    &quot;&quot;&quot;
+
+    callargs = kwargs.pop(&#39;__callargs__&#39;, None)
+
+    # Generate instances from pattern and predict
+
+    instances, _ = from_pattern(pattern, **kwargs)
+
+    predictions = model.predict(instances)
+
+    if expectation is None:
+
+        if len(predictions) == 0:
+
+            return 0.0, [], []
+
+        expectation = predictions[0][-1]
+
+    if not isinstance(expectation, frozenset):
+
+        expectation = frozenset({expectation})
+
+    correct = [instances[id] for id, label in predictions if label == expectation]
+
+    wrong = [instances[id] for id, label in predictions if label != expectation]
+
+    return SuccessTest(1.0 if len(predictions) == 0 else len(correct) / len(predictions),
+
+                       correct,
+
+                       wrong,
+
+                       predictions=predictions,
+
+                       type=&#39;sensitivity&#39;,
+
+                       subtype=&#39;invariance&#39;,
+
+                       callargs=callargs)
+</code></pre></div>
+</td></tr></table>
+</details>
+<h3 id="mean_score">mean_score</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mean_score</span><span class="p">(</span>
+    <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">machinelearning</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">AbstractClassifier</span><span class="p">,</span>
+    <span class="n">selected_label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="o">~</span><span class="n">LT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_sensitivity</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">MeanScore</span>
+</code></pre></div>
+</td></tr></table>
+<p>Calculate mean (probability) score for a given label, for data generated from a pattern.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pattern</td>
+<td>str</td>
+<td></td>
+<td>None</td>
+</tr>
+<tr>
+<td>model</td>
+<td>AbstractClassifier</td>
+<td>Model to generate scores from.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>selected_label</td>
+<td>Optional[LT]</td>
+<td>Label name to select. If None is replaced by the first label.</td>
+<td></td>
+</tr>
+<tr>
+<td>Defaults to None.</td>
+<td>None</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MeanScore</td>
+<td>Mean score for the selected label, generated instances and label scores.</td>
+</tr>
+</tbody>
+</table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>@add_callargs
+
+def mean_score(pattern: str,
+
+               model: AbstractClassifier,
+
+               selected_label: Optional[LT] = None,
+
+               **kwargs) -&gt; MeanScore:
+
+    &quot;&quot;&quot;Calculate mean (probability) score for a given label, for data generated from a pattern.
+
+    Args:
+
+        pattern (str):
+
+        model (AbstractClassifier): Model to generate scores from.
+
+        selected_label (Optional[LT], optional): Label name to select. If None is replaced by the first label.
+
+            Defaults to None.
+
+    Returns:
+
+        MeanScore: Mean score for the selected label, generated instances and label scores.
+
+    &quot;&quot;&quot;
+
+    callargs = kwargs.pop(&#39;__callargs__&#39;, None)
+
+    instances, _ = from_pattern(pattern, **kwargs)
+
+    predictions = model.predict_proba_provider(instances)
+
+    if selected_label is None:
+
+        if len(predictions) == 0:
+
+            return
+
+        selected_label = list(model.encoder.labelset)[0]
+
+    if isinstance(selected_label, frozenset):
+
+        selected_label = list(selected_label)[0]
+
+    predictions_by_label = [(instances[id], [proba for label, proba in list(probas) if label == selected_label][0])
+
+                            for id, probas in predictions]
+
+    return MeanScore(scores=[p for _, p in predictions_by_label],
+
+                     label=selected_label,
+
+                     instances=instances,
+
+                     callargs=callargs,
+
+                     **kwargs)
 </code></pre></div>
 </td></tr></table>
 </details>

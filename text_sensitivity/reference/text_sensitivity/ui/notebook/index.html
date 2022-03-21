@@ -1665,9 +1665,9 @@ class Render(BaseRender):
 
             callargs = copy.copy(meta[&#39;callargs&#39;])
 
-        _ = callargs.pop(&#39;__name__&#39;)
+        _ = callargs.pop(&#39;__name__&#39;, None)
 
-        _ = callargs.pop(&#39;model&#39;)
+        _ = callargs.pop(&#39;model&#39;, None)
 
         if &#39;kwargs&#39; in callargs:
 
@@ -2233,9 +2233,9 @@ class Render(BaseRender):
 
             callargs = copy.copy(meta[&#39;callargs&#39;])
 
-        _ = callargs.pop(&#39;__name__&#39;)
+        _ = callargs.pop(&#39;__name__&#39;, None)
 
-        _ = callargs.pop(&#39;model&#39;)
+        _ = callargs.pop(&#39;model&#39;, None)
 
         if &#39;kwargs&#39; in callargs:
 
@@ -2766,9 +2766,9 @@ class Render(BaseRender):
 
             callargs = copy.copy(meta[&#39;callargs&#39;])
 
-        _ = callargs.pop(&#39;__name__&#39;)
+        _ = callargs.pop(&#39;__name__&#39;, None)
 
-        _ = callargs.pop(&#39;model&#39;)
+        _ = callargs.pop(&#39;model&#39;, None)
 
         if &#39;kwargs&#39; in callargs:
 
