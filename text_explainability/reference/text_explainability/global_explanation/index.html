@@ -3371,10 +3371,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -3393,75 +3395,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def prototypes(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;prototypes&#39;: self.prototype_sampler.prototypes(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;prototypes&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -3501,10 +3451,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -3523,75 +3475,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def prototypes(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;prototypes&#39;: self.prototype_sampler.prototypes(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;prototypes&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -3632,10 +3532,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">criticisms</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">criticisms</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -3654,75 +3556,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def criticisms(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;criticisms&#39;: self.prototype_sampler.criticisms(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;criticisms&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -3730,10 +3580,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -3752,75 +3604,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def prototypes(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;prototypes&#39;: self.prototype_sampler.prototypes(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;prototypes&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -3857,10 +3657,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">criticisms</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">criticisms</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -3879,75 +3681,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def criticisms(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;criticisms&#39;: self.prototype_sampler.criticisms(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;criticisms&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -3955,10 +3705,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -3977,75 +3729,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def prototypes(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;prototypes&#39;: self.prototype_sampler.prototypes(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;prototypes&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -4148,10 +3848,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">criticisms</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">criticisms</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -4170,75 +3872,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def criticisms(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;criticisms&#39;: self.prototype_sampler.criticisms(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;criticisms&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -4246,10 +3896,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -4268,75 +3920,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def prototypes(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;prototypes&#39;: self.prototype_sampler.prototypes(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;prototypes&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>
@@ -4492,10 +4092,12 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prototypes</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">generation</span><span class="o">.</span><span class="n">return_types</span><span class="o">.</span><span class="n">Instances</span>
 </code></pre></div>
 </td></tr></table>
 <details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -4514,75 +4116,23 @@ class LabelwiseMMDCritic(PrototypeCriticismWrapper):
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def inner(*args, **kwargs):
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    @add_callargs
 
-        ba = inspect.signature(function).bind(*args, **kwargs)
+    def prototypes(self, *args, **kwargs) -&gt; Instances:
 
-        ba.apply_defaults()
+        callargs = kwargs.pop(&#39;__callargs__&#39;, None)
 
-        kw = next((k for k, v in ba.signature.parameters.items()
+        return Instances(instances={&#39;prototypes&#39;: self.prototype_sampler.prototypes(*args, **kwargs)},
 
-                   if k == &#39;__callargs__&#39; or v.kind == inspect._ParameterKind.VAR_KEYWORD),
+                         type=self.type,
 
-                  None)
+                         subtype=&#39;prototypes&#39;,
 
-        # Do not decorate the function if we are unable to pass __callargs__ as an argument
+                         method=self.method,
 
-        if kw is None:
+                         callargs=callargs,
 
-            return function(*ba.args, **ba.kwargs)
-
-        # Construct __callargs__ (including introspection of the self argument)
-
-        callargs = {&#39;__name__&#39;: function.__name__, **dict(recursive_to_dict(ba.arguments))}
-
-        if hasattr(function, &#39;__self__&#39;) and &#39;self&#39; not in callargs.keys():
-
-            callargs[&#39;self&#39;] = function.__self__
-
-        if &#39;self&#39; in callargs.keys():
-
-            self = callargs.pop(&#39;self&#39;)
-
-            callargs[&#39;self&#39;] = self.to_config() if hasattr(self, &#39;to_config&#39;) and hasattr(self, &#39;_dict&#39;) \
-
-                else dict(recursive_to_dict(self))
-
-            if &#39;__name__&#39; not in callargs[&#39;self&#39;] and hasattr(self, &#39;__class__&#39;) or hasattr(self, &#39;__name__&#39;):
-
-                callargs[&#39;self&#39;][&#39;__name__&#39;] = self.__class__.__name__ if hasattr(self, &#39;__class__&#39;) \
-
-                    else self.__name__
-
-        callargs.pop(&#39;__class__&#39;, None)
-
-        return function(*ba.args, __callargs__=callargs, **ba.kwargs)
+                         labelwise=self.labelwise)
 </code></pre></div>
 </td></tr></table>
 </details>

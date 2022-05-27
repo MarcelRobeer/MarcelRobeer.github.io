@@ -741,6 +741,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#to_config" class="md-nav__link">
+    to_config
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1218,6 +1225,13 @@
           <li class="md-nav__item">
   <a href="#prototypes_4" class="md-nav__link">
     prototypes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_config" class="md-nav__link">
+    to_config
   </a>
   
 </li>
@@ -2019,9 +2033,7 @@
 <span class="normal">714</span>
 <span class="normal">715</span>
 <span class="normal">716</span>
-<span class="normal">717</span>
-<span class="normal">718</span>
-<span class="normal">719</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
+<span class="normal">717</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&quot;&quot;&quot;Sample an (informative) subset from the data.
 
 Todo:
 
@@ -2049,7 +2061,7 @@ from instancelib.machinelearning.base import AbstractClassifier
 
 from .embedding import Embedder, TfidfVectorizer
 
-from .weights import exponential_kernel
+from .weights import rbf_kernel
 
 class PrototypeSampler(Readable):
 
@@ -2191,7 +2203,7 @@ class MMDCritic(PrototypeSampler):
 
                  embedder: Embedder = TfidfVectorizer,
 
-                 kernel: Callable = exponential_kernel):
+                 kernel: Callable = rbf_kernel):
 
         &quot;&quot;&quot;Select prototypes and criticisms based on embedding distances using `MMD-Critic`_.
 
@@ -2203,7 +2215,7 @@ class MMDCritic(PrototypeSampler):
 
                 Defaults to TfidfVectorizer.
 
-            kernel (Callable, optional): Kernel to calculate distances. Defaults to exponential_kernel.
+            kernel (Callable, optional): Kernel to calculate distances. Defaults to rbf_kernel.
 
         .. _MMD-critic:
 
@@ -2223,15 +2235,19 @@ class MMDCritic(PrototypeSampler):
 
     def _calculate_kernel(self):
 
-        &quot;&quot;&quot;Calculate kernel `K` and column totals `colsum`.&quot;&quot;&quot;
+        &quot;&quot;&quot;Calculate kernel `__K` and column totals `__colsum`.&quot;&quot;&quot;
 
         self.K = self.kernel(self.embedded, 1.0 / self.embedded.shape[1])
 
-        self.colsum = np.sum(self.K, axis=0) / self.embedded.shape[1]
+        self.colsum = np.sum(self.K, axis=0) / self.embedded.shape[0]
+
+    def to_config(self):
+
+        return {&#39;kernel&#39;: self.kernel, &#39;prototypes&#39;: self.prototypes, &#39;criticisms&#39;: self.criticisms}
 
     def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
-        &quot;&quot;&quot;Select `n` prototypes (most representatitve instances), using `MMD-critic implementation`_.
+        &quot;&quot;&quot;Select `n` prototypes (most representative instances), using `MMD-critic implementation`_.
 
         Args:
 
@@ -2255,8 +2271,6 @@ class MMDCritic(PrototypeSampler):
 
             raise ValueError(f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;)
 
-        K = self.K
-
         colsum = self.colsum.copy() * 2
 
         sample_indices = np.arange(0, len(self.instances))
@@ -2271,7 +2285,7 @@ class MMDCritic(PrototypeSampler):
 
             s1 = colsum[candidate_indices]
 
-            diag = np.diagonal(K)[candidate_indices]
+            diag = np.diagonal(self.K)[candidate_indices]
 
             if selected.shape[0] == 0:
 
@@ -2279,7 +2293,7 @@ class MMDCritic(PrototypeSampler):
 
             else:
 
-                temp = K[selected, :][:, candidate_indices]
+                temp = self.K[selected, :][:, candidate_indices]
 
                 s2 = np.sum(temp, axis=0) * 2 + diag
 
@@ -2347,10 +2361,6 @@ class MMDCritic(PrototypeSampler):
 
         prototypes = np.array([id_map[p.identifier] for p in self._prototypes])
 
-        K = self.K
-
-        colsum = self.colsum
-
         sample_indices = np.arange(0, len(self.instances))
 
         is_selected = np.zeros_like(sample_indices)
@@ -2365,9 +2375,9 @@ class MMDCritic(PrototypeSampler):
 
             candidate_indices = sample_indices[is_selected == 0]
 
-            s1 = colsum[candidate_indices]
+            s1 = self.colsum[candidate_indices]
 
-            temp = K[prototypes, :][:, candidate_indices]
+            temp = self.K[prototypes, :][:, candidate_indices]
 
             s2 = np.sum(temp, axis=0)
 
@@ -2379,11 +2389,11 @@ class MMDCritic(PrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K + 1)[candidate_indices]
+                diag = np.diagonal(self.K + 1)[candidate_indices]
 
                 if inverse_of_prev_selected is not None:
 
-                    temp = K[selected, :][:, candidate_indices]
+                    temp = self.K[selected, :][:, candidate_indices]
 
                     temp2 = np.dot(inverse_of_prev_selected, temp)
 
@@ -2415,7 +2425,7 @@ class MMDCritic(PrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                inverse_of_prev_selected = np.linalg.pinv(K[selected, :][:, selected])
+                inverse_of_prev_selected = np.linalg.pinv(self.K[selected, :][:, selected])
 
         selected_in_order = selected[is_selected[(is_selected &gt; 0) &amp; (is_selected != (n + 1))].argsort()]
 
@@ -2649,7 +2659,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                  embedder: Embedder = TfidfVectorizer,
 
-                 kernel: Callable = exponential_kernel):
+                 kernel: Callable = rbf_kernel):
 
         &quot;&quot;&quot;Select prototypes and criticisms for each label based on embedding distances using `MMD-Critic`_.
 
@@ -2665,7 +2675,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                 Defaults to TfidfVectorizer.
 
-            kernel (Callable, optional): Kernel to calculate distances. Defaults to exponential_kernel.
+            kernel (Callable, optional): Kernel to calculate distances. Defaults to rbf_kernel.
 
         .. _MMD-critic:
 
@@ -3369,7 +3379,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">LabelProvider</span><span class="p">],</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16eaf9310</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">rbf_kernel</span> <span class="n">at</span> <span class="mh">0x162a5d280</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -3483,7 +3493,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                  embedder: Embedder = TfidfVectorizer,
 
-                 kernel: Callable = exponential_kernel):
+                 kernel: Callable = rbf_kernel):
 
         &quot;&quot;&quot;Select prototypes and criticisms for each label based on embedding distances using `MMD-Critic`_.
 
@@ -3499,7 +3509,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                 Defaults to TfidfVectorizer.
 
-            kernel (Callable, optional): Kernel to calculate distances. Defaults to exponential_kernel.
+            kernel (Callable, optional): Kernel to calculate distances. Defaults to rbf_kernel.
 
         .. _MMD-critic:
 
@@ -4191,7 +4201,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MMDCritic</span><span class="p">(</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">MemoryBucketProvider</span><span class="p">,</span>
     <span class="n">embedder</span><span class="p">:</span> <span class="n">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">Embedder</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">text_explainability</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">TfidfVectorizer</span><span class="s1">&#39;&gt;,</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">exponential_kernel</span> <span class="n">at</span> <span class="mh">0x16eaf9310</span><span class="o">&gt;</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">rbf_kernel</span> <span class="n">at</span> <span class="mh">0x162a5d280</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -4461,9 +4471,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">264</span>
 <span class="normal">265</span>
 <span class="normal">266</span>
-<span class="normal">267</span>
-<span class="normal">268</span>
-<span class="normal">269</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class MMDCritic(PrototypeSampler):
+<span class="normal">267</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>class MMDCritic(PrototypeSampler):
 
     def __init__(self,
 
@@ -4471,7 +4479,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                  embedder: Embedder = TfidfVectorizer,
 
-                 kernel: Callable = exponential_kernel):
+                 kernel: Callable = rbf_kernel):
 
         &quot;&quot;&quot;Select prototypes and criticisms based on embedding distances using `MMD-Critic`_.
 
@@ -4483,7 +4491,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
                 Defaults to TfidfVectorizer.
 
-            kernel (Callable, optional): Kernel to calculate distances. Defaults to exponential_kernel.
+            kernel (Callable, optional): Kernel to calculate distances. Defaults to rbf_kernel.
 
         .. _MMD-critic:
 
@@ -4503,15 +4511,19 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
     def _calculate_kernel(self):
 
-        &quot;&quot;&quot;Calculate kernel `K` and column totals `colsum`.&quot;&quot;&quot;
+        &quot;&quot;&quot;Calculate kernel `__K` and column totals `__colsum`.&quot;&quot;&quot;
 
         self.K = self.kernel(self.embedded, 1.0 / self.embedded.shape[1])
 
-        self.colsum = np.sum(self.K, axis=0) / self.embedded.shape[1]
+        self.colsum = np.sum(self.K, axis=0) / self.embedded.shape[0]
+
+    def to_config(self):
+
+        return {&#39;kernel&#39;: self.kernel, &#39;prototypes&#39;: self.prototypes, &#39;criticisms&#39;: self.criticisms}
 
     def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
-        &quot;&quot;&quot;Select `n` prototypes (most representatitve instances), using `MMD-critic implementation`_.
+        &quot;&quot;&quot;Select `n` prototypes (most representative instances), using `MMD-critic implementation`_.
 
         Args:
 
@@ -4535,8 +4547,6 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             raise ValueError(f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;)
 
-        K = self.K
-
         colsum = self.colsum.copy() * 2
 
         sample_indices = np.arange(0, len(self.instances))
@@ -4551,7 +4561,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             s1 = colsum[candidate_indices]
 
-            diag = np.diagonal(K)[candidate_indices]
+            diag = np.diagonal(self.K)[candidate_indices]
 
             if selected.shape[0] == 0:
 
@@ -4559,7 +4569,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             else:
 
-                temp = K[selected, :][:, candidate_indices]
+                temp = self.K[selected, :][:, candidate_indices]
 
                 s2 = np.sum(temp, axis=0) * 2 + diag
 
@@ -4627,10 +4637,6 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         prototypes = np.array([id_map[p.identifier] for p in self._prototypes])
 
-        K = self.K
-
-        colsum = self.colsum
-
         sample_indices = np.arange(0, len(self.instances))
 
         is_selected = np.zeros_like(sample_indices)
@@ -4645,9 +4651,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             candidate_indices = sample_indices[is_selected == 0]
 
-            s1 = colsum[candidate_indices]
+            s1 = self.colsum[candidate_indices]
 
-            temp = K[prototypes, :][:, candidate_indices]
+            temp = self.K[prototypes, :][:, candidate_indices]
 
             s2 = np.sum(temp, axis=0)
 
@@ -4659,11 +4665,11 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K + 1)[candidate_indices]
+                diag = np.diagonal(self.K + 1)[candidate_indices]
 
                 if inverse_of_prev_selected is not None:
 
-                    temp = K[selected, :][:, candidate_indices]
+                    temp = self.K[selected, :][:, candidate_indices]
 
                     temp2 = np.dot(inverse_of_prev_selected, temp)
 
@@ -4695,7 +4701,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                inverse_of_prev_selected = np.linalg.pinv(K[selected, :][:, selected])
+                inverse_of_prev_selected = np.linalg.pinv(self.K[selected, :][:, selected])
 
         selected_in_order = selected[is_selected[(is_selected &gt; 0) &amp; (is_selected != (n + 1))].argsort()]
 
@@ -4950,11 +4956,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">116</span>
 <span class="normal">117</span>
 <span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[DataPoint]:
+<span class="normal">119</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def criticisms(self, n: int = 5, regularizer: Optional[str] = None) -&gt; Sequence[DataPoint]:
 
         &quot;&quot;&quot;Select `n` criticisms (instances not well represented by prototypes), using `MMD-critic implementation`_.
 
@@ -5002,10 +5004,6 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
         prototypes = np.array([id_map[p.identifier] for p in self._prototypes])
 
-        K = self.K
-
-        colsum = self.colsum
-
         sample_indices = np.arange(0, len(self.instances))
 
         is_selected = np.zeros_like(sample_indices)
@@ -5020,9 +5018,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             candidate_indices = sample_indices[is_selected == 0]
 
-            s1 = colsum[candidate_indices]
+            s1 = self.colsum[candidate_indices]
 
-            temp = K[prototypes, :][:, candidate_indices]
+            temp = self.K[prototypes, :][:, candidate_indices]
 
             s2 = np.sum(temp, axis=0)
 
@@ -5034,11 +5032,11 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                diag = np.diagonal(K + 1)[candidate_indices]
+                diag = np.diagonal(self.K + 1)[candidate_indices]
 
                 if inverse_of_prev_selected is not None:
 
-                    temp = K[selected, :][:, candidate_indices]
+                    temp = self.K[selected, :][:, candidate_indices]
 
                     temp2 = np.dot(inverse_of_prev_selected, temp)
 
@@ -5070,7 +5068,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             if regularizer == &#39;logdet&#39;:
 
-                inverse_of_prev_selected = np.linalg.pinv(K[selected, :][:, selected])
+                inverse_of_prev_selected = np.linalg.pinv(self.K[selected, :][:, selected])
 
         selected_in_order = selected[is_selected[(is_selected &gt; 0) &amp; (is_selected != (n + 1))].argsort()]
 
@@ -5090,7 +5088,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">instancelib</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">DataPoint</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
-<p>Select <code>n</code> prototypes (most representatitve instances), using <code>MMD-critic implementation</code>_.</p>
+<p>Select <code>n</code> prototypes (most representative instances), using <code>MMD-critic implementation</code>_.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -5214,11 +5212,9 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 <span class="normal">64</span>
 <span class="normal">65</span>
 <span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
+<span class="normal">67</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def prototypes(self, n: int = 5) -&gt; Sequence[DataPoint]:
 
-        &quot;&quot;&quot;Select `n` prototypes (most representatitve instances), using `MMD-critic implementation`_.
+        &quot;&quot;&quot;Select `n` prototypes (most representative instances), using `MMD-critic implementation`_.
 
         Args:
 
@@ -5242,8 +5238,6 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             raise ValueError(f&#39;Cannot select more than all instances ({len(self.instances)}.&#39;)
 
-        K = self.K
-
         colsum = self.colsum.copy() * 2
 
         sample_indices = np.arange(0, len(self.instances))
@@ -5258,7 +5252,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             s1 = colsum[candidate_indices]
 
-            diag = np.diagonal(K)[candidate_indices]
+            diag = np.diagonal(self.K)[candidate_indices]
 
             if selected.shape[0] == 0:
 
@@ -5266,7 +5260,7 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
 
             else:
 
-                temp = K[selected, :][:, candidate_indices]
+                temp = self.K[selected, :][:, candidate_indices]
 
                 s2 = np.sum(temp, axis=0) * 2 + diag
 
@@ -5285,6 +5279,22 @@ class LabelwiseMMDCritic(LabelwisePrototypeSampler):
         self._prototypes = self._select_from_provider(selected_in_order)
 
         return self._prototypes
+</code></pre></div>
+</td></tr></table>
+</details>
+<h4 id="to_config">to_config</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">to_config</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<details class="example"><summary>View Source</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    def to_config(self):
+
+        return {&#39;kernel&#39;: self.kernel, &#39;prototypes&#39;: self.prototypes, &#39;criticisms&#39;: self.criticisms}
 </code></pre></div>
 </td></tr></table>
 </details>
