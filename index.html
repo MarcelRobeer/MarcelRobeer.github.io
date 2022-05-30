@@ -36,8 +36,6 @@
       body { background-color: #DDDDDD; color: #F8F8F2; position: relative; margin: auto; display: block; height: auto;
           justify-content: center;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-          background-image: url("https://marcelrobeer.github.io/img/dot-grid.png");
-          background-repeat: repeat;
       }
       #header { z-index: 1000; position: fixed; top: 0; left: 0; width: 100%; height: 4rem; background-color: #0d0d0d; border-bottom: 1px solid #090909; color: #fff; }
       #header #logo { position: fixed; left: 2rem; top: 0; font-family: "visitor"; line-height: 4rem; font-size: 3rem; }
@@ -47,9 +45,12 @@
       #header nav ul li { float: left; }
       #header nav ul li a { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", sans-serif; display: block; padding: 0 1.2rem; text-align: center; line-height: 4rem; }
       #header nav ul li a, #header nav ul li a:hover, #header nav ul li a:visited { color: #dfdee5; text-decoration: none; }
-      #header nav ul li a:hover { color: #fff; text-decoration: none; }
-      .content { width: 100%; max-width: 800px; min-width: 500px; height: 100%; margin: 4.65rem auto; box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); }
-      .content nav { background-color: #2B6E8F; padding: 1.5rem; display: block; } /* #2E3A82 */
+      #header nav ul li a:hover { color: #FFFFFF; text-decoration: none; }
+      .content { color: #000; margin: 4rem 0; box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); }
+      .wrapper { width: 100%; max-width: 1200px; min-width: 500px; height: 100%; margin: 0 auto; }
+      section { background-color: #FEFEFE; padding: 0; margin: 0; }
+      section .wrapper { padding: 1.5rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
+      section.bg { background-image: url("https://marcelrobeer.github.io/img/dot-grid.png"); background-repeat: repeat; }
       .links { padding-right: 1rem; }
       .links .item { background-color: rgba(0, 0, 0, 0.2); padding: .7rem .7rem; font-size: 1em; width: 100%; margin-bottom: .8rem; display:grid; grid-template-columns: 1fr auto; }
       .links .item:nth-child(odd) { background-color: rgba(0, 0, 0, 0.33); }
@@ -79,55 +80,23 @@
       </nav>
     </div>
     <div class="content">
-      <nav>
-        <div class="links">
-          <h1>Package index</h1>
-          <div class="item">
-            <div class="description">
-              <a href="https://github.com/MarcelRobeer/explabox"><i class="fab fa-github" aria-hidden="true"></i>explabox</a>
-              <p>{ Explore | Examine | Expose | Explain } your AI model with the explabox!</p>
-            </div>
-            <a href="https://explabox.rtfd.io"><i class="fas fa-book-open text-muted" aria-hidden="true"></i></a>
-          </div>
-
-          <div class="item">
-            <div class="description">
-              <a href="https://git.science.uu.nl/m.j.robeer/text_explainability"><i class="fab fa-gitlab" aria-hidden="true"></i>text_explainability</a>
-              <p>A generic explainability architecture for explaining text machine learning models</p>
-            </div>
-            <a href="https://text-explainability.rtfd.io/"><i class="fas fa-book-open text-muted" aria-hidden="true"></i></a>
-          </div>
-
-          <div class="item">
-            <div class="description">
-              <a href="https://git.science.uu.nl/m.j.robeer/text_sensitivity"><i class="fab fa-gitlab" aria-hidden="true"></i>text_sensitivity</a>
-              <p>Extension of text_explainability for sensitivity testing (robustness, fairness)</p>
-            </div>
-          <a href="https://marcelrobeer.github.io/text_sensitivity"><i class="fas fa-book-open text-muted" aria-hidden="true"></i></a>
-          </div>
-
-          <div class="item">
-            <div class="description">
-              <a href="https://github.com/MarcelRobeer/ContrastiveExplanation"><i class="fab fa-github" aria-hidden="true"></i>ContrastiveExplanation</a>
-              <p>Contrastive and counterfactual explanations for machine learning with Foil Trees</p>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="description">
-              <a href="https://github.com/MarcelRobeer/VisualNarrator"><i class="fab fa-github" aria-hidden="true"></i>VisualNarrator</a>
-              <p>Turns user stories into a conceptual model containing entities and relationships</p>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="description">
-              <a href="https://git.science.uu.nl/m.j.robeer/genbase"><i class="fab fa-gitlab" aria-hidden="true"></i>genbase</a>
-              <p>Generation base dependency (unifies functions for text_explainability and text_sensitivity)</p>
-            </div>
-          </div>
-      </nav>
-      <footer>Marcel Robeer</footer>
+      <section class="bg">
+        <div class="wrapper">
+          <h1>Title</h1>
+          <p>Content</p>
+        </div>
+      </section>
+      <section>
+        <div class="wrapper">
+          <h1>Title</h1>
+          <p>Content</p>
+        </div>
+      </section>
+      <footer>
+        <div class="wrapper">
+          &copy; Marcel Robeer
+        </div>
+      </footer>
     </div>
   </body>
 </html>
