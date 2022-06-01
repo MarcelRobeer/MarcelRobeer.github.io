@@ -11,6 +11,5 @@ $(document).ready(function() {
     
         $('.scroll-bar').css('width', indicator + '%');
     
-    
     });
 });
