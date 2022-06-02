@@ -33,7 +33,10 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 .links .item > a { background-color: #252526; color: #F9F9F9; margin-left: auto; margin-right: 0; padding: 2rem; max-height: 45px; }
 .links .item > a:hover { background-color: #353536; color: #FFF; }
 .links .item > a i { float: right; font-size: 2.5rem; }
-.doc { display: flex; }
+.doc { display: flex; width: 100%; justify-content: space-between; gap: 2rem; }
+.doc section { flex: 1; background: none; }
+.doc aside { position: relative; width: 160px; height: 160px; }
+.doc aside > img { position: absolute; margin: auto; max-height: 100%; max-width: 100%; top: 0; right: 0; bottom: 0; left: 0; }
 footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: block; text-align: right; }
 @media only screen and (max-width: 768px) {
     .bg-dark h1 { font-size: 2.4rem; line-height: 2.6rem; }
