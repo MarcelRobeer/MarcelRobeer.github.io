@@ -107,15 +107,19 @@ box <span class="operator">=</span> <span class="class">Explabox</span>(data<spa
     <code>python3.8 and above</code>
   </div>
 <pre>
+<span class="comment"># Explore descriptive statistics</span>
 box<span class="operator">.</span><span class="function">explore</span>()
 <span class="omitted">...</span>
 
+<span class="comment"># Examine model performance on the data</span>
 box<span class="operator">.</span>examine<span class="operator">.</span><span class="function">wrongly_classified</span>()
 <span class="omitted">...</span>
 
+<span class="comment"># Explain local/global model behavior</span>
 box<span class="operator">.</span>explain<span class="operator">.</span><span class="function">explain_prediction</span>(<span class="variable">&#39;Explain this instance!&#39;</span>)
 <span class="omitted">...</span>
 
+<span class="comment"># Expose where the model is sensitive to</span>
 box<span class="operator">.</span>expose<span class="operator">.</span><span class="function">compare_metrics</span>(perturbation<span class="operator">=</span><span class="variable">&#39;upper&#39;</span>)
 <span class="omitted">...</span>
 </pre>
