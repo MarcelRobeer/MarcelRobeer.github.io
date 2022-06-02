@@ -40,7 +40,7 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 .doc aside { position: relative; width: 160px; height: 160px; }
 .doc aside > img { position: absolute; margin: auto; max-height: 100%; max-width: 100%; top: 0; right: 0; bottom: 0; left: 0; }
 .doc + .cta a, #explabox .cta a { font-size: .9rem; text-transform: none; margin: 0; color: #FFF; background-color: #F84F4F; float: right; }
-#explabox .cta a { margin: 1rem 1.5rem 0 1.5rem; }
+#explabox .cta a { margin: 1.5rem 0 1.5rem 1rem; }
 #explabox .cta a:nth-child(1) { background-color: #6F6F6F; }
 .doc + .cta a:hover, #explabox .cta a:hover { background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px #FDFDFD inset, 0px 0px 0px 5px #FF1112; }
 p { color: #1E1E1E; line-height: 1.5em; }
