@@ -7,6 +7,7 @@ h1 { font-size: 3em; margin-block-end: .5em; }
 .bg-dark h1, .bg-dark h2 { text-align: center; max-width: 600px; }
 .bg-dark h1 { color: #FFF; font-size: 4.6rem; margin: 6rem auto 0 auto; line-height: 4.2rem; }
 .bg-dark h2 { font-family: 'visitor'; color: #FF3333; margin: 1rem auto 3.8rem auto; font-size: 8rem; line-height: 6.4rem; }
+.bg-dark h3 { color: #FEFEF3; font-size: 3.8rem; }
 .bg-dark .cta { display: flex; align-items: center; justify-content: center; margin-bottom: 5rem; }
 .bg-dark .cta a { display: inline-block; padding: 1rem 1.8rem; margin: 0 2rem; background-color: #E6E6E6; color: #000; text-transform: uppercase; font-weight: 800; transition: 0.5s ease-in-out; }
 .bg-dark .cta a > emph { text-decoration: underline; }
