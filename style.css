@@ -43,6 +43,7 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 #explabox .cta a { margin: 1.5rem 0 1.5rem 1rem; }
 #explabox .cta a:nth-child(1) { background-color: #6F6F6F; }
 .doc + .cta a:hover, #explabox .cta a:hover { background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px #FDFDFD inset, 0px 0px 0px 5px #FF1112; }
+#explabox .cta a:nth-child(1):hover { background-color: #0D0D0D; box-shadow: 0px 0px 0px 2.5px #FDFDFD inset, 0px 0px 0px 5px #0D0D0D; }
 p { color: #1E1E1E; line-height: 1.5em; }
 p > span.c { font-family: Menlo, Monaco, Consolas, "Courier New", "Lucida Console", monospace; font-size: 90%; padding: 2px; }
 p.info { color: #FF7775; line-height: 24px; }
