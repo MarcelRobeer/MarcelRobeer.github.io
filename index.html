@@ -82,13 +82,13 @@
             <code>python3.8 and above</code>
           </div>
 <pre>
+<span class="built-in">from</span> <span class="package">explabox</span> <span class="built-in">import</span> <span class="class">Explabox</span>, <span class="function">import_data</span>, <span class="function">import_model</span>
+
 <span class="comment"># Import model and data</span>
-<span class="built-in">from</span> <span class="package">explabox</span> <span class="built-in">import</span> <span class="function">import_data</span>, <span class="function">import_model</span>
 data <span class="operator">=</span> <span class="function">import_data</span>(<span class="variable">&#39;data.csv&#39;</span>, data_cols<span class="operator">=</span><span class="variable">&#39;review&#39;</span>, label_cols<span class="operator">=</span><span class="variable">&#39;score&#39;</span>)
 model <span class="operator">=</span> <span class="function">import_model</span>(<span class="variable">&#39;classifier.onnx&#39;</span>)
 
 <span class="comment"># Wrap in the explabox</span>
-<span class="built-in">from</span> <span class="package">explabox</span> <span class="built-in">import</span> <span class="class">Explabox</span>
 box <span class="operator">=</span> <span class="class">Explabox</span>(data<span class="operator">=</span>data, model<span class="operator">=</span>model)
 
 <span class="comment"># Explore, examine, explain and expose!</span>
