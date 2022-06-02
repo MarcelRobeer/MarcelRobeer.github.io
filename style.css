@@ -60,5 +60,5 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
     .bg-dark .cta a { margin: 2rem 1rem; padding: 2.4rem 2.8rem; }
     .cta a { margin: 2rem 1rem; }
     .bg-dark .wrapper { margin: 0; }
-    .wrapper { margin: 0 1rem; }
+    .wrapper { width: 95%; margin: 0 1rem; }
 }
