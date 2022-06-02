@@ -6,7 +6,7 @@
 .codehilite pre .class { color: #FF3333; }
 .codehilite pre .comment { color: #a0a1a7; font-style: italic; }
 .codehilite pre .function { color: #e06c75 }
-.codehilite pre .omitted { color #bbbbbb; }
+.codehilite pre .omitted { color: #bbbbbb; }
 .codehilite pre .operator { color: #666666; }
 .codehilite pre .package { color: inherit; }
 .codehilite pre .variable { color: #50a14f; }
