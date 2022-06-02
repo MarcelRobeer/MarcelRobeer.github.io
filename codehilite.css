@@ -3,7 +3,7 @@
 .codehilite .topbar > svg { position: absolute; left: 0; top: 18px; }
 .codehilite pre { margin: 0; line-height: 125%; }
 .codehilite pre .built-in { color: #a626a4; }
-.codehilite pre .class { color: #FF3333; font-style: bold; }
+.codehilite pre .class { color: #FF3333; font-weight: bold; }
 .codehilite pre .comment { color: #a0a1a7; font-style: italic; }
 .codehilite pre .function { color: #e06c75 }
 .codehilite pre .omitted { color: #bbbbbb; }
