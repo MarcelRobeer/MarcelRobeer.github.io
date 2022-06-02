@@ -9,12 +9,12 @@ h1 { font-size: 3em; margin-block-end: .5em; }
 .bg-dark h2 { font-family: 'visitor'; color: #FF3333; margin: 1rem auto 3.8rem auto; font-size: 8rem; line-height: 6.4rem; }
 .bg-dark h3 { color: #FEFEF3; color: #FF3333; margin: 1rem auto 3.6rem auto; font-size: 3.4rem; line-height: 3.8rem; }
 .bg-dark .cta { display: flex; align-items: center; justify-content: center; margin-bottom: 5rem; }
-.bg-dark .cta a { display: inline-block; padding: 1rem 1.8rem; margin: 0 2rem; background-color: #E6E6E6; color: #000; text-transform: uppercase; font-weight: 800; transition: 0.5s ease-in-out; }
-.bg-dark .cta a > emph { text-decoration: underline; }
-.bg-dark .cta a, .bg-dark .cta a:hover, .bg-dark .cta a:visited { text-decoration: none; }
-.bg-dark .cta a:hover { color: #FFF; background-color: #F84F4F; box-shadow: 0px 0px 0px 2.5px black inset, 0px 0px 0px 5px #F84F4F; }
-.bg-dark .cta a:nth-child(1) { background-color: #FF9999; }
-.bg-dark .cta a:nth-child(1):hover { color: #FFF; background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px black inset, 0px 0px 0px 5px #FF1112; }
+.cta a { display: inline-block; padding: 1rem 1.8rem; margin: 0 2rem; background-color: #E6E6E6; color: #000; text-transform: uppercase; font-weight: 800; transition: 0.5s ease-in-out; }
+.cta a > emph { text-decoration: underline; }
+.cta a, .bg-dark .cta a:hover, .bg-dark .cta a:visited { text-decoration: none; }
+.cta a:hover { color: #FFF; background-color: #F84F4F; box-shadow: 0px 0px 0px 2.5px black inset, 0px 0px 0px 5px #F84F4F; }
+.cta a:nth-child(1) { background-color: #FF9999; }
+.cta a:nth-child(1):hover { color: #FFF; background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px black inset, 0px 0px 0px 5px #FF1112; }
 .content { color: #000; margin: 4rem 0 0 0; box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); }
 .wrapper { width: 100%; max-width: 1200px; min-width: 400px; height: 100%; margin: 0 auto; }
 section { background-color: #FDFDFD; padding: 0; margin: 0; }
@@ -36,6 +36,7 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 .links .item > a i { float: right; font-size: 2.5rem; }
 .doc { display: flex; width: 100%; justify-content: space-between; gap: 2rem; }
 .doc section { flex: 1; background: none; }
+.doc section .cta { float: right; }
 .doc aside { position: relative; width: 160px; height: 160px; }
 .doc aside > img { position: absolute; margin: auto; max-height: 100%; max-width: 100%; top: 0; right: 0; bottom: 0; left: 0; }
 footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: block; text-align: right; }
