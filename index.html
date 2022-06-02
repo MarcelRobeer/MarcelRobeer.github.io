@@ -76,7 +76,7 @@
       <section id="explabox" class="bg">
         <div class="wrapper">
           <h1>Explabox</h1>
-          <p>... <span class="c">pip install explabox</span></p>
+          <p>With the <span class="c">explabox</span>, you can turn your <emph>ingestibles</emph> (model and data) into <emph>digestibles</emph> (statistics and insights). You no longer need a whole suite of Python packages to for descriptive statistiscs, explainable AI (XAI), and robustness &amp; fairness testing. Simply <span class="c">pip install explabox</span>, and you are good to go:</p>
           <div class="codehilite">
           <div class="topbar">
             <svg xmlns="https://www.w3.org/2000/svg" width="54px" height="14px" viewBox="0 0 54 14">
@@ -101,7 +101,13 @@ box <span class="operator">=</span> <span class="class">Explabox</span>(data<spa
 <span class="comment"># Explore, examine, explain and expose!</span>
 </pre>
 </div>
-<p>More explanation</p>
+<p>Once your model (e.g. <span class="c">csv</span>, <span class="c">pandas DataFrame</span> or <span class="c">huggingface Dataset</span>) and model (e.g. <span class="c">scikit-learn</span>, <span class="c">PyTorch</span> or <span class="c">tensorflow</span>) are wrapped in the <span class="c">explabox</span>, you are <emph>good to go</emph>!</p>
+<ul>
+  <li><b>Explore</b>: describe aspects of the model and data.</li>
+  <li><b>Examine</b>: calculate quantitative metrics on how the model performs.</li>
+  <li><b>Expose</b>: see model sensitivity to random inputs (robustness), test model generalizability (robustness), and see the effect of adjustments of attributes in the inputs (e.g. swapping male pronouns for female pronouns; fairness), for the dataset as a whole (global) as well as for individual instances (local).</li>
+  <li><b>Explain</b>: use XAI methods for explaining the whole dataset (global), model behavior on the dataset (global), and specific predictions/decisions (local).</li>
+</ul>
 <div class="codehilite">
   <div class="topbar">
     <svg xmlns="https://www.w3.org/2000/svg" width="54px" height="14px" viewBox="0 0 54 14">
@@ -131,7 +137,7 @@ box<span class="operator">.</span><span class="part">expose</span><span class="o
 <span class="omitted">...</span>
 </pre>
 </div>
-
+<p>The <span class="c">explabox</span> aims to support <emph>data scientists and ML engineers</emph>, but also makes it easy to document and communicate it with your stakeholders! It was developed in a <emph>professional environment</emph>, where the <span class="c">explabox</span> is used to <emph>support the AI development lifecycle</emph> with <emph color="#FF7775">traceable, accountable, transparent</emph> model development.</p>
           <div class="cta">
             <a target="_blank" href="https://github.com/MarcelRobeer/explabox/">github.com/MarcelRobeer/explabox</a>
             <a href="https://explabox.readthedocs.io/">explabox.readthedocs.io</a>
