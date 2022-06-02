@@ -31,10 +31,11 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
       <link rel="stylesheet" href="https://marcelrobeer.github.io/header.css">
       <link rel="stylesheet" href="https://marcelrobeer.github.io/style.css">
+      <link rel="stylesheet" href="https://marcelrobeer.github.io/codehilite.css">
       <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
       <script type="text/javascript" src="https://marcelrobeer.github.io/header.js"></script>
       <link rel="icon" type="image/png" href="https://marcelrobeer.github.io//img/icon.png">
-      <link rel="apple-touch-icon" type="image/png" href="https://marcelrobeer.github.io//img/icon-192.png">    
+      <link rel="apple-touch-icon" type="image/png" href="https://marcelrobeer.github.io//img/icon-192.png">
   </head>
   <body>
     <div id="header" class="no-print">
@@ -69,6 +70,32 @@
         <div class="wrapper">
           <h1>Explabox</h1>
           <p>Content</p>
+          <div class="codehilite">
+          <div class="topbar">
+            <svg xmlns="https://www.w3.org/2000/svg" width="54px" height="14px" viewBox="0 0 54 14">
+              <g fill="none">
+                <circle cx="6" cy="6" r="6" fill="#FF5F56" stroke="#E0443E" stroke-width="0"></circle>
+                <circle cx="26" cy="6" r="6" fill="#FFBD2E" stroke="#DEA123" stroke-width="0"></circle>
+                <circle cx="46" cy="6" r="6" fill="#27C93F" stroke="#1AAB29" stroke-width="0"></circle>
+              </g>
+            </svg>
+            <code>python3</code>
+          </div>
+<pre>
+<span class="built-in">from</span> <span class="package">explabox</span> <span class="built-in">import</span> <span class="function">import_data</span>, <span class="function">import_model</span>, <span class="class">Explabox</span>
+
+<span class="comment"># Import model and data</span>
+data <span class="operator">=</span> <span class="function">import_data</span>(<span class="variable">&#39;data.csv&#39;</span>, data_cols<span class="operator">=</span><span class="variable">&#39;review&#39;</span>, label_cols<span class="operator">=</span><span class="variable">&#39;score&#39;</span>)
+model <span class="operator">=</span> <span class="function">import_model</span>(<span class="variable">&#39;classifier.onnx&#39;</span>)
+
+<span class="comment"># Wrap in the explabox</span>
+box <span class="operator">=</span> <span class="class">Explabox</span>(data<span class="operator">=</span>data, model<span class="operator">=</span>model)
+
+<span class="comment"># Explore, examine, explain and expose!</span>
+box<span class="operator">.</span><span class="function">explore</span>()
+</pre>
+</div>
+  
         </div>
       </section>
       <section id="package-index">
