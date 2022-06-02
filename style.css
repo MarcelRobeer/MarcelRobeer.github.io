@@ -42,7 +42,7 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 .doc + .cta a { font-size: .9rem; text-transform: none; margin: 0; color: #FFF; background-color: #F84F4F; float: right; }
 .doc + .cta a:hover { background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px #FDFDFD inset, 0px 0px 0px 5px #FF1112; }
 p { color: #1E1E1E; line-height: 1.5em; }
-p > span.c { font-family: "Courier New", "Lucida Console", monospace; font-weight: 600; }
+p > span.c { font-family: "Courier New", "Lucida Console", monospace; font-weight: 500; }
 ul > li { line-height: 1.25em; }
 ul > li:not(:last-child) { margin-bottom: .5rem; }
 footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: block; text-align: right; }
