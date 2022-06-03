@@ -1,4 +1,4 @@
-.codehilite { background: #FCFCFC; overflow: auto; width: auto; border-radius: 5px; box-shadow: 0 7px 18px rgb(0 0 0 / 35%); padding: 1rem 1.3rem; margin: 2.3rem auto; }
+.codehilite { background: #FCFCFC; max-width: 640px; overflow: auto; width: auto; border-radius: 5px; box-shadow: 0 7px 18px rgb(0 0 0 / 35%); padding: 1rem 1.3rem; margin: 2.3rem auto; }
 .codehilite .topbar { position: relative; color: #bbbbbb; text-align: center; line-height: 48px; margin-top: -1rem; margin-bottom: 1rem; }
 .codehilite .topbar > svg { position: absolute; left: 0; top: 18px; }
 .codehilite pre { margin: 0; line-height: 125%; }
