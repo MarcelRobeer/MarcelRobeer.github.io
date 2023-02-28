@@ -4,22 +4,26 @@ body { background-color: #DDDDDD; color: #F8F8F2; position: relative; margin: au
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 h1 { font-size: 3em; margin-block-end: .5em; }
-.bg-dark h1, .bg-dark h2, .bg-dark h3 { text-align: center; max-width: 600px; }
-.bg-dark h1 { color: #FFF; font-size: 4.6rem; margin: 6rem auto 0 auto; line-height: 4.2rem; }
-.bg-dark h2 { font-family: 'visitor'; color: #FF3333; margin: 1rem auto 3.8rem auto; font-size: 8rem; line-height: 6.4rem; }
-.bg-dark h3 { color: #FEFEF3; color: #FF3333; margin: 1rem auto 3.6rem auto; font-size: 3.4rem; line-height: 3.8rem; }
-.bg-dark .cta { display: flex; align-items: center; justify-content: center; margin-bottom: 5rem; }
+.bg-animated h1, .bg-animated h2, .bg-animated h3, .bg-dark h1, .bg-dark h2, .bg-dark h3 { text-align: center; max-width: 600px; }
+.bg-animated h1, .bg-dark h1 { color: #FFF; font-size: 4.6rem; margin: 6rem auto 0 auto; line-height: 4.2rem; }
+.bg-animated h2, .bg-dark h2 { font-family: 'visitor'; color: #FF3333; margin: 1rem auto 3.8rem auto; font-size: 8rem; line-height: 6.4rem; }
+.bg-animated h3, .bg-dark h3 { color: #FEFEF3; color: #FF3333; margin: 1rem auto 3.6rem auto; font-size: 3.4rem; line-height: 3.8rem; }
+.bg-animated .cta, .bg-dark .cta { display: flex; align-items: center; justify-content: center; margin-bottom: 5rem; }
 .cta a { display: inline-block; padding: 1rem 1.8rem; margin: 0 2rem; background-color: #E6E6E6; color: #000; text-transform: uppercase; font-weight: 800; transition: 0.5s ease-in-out; }
 .cta a > emph, p > emph { text-decoration: underline; }
-.cta a, .bg-dark .cta a:hover, .bg-dark .cta a:visited { text-decoration: none; }
+.cta a, .bg-animated .cta a:hover, .bg-animated .cta a:visited { text-decoration: none; }
 .cta a:hover { color: #FFF; background-color: #F84F4F; box-shadow: 0px 0px 0px 2.5px black inset, 0px 0px 0px 5px #F84F4F; }
 .cta a:nth-child(1) { background-color: #FF9999; }
 .cta a:nth-child(1):hover { color: #FFF; background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px black inset, 0px 0px 0px 5px #FF1112; }
 .content { color: #000; margin: 4rem 0 0 0; box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); }
 .wrapper { width: 100%; max-width: 1200px; min-width: 420px; height: 100%; margin: 0 auto; }
 .wrapper .cta { min-height: 5rem; }
-section { background-color: #FDFDFD; padding: 0; margin: 0; }
-section .wrapper { padding: 1.5rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+section { background-color: #FDFDFD; padding: 0; margin: 0; z-index: 0; }
+section .wrapper { padding: 1.5rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); max-height: 100vh; }
+section.bg-animated { overflow: hidden; background: none; }
+section.bg-animated > .bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(-45deg, #5189E3, #EE3839, #DDDDDD, #EE3839); background-size: 400% 400%; overflow: hidden; animation: gradient 6s ease infinite; }
+.halftone { aspect-ratio: 1; background: rgb(0 0 0); filter: contrast(20) invert(0); mix-blend-mode: multiply; z-index: -1; }
+.halftone::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at center, rgb(255, 255, 255) 3%, rgb(255 255 255 / 0.4) 7%); background-size: 33px 33px; background-repeat: round; background-position: 0 0, 40px 40px; -webkit-mask-image: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0.5)); mask-image: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0.5)); mask-size: cover; mask-position: center; transition: background-size 100ms; }
 section.bg-dark { background-image: url("https://marcelrobeer.github.io/img/dot-grid-dark.png"); background-repeat: repeat; }
 section.bg { background-image: url("https://marcelrobeer.github.io/img/dot-grid.png"); background-repeat: repeat; }
 .links { padding-right: 1rem; }
@@ -56,11 +60,22 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
 @media only screen and (max-width: 768px) {
     body { margin: 0px; width: 100vw; height: 100vh; overflow: auto; }
     #header { width: 100vw; }
-    .bg-dark h1 { font-size: 2.4rem; line-height: 2.6rem; }
-    .bg-dark h2 { font-size: 4.6rem; line-height: 4.8rem; }
-    .bg-dark .cta, .bg-dark .cta a { display: block; padding: 0; }
-    .bg-dark .cta a { margin: 2rem 1rem; padding: 2.4rem 2.8rem; }
+    .bg-animated h1, .bg-dark h1 { font-size: 2.4rem; line-height: 2.6rem; }
+    .bg-animated h2, .bg-dark h1 { font-size: 4.6rem; line-height: 4.8rem; }
+    .bg-animated .cta, .bg-animated .cta a, .bg-dark .cta, .bg-dark .cta a { display: block; padding: 0; }
+    .bg-animated .cta a, .bg-dark .cta a { margin: 2rem 1rem; padding: 2.4rem 2.8rem; }
     .cta a { margin: 2rem 1rem; }
-    .bg-dark .wrapper { margin: 0; }
+    .bg-animated .wrapper, .bg-dark .wrapper { margin: 0; }
     .wrapper { width: 100vw; min-width: 420px; margin: 0; padding: 0 1rem; }
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
