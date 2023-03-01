@@ -19,7 +19,7 @@ h1 { font-size: 3em; margin-block-end: .5em; }
 .wrapper { width: 100%; max-width: 1200px; min-width: 420px; height: 100%; margin: 0 auto; }
 .wrapper .cta { min-height: 5rem; }
 section { background-color: #FDFDFD; padding: 0; margin: 0; z-index: 0; }
-section .wrapper { padding: 1.5rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); max-height: 100vh; }
+section .wrapper { padding: 1.5rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
 section.bg-animated { overflow: hidden; background: none; }
 section.bg-animated > .bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(-45deg, #5189E3, #EE3839, #DDDDDD, #EE3839); background-size: 400% 400%; overflow: hidden; animation: gradient 6s ease infinite; }
 .halftone { aspect-ratio: 1; background: rgb(0 0 0); filter: contrast(20) invert(0); mix-blend-mode: multiply; z-index: -1; }
