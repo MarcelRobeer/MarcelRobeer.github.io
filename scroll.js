@@ -38,6 +38,8 @@ window.addEventListener('DOMContentLoaded', function() {
     elements.forEach((elem) => {observer.observe(elem)});
 
     follow = document.getElementById('follow');
+    follow.style.left = window.innerWidth / 2 + 'px';
+    follow.style.top = window.innerHeight / 2 + 'px';
 
     document.addEventListener('mousemove', (e) => { move(e); });
     document.addEventListener('mousedown', (e) => { click(e); });
