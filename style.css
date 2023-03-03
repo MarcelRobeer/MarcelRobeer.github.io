@@ -55,6 +55,10 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 #about .cta a, #explabox .cta a { margin: 1.5rem 0 1.5rem 1.2rem; }
 #about .cta a:nth-child(even), #explabox .cta a:nth-child(even) { background-color: #6F6F6F; }
 .doc + .cta a:hover, #about .cta a:hover, #explabox .cta a:hover { background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px #FDFDFD inset, 0px 0px 0px 5px #FF1112; }
+section:has(img.bg-img) { position: relative; overflow: hidden; }
+section > img.bg-img { width: 512px; height: 512px; top: 50%; position: absolute; opacity: 0.13; transition: none; z-index: -1; }
+section > img.bg-img-left { left: -100px; transform: rotate(12deg) translateY(-50%); }
+section > img.bg-img-right { right: -100px;  transform: rotate(-12deg) translateY(-50%); }
 p { color: #1E1E1E; line-height: 1.5em; }
 p > span.c { font-family: Menlo, Monaco, Consolas, "Courier New", "Lucida Console", monospace; font-size: 90%; padding: 2px; }
 p.info { color: #FF7775; line-height: 24px; }
@@ -107,6 +111,7 @@ footer .wrapper > span { position: absolute; right: 0; }
     .links .item .description a { font-size: 1.5em; }
     .links .item .description p { font-size: 0.9rem; }
     .bg-animated .wrapper, .bg-dark .wrapper { margin: 0; }
+    section > img.bg-img { width: 420px; height: 420px; }
     .wrapper { width: min(100vw, 100%); min-width: 420px; margin: 0; padding: 0 1rem; }
     footer .wrapper { padding: 0; }
     footer a { position: relative; display: block; float: none; margin: 1rem 0; }
