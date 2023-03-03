@@ -2,13 +2,14 @@ html, body { min-height: 100%; width: 100%; padding: 0; margin: 0; box-sizing: b
 body { background-color: #DDDDDD; color: #F8F8F2; position: relative; margin: auto; display: block; height: auto;
     justify-content: center;
 }
-body, .links .item > a i::after { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; }
+a:link, a:visited, a:hover, a:active { text-decoration: none; }
+body, .links .group a.docs i::after { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; }
 ::selection, ::-moz-selection { background-color: #6C1616; color: #FFFFFF; }
 h1 { font-size: 3em; margin-block-end: .5em; }
 .bg-animated h1, .bg-animated h2, .bg-animated h3, .bg-dark h1, .bg-dark h2, .bg-dark h3 { text-align: center; max-width: 600px; }
 .bg-animated h1, .bg-dark h1 { color: #FFF; font-size: 4.6rem; margin: 6rem auto 0 auto; line-height: 4.2rem; }
 .bg-animated h2, .bg-dark h2 { font-family: 'visitor'; color: #FF3333; margin: 1rem auto 3.8rem auto; font-size: 8rem; line-height: 6.4rem; }
-.bg-animated h3, .bg-dark h3 { color: #FEFEF3; color: #FF3333; margin: 1rem auto 3.6rem auto; font-size: 3.4rem; line-height: 3.8rem; }
+.bg-animated h3, .bg-dark h3 { color: #FEFEF3; margin: 1rem auto 3.6rem auto; font-size: 3.4rem; line-height: 3.8rem; }
 .bg-animated .cta, .bg-dark .cta { display: flex; align-items: center; justify-content: center; margin-bottom: 5rem; }
 .cta a { display: inline-block; padding: 1rem 1.8rem; margin: 0 2rem; background-color: #E6E6E6; color: #000; text-transform: uppercase; font-weight: 800; transition: 0.5s ease-in-out; }
 .cta a > emph, p > emph { text-decoration: underline; }
@@ -27,20 +28,24 @@ section.bg-animated > .bg { position: absolute; top: 0; left: 0; width: 100%; he
 .halftone::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at center, rgb(255, 255, 255) 3%, rgb(255 255 255 / 0.4) 7%); background-size: 33px 33px; background-repeat: round; background-position: 0 0, 40px 40px; -webkit-mask-image: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0.5)); mask-image: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 0.5)); mask-size: cover; mask-position: center; transition: background-size 100ms; }
 section.bg-dark { background-image: url("https://marcelrobeer.github.io/img/dot-grid-dark.png"); background-repeat: repeat; }
 section.bg { background-image: url("https://marcelrobeer.github.io/img/dot-grid.png"); background-repeat: repeat; }
-.links { padding-right: 1rem; }
-.links .item { background-color: #E6E6E6; padding: .7rem .7rem; font-size: 1em; width: 100%; margin-bottom: .8rem; display:grid; grid-template-columns: 1fr auto; }
-.links .item .description { margin-left: 1rem; }
-.links .item .description p { font-size: .9rem; font-style: italic; color: #111112; }
-.links .item .description a { display: block; font-size: 1.5em; margin-top: 0.83em; margin-bottom: 0.83em; margin-left: 0; margin-right: 0; font-weight: bold;
-font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif
-}
-.links .item .description a i { margin-right: .8em; }
-.links .item .description a:hover { text-decoration: underline; }
-.links .item a { color: #080802; text-decoration: none; }
-.links .item > a { background-color: #252526; color: #F9F9F9; margin-left: auto; margin-right: 0; padding: 2rem; max-height: 45px; }
-.links .item > a:hover { background-color: #353536; color: #FFF; }
-.links .item > a i { float: right; font-size: 2.5rem; white-space: pre; position: relative; transform: translateY(-0.33rem); }
-.links .item > a i::after { content: '\A docs'; font-size: 0.6rem; position: absolute; bottom: -1rem; left: 0.66rem; }
+.links { padding-right: 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
+.links .group { width: 100%; display: flex; font-size: 1em; position: relative; }
+.links .group a.item { display: flex; flex: 1; min-height: 100%; margin: 0; min-width: 100%; background-color: #E6E6E6; transition: 0.5s ease-in-out; overflow: hidden; }
+.links .group a.item img { width: 150px; transition: 0.6s ease-in-out; }
+.links .group a.item .description h4, .links .group a.item:not(:hover) .description p { text-decoration: none; }
+.links .group a.item .description { display: inline-block; margin-left: 1.2rem; margin-right: 1.2em; }
+.links .group a.item .description h4 { display: block; font-size: 1.65em; margin-top: 0.83em; margin-bottom: 0.83em; margin-left: 0; margin-right: 0; font-weight: bold;
+font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif; }
+.links .group a.item .description p { font-size: 0.95rem; font-style: italic; color: #111112; }
+.links .group a.item:hover { color: #000; background-color: #EE8787; box-shadow: 0px 0px 0px 2.5px #FDFDFD, 0px 0px 0px 7.5px #EE8787; }
+.links .group a.item:hover img { filter: brightness(122%); transform: scale(1.1); }
+.links .group a.item .description h4 i { margin-right: .8em; }
+.links .group a.item:hover .description h4 { text-decoration: underline; }
+.links .group a.item h4 { color: #080802; text-decoration: none; }
+.links .group a.docs { background-color: #252526; color: #F9F9F9; position: absolute; right: 1rem; top: 1rem; width: calc(150px - 2rem); height: calc(150px - 2rem); transition: 0.5s ease-in-out; }
+.links .group a.docs:hover { background-color: #F84F4F; color: #FFF; box-shadow: 0px 0px 0px 2.5px #E6E6E6 inset, 0px 0px 0px 7.5px #F84F4F;  }
+.links .group a.docs i { font-size: 2.5rem; white-space: pre; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.links .group a.docs i::after { content: '\A docs'; font-size: 0.6rem; position: absolute; bottom: -1rem; left: 0.66rem; }
 .doc { display: flex; width: 100%; justify-content: space-between; gap: 2rem; }
 .doc section { flex: 1; background: none; }
 .doc aside { position: relative; width: 160px; height: 160px; }
@@ -81,10 +86,13 @@ footer .wrapper > span { position: absolute; right: 0; }
     #follow, #follow.animating, #follow.animating::before { display: none; opacity: 0; z-index: -1000; }
 }
 @media only screen and (max-width: 1200px) and (min-width: 769px) {
+    .links .item .description a { font-size: 1.5em; }
+    .links .item .description p { font-size: 0.9rem; }
     footer a:not(:first-child)::before { width: 20px; }
     footer .wrapper { position: relative; height: 3rem; }
     footer .wrapper > span { position: absolute; right: 0; bottom: 0; }
     .wrapper { max-width: 700px; min-width: 420px; margin: 0 auto; }
+    .links .group a.item:not(:only-child) > .description { margin-right: calc(150px + 0.6rem); }
 }
 @media only screen and (max-width: 768px) {
     body { margin: 0px; width: 100vw; height: 100vh; overflow: auto; }
@@ -92,6 +100,12 @@ footer .wrapper > span { position: absolute; right: 0; }
     .halftone { aspect-ratio: 0.5; }
     .bg-animated h1, .bg-dark h1 { font-size: 2.4rem; line-height: 2.6rem; }
     .bg-animated h2, .bg-dark h1 { font-size: 4.6rem; line-height: 4.8rem; }
+    .links .group a.item:not(:only-child) > .description { margin-right: calc(80px + 0.6rem); }
+    .links .group a.docs { width: 80px; height: 80px; }
+    .links .group a.docs i { font-size: 1.5rem; }
+    .links .group a.docs i::after { left: 0.1rem; }
+    .links .item .description a { font-size: 1.5em; }
+    .links .item .description p { font-size: 0.9rem; }
     .bg-animated .wrapper, .bg-dark .wrapper { margin: 0; }
     .wrapper { width: min(100vw, 100%); min-width: 420px; margin: 0; padding: 0 1rem; }
     footer .wrapper { padding: 0; }
