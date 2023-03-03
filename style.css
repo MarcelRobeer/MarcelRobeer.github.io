@@ -144,20 +144,10 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
 }
 @keyframes grow {
     0%, 100% {
-        width: 80px;
-        height: 80px;
+        transform: scale(1.0);
     }
     50% {
-        width: 120px;
-        height: 120px;
-    }
-}
-@keyframes growClick {
-    0%, 100% {
-        border: none;
-    }
-    50% {
-        border: 3px solid red;
+        transform: scale(2.0);
     }
 }
 @keyframes borderExpand {
