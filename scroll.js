@@ -9,7 +9,7 @@ const click = (e) => {
     frameService.debounce(() => {
         follow.classList.remove('animating');
         follow.classList.add('animating');
-        setTimeout(function() { follow.classList.remove('animating')}, 1000);
+        setTimeout(function() { follow.classList.remove('animating')}, 600);
     })
 }
 
