@@ -67,13 +67,16 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
 @media only screen and (max-width: 768px) {
     body { margin: 0px; width: 100vw; height: 100vh; overflow: auto; }
     #header { width: 100vw; }
+    .halftone { aspect-ratio: 0.5; }
     .bg-animated h1, .bg-dark h1 { font-size: 2.4rem; line-height: 2.6rem; }
     .bg-animated h2, .bg-dark h1 { font-size: 4.6rem; line-height: 4.8rem; }
-    .bg-animated .cta, .bg-animated .cta a, .bg-dark .cta, .bg-dark .cta a { display: block; padding: 0; }
-    .bg-animated .cta a, .bg-dark .cta a { margin: 2rem 1rem; padding: 2.4rem 2.8rem; }
-    .cta a { margin: 2rem 1rem; }
     .bg-animated .wrapper, .bg-dark .wrapper { margin: 0; }
     .wrapper { width: 100vw; min-width: 420px; margin: 0; padding: 0 1rem; }
+}
+@media only screen and (max-width: 665px) {
+    .bg-animated .cta, .bg-animated .cta a, .bg-dark .cta, .bg-dark .cta a { display: block; padding: 0; }
+    .bg-animated .cta a, .bg-dark .cta a { margin: 2rem 1rem; padding: 1.4rem 1.8rem; }
+    .cta a, .doc + .cta a, #about .cta a, #explabox .cta a { display: block; float: none; margin: 2rem 0.5rem; };
 }
 @keyframes gradient {
 	0% {
@@ -126,3 +129,13 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
         opacity: 1;
     }
 }
+@media (prefers-reduced-motion: reduce) {
+    .fade-left, .fade-right, .fade-in { animation: none; transform: translate(0); opacity: 1; }
+    :not(.in-view, .in-view-first)[data-animate] { transform: translate(0); opacity: 1; }
+}
+[data-animate] { opacity: 0; transition: 0.6s ease-in-out;}
+:not(.in-view, .in-view-first)[data-animate="fade-up"] { transform: translateY(20px); }
+:not(.in-view, .in-view-first)[data-animate="fade-left"] { transform: translateX(-100px); }
+:not(.in-view, .in-view-first)[data-animate="fade-right"] { transform: translateX(100px); }
+.in-view[data-animate], .in-view-first[data-animate] { opacity: 1; }
+.in-view[data-animate="fade"], .in-view-first[data-animate="fade"] { transform: translate(0); }
