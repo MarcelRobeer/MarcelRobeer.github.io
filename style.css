@@ -60,7 +60,7 @@ footer { background-color: #F9F9F9; color: #4E4E4E; padding: 1.8rem; display: bl
 footer .wrapper { position: relative; }
 footer a, footer a:active { color: #4E4E4E; text-decoration: none; }
 footer a:hover { color: #FF1112; }
-footer a:not(:first-child)::before { content: ""; display: inline-block; width: 25px; }
+footer a:not(:first-child)::before { content: ""; display: inline-block; width: 28px; }
 footer .wrapper > span { position: absolute; right: 0; }
 .fade-left, .fade-right, .fade-in { animation-iteration-count: 1; animation-fill-mode: forwards; }
 .fade-left { animation: fadeLeft ease-out 1.2s; }
@@ -81,7 +81,7 @@ footer .wrapper > span { position: absolute; right: 0; }
     #follow, #follow.animating, #follow.animating::before { display: none; opacity: 0; z-index: -1000; }
 }
 @media only screen and (max-width: 1200px) and (min-width: 769px) {
-    footer a:not(:first-child)::before { width: 16px; }
+    footer a:not(:first-child)::before { width: 20px; }
     footer .wrapper { position: relative; height: 3rem; }
     footer .wrapper > span { position: absolute; right: 0; bottom: 0; }
     .wrapper { max-width: 700px; min-width: 420px; margin: 0 auto; }
