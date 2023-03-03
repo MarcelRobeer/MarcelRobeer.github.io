@@ -71,6 +71,7 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
 #follow { pointer-events: none; z-index: 100; animation: grow 4.6s infinite; background: #fff; mix-blend-mode: difference; position: fixed; width: 80px; height: 80px; transform-origin: center center; transform: translate(-50%, -50%); border-radius: 80%; backface-visibility: hidden; transition: 0.1s ease-out; }
 #follow.animating { animation: addBorder 0.6s; }
 #follow.animating::before { content: ''; position: absolute; z-index: 101; animation: borderExpand 0.6s; border-radius: 80%; }
+#follow.animating::after { content: 'click!'; font-family: 'visitor'; mix-blend-mode: darken; position: absolute; z-index: 102; top: 15%; bottom: 50%; left: 50%; right: -20px; color: #FF1112; opacity: 0.7; }
 @media (pointer: coarse) {
     #follow, #follow.animating, #follow.animating::before { display: none; opacity: 0; z-index: -1000; }
 }
