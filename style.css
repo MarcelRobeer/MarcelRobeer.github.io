@@ -61,6 +61,15 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
 .fade-right { animation: fadeRight ease-out 1.2s; }
 .fade-in > a { animation: fadeIn ease-out 1.8s; }
 .fade-in a:nth-child(2) { animation: fadeIn2 ease-out 2.2s; }
+[data-animate] { opacity: 0; transition: 0.6s ease-in-out;}
+:not(.in-view, .in-view-first)[data-animate="fade-up"] { transform: translateY(20px); }
+:not(.in-view, .in-view-first)[data-animate="fade-left"] { transform: translateX(-80px); }
+:not(.in-view, .in-view-first)[data-animate="fade-right"] { transform: translateX(80px); }
+.in-view[data-animate], .in-view-first[data-animate] { opacity: 1; }
+.in-view[data-animate="fade"], .in-view-first[data-animate="fade"] { transform: translate(0); }
+#follow { pointer-events: none; z-index: 100; animation: grow 4.6s infinite; background: #fff; mix-blend-mode: difference; position: fixed; width: 80px; height: 80px; transform: translate(-50%, -50%); border-radius: 80%; backface-visibility: hidden; transition: 0.1s ease-out; }
+#follow.animating { border: 40px solid white; transition: border ease-in-out 0.6s; }
+#follow.animating::before { content: ''; position: absolute; z-index: 101; animation: borderExpand 0.6s; border-radius: 80%; }
 @media only screen and (max-width: 1200px) and (min-width: 769px) {
     .wrapper { max-width: 700px; min-width: 420px; margin: 0 auto; }
 }
@@ -129,13 +138,39 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
         opacity: 1;
     }
 }
+@keyframes grow {
+    0%, 100% {
+        width: 80px;
+        height: 80px;
+    }
+    50% {
+        width: 120px;
+        height: 120px;
+    }
+}
+@keyframes growClick {
+    0%, 100% {
+        border: none;
+    }
+    50% {
+        border: 3px solid red;
+    }
+}
+@keyframes borderExpand {
+    0% {
+        top: 0px; left: 0px; right: 0px; bottom: 0px; opacity: 1; border: 5px solid #000;
+    }
+    33% {
+        top: 5px; left: 5px; right: 5px; bottom: 5px; opacity: 0.5; border: 1px solid #000;
+    }
+    66% {
+        top: 0px; left: 0px; right: 0px; bottom: 0px; opacity: 1; border: 2px solid #000;
+    }
+    100% {
+        top: 5px; left: 5px; right: 5px; bottom: 5px; opacity: 0; border: 3px solid #000;
+    }
+}
 @media (prefers-reduced-motion: reduce) {
     .fade-left, .fade-right, .fade-in { animation: none; transform: translate(0); opacity: 1; }
     :not(.in-view, .in-view-first)[data-animate] { transform: translate(0); opacity: 1; }
 }
-[data-animate] { opacity: 0; transition: 0.6s ease-in-out;}
-:not(.in-view, .in-view-first)[data-animate="fade-up"] { transform: translateY(20px); }
-:not(.in-view, .in-view-first)[data-animate="fade-left"] { transform: translateX(-80px); }
-:not(.in-view, .in-view-first)[data-animate="fade-right"] { transform: translateX(80px); }
-.in-view[data-animate], .in-view-first[data-animate] { opacity: 1; }
-.in-view[data-animate="fade"], .in-view-first[data-animate="fade"] { transform: translate(0); }
