@@ -1,4 +1,4 @@
-html, body { min-height: 100%; width: 100%; padding: 0; margin: 0; }
+html, body { min-height: 100%; width: 100%; padding: 0; margin: 0; box-sizing: border-box; }
 body { background-color: #DDDDDD; color: #F8F8F2; position: relative; margin: auto; display: block; height: auto;
     justify-content: center;
 }
