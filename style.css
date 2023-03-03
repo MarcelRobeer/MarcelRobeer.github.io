@@ -48,7 +48,7 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 .doc + .cta, #about .cta, #explabox .cta { text-align: right; }
 .doc + .cta a, #about .cta a, #explabox .cta a { font-size: .9rem; text-transform: none; margin: 0; color: #FFF; background-color: #F84F4F; text-align: left; }
 #about .cta a, #explabox .cta a { margin: 1.5rem 0 1.5rem 1.2rem; }
-#about .cta a:nth-child(1), #explabox .cta a:nth-child(1) { background-color: #6F6F6F; }
+#about .cta a:nth-child(even), #explabox .cta a:nth-child(even) { background-color: #6F6F6F; }
 .doc + .cta a:hover, #about .cta a:hover, #explabox .cta a:hover { background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px #FDFDFD inset, 0px 0px 0px 5px #FF1112; }
 p { color: #1E1E1E; line-height: 1.5em; }
 p > span.c { font-family: Menlo, Monaco, Consolas, "Courier New", "Lucida Console", monospace; font-size: 90%; padding: 2px; }
@@ -56,7 +56,12 @@ p.info { color: #FF7775; line-height: 24px; }
 p.info::before { content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='24px' height='24px'%3E%3Cpath fill='%23FF7775' d='M 10 4 L 10 6 L 22 6 L 22 4 L 10 4 z M 22 6 L 22 8 L 24 8 L 24 6 L 22 6 z M 24 8 L 24 10 L 26 10 L 26 8 L 24 8 z M 26 10 L 26 22 L 28 22 L 28 10 L 26 10 z M 26 22 L 24 22 L 24 24 L 26 24 L 26 22 z M 24 24 L 22 24 L 22 26 L 24 26 L 24 24 z M 22 26 L 10 26 L 10 28 L 22 28 L 22 26 z M 10 26 L 10 24 L 8 24 L 8 26 L 10 26 z M 8 24 L 8 22 L 6 22 L 6 24 L 8 24 z M 6 22 L 6 10 L 4 10 L 4 22 L 6 22 z M 6 10 L 8 10 L 8 8 L 6 8 L 6 10 z M 8 8 L 10 8 L 10 6 L 8 6 L 8 8 z M 15 10 L 15 12 L 17 12 L 17 10 L 15 10 z M 14 14 L 14 16 L 15 16 L 15 22 L 18 22 L 18 20 L 17 20 L 17 14 L 14 14 z'/%3E%3C/svg%3E"); display: inline-block; width: 24px; height: 24px; margin-right: 4px; position: relative; top: 0.3em; }
 ul > li { line-height: 1.25em; }
 ul > li:not(:last-child) { margin-bottom: .5rem; }
-footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: block; text-align: right; }
+footer { background-color: #F9F9F9; color: #4E4E4E; padding: 1.5rem; display: block; }
+footer .wrapper { position: relative; }
+footer a, footer a:active { color: #4E4E4E; text-decoration: none; }
+footer a:hover { color: #FF1112; }
+footer a:not(:first-child)::before { content: ""; display: inline-block; width: 25px; }
+footer .wrapper > span { position: absolute; right: 0; }
 .fade-left, .fade-right, .fade-in { animation-iteration-count: 1; animation-fill-mode: forwards; }
 .fade-left { animation: fadeLeft ease-out 1.2s; }
 .fade-right { animation: fadeRight ease-out 1.2s; }
