@@ -135,7 +135,7 @@ footer { background-color: #F9F9F9; color: #0E0E0E; padding: 1.5rem; display: bl
 }
 [data-animate] { opacity: 0; transition: 0.6s ease-in-out;}
 :not(.in-view, .in-view-first)[data-animate="fade-up"] { transform: translateY(20px); }
-:not(.in-view, .in-view-first)[data-animate="fade-left"] { transform: translateX(-100px); }
-:not(.in-view, .in-view-first)[data-animate="fade-right"] { transform: translateX(100px); }
+:not(.in-view, .in-view-first)[data-animate="fade-left"] { transform: translateX(-80px); }
+:not(.in-view, .in-view-first)[data-animate="fade-right"] { transform: translateX(80px); }
 .in-view[data-animate], .in-view-first[data-animate] { opacity: 1; }
 .in-view[data-animate="fade"], .in-view-first[data-animate="fade"] { transform: translate(0); }
