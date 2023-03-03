@@ -1,5 +1,5 @@
 @font-face { font-family: "visitor"; src: url("https://marcelrobeer.github.io/visitor1.ttf"); } 
-#header { z-index: 1000; position: fixed; top: 0; left: 0; width: 100%; height: 4rem; background-color: #0d0d0d; border-bottom: 1px solid #090909; color: #fff; }
+#header { z-index: 1000; position: fixed; top: 0; left: 0; width: min(100%, 100vw); height: 4rem; background-color: #0d0d0d; border-bottom: 1px solid #090909; color: #fff; }
 #header #logo { position: fixed; left: 2rem; top: 0; font-family: "visitor"; line-height: 4rem; font-size: 3rem; }
 #header #logo, #header #logo:visited, #header #logo:active, #header #logo:hover { text-decoration: none; color: #FF4E4E; }
 #header nav { float: right; }
