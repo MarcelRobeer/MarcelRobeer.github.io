@@ -11,7 +11,7 @@ h1 { font-size: 3em; margin-block-end: .5em; }
 .bg-animated h2, .bg-dark h2 { font-family: 'visitor'; color: #FF3333; margin: 1rem auto 3.8rem auto; font-size: 8rem; line-height: 6.4rem; }
 .bg-animated h3, .bg-dark h3 { color: #FF3333; margin: 1rem auto 3.6rem auto; font-size: 3.4rem; line-height: 3.8rem; }
 .bg-animated .cta, .bg-dark .cta { display: flex; align-items: center; justify-content: center; margin-bottom: 5rem; }
-.cta a { display: inline-block; padding: 1rem 1.8rem; margin: 0 2rem; background-color: #E6E6E6; color: #000; text-transform: uppercase; font-weight: 800; transition: 0.5s ease-in-out; }
+.cta a { display: inline-block; padding: 1rem 1.8rem; margin: 0 2rem; background-color: #E6E6E6; color: #000; text-transform: uppercase; font-weight: 800; transition: 0.6s ease-in-out; }
 .cta a > emph, p > emph { text-decoration: underline; }
 .cta a, .bg-animated .cta a:hover, .bg-animated .cta a:visited { text-decoration: none; }
 .cta a:hover { color: #FFF; background-color: #F84F4F; box-shadow: 0px 0px 0px 2.5px black inset, 0px 0px 0px 5px #F84F4F; }
@@ -30,8 +30,8 @@ section.bg-dark { background-image: url("https://marcelrobeer.github.io/img/dot-
 section.bg { background-image: url("https://marcelrobeer.github.io/img/dot-grid.png"); background-repeat: repeat; }
 .links { padding-right: 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
 .links .group { width: 100%; display: flex; font-size: 1em; position: relative; }
-.links .group a.item { display: flex; flex: 1; min-height: 100%; margin: 0; min-width: 100%; background-color: #E6E6E6; transition: 0.5s ease-in-out; overflow: hidden; }
-.links .group a.item img { width: 150px; transition: 0.6s ease-in-out; }
+.links .group a.item { display: flex; flex: 1; min-height: 100%; margin: 0; min-width: 100%; background-color: #E6E6E6; transition: 0.6s ease-in-out; overflow: hidden; }
+.links .group a.item img { width: 150px; transition: 0.6s ease-in-out; object-fit: cover; }
 .links .group a.item .description h4, .links .group a.item:not(:hover) .description p { text-decoration: none; }
 .links .group a.item .description { display: inline-block; margin-left: 1.2rem; margin-right: 1.2em; }
 .links .group a.item .description h4 { display: block; font-size: 1.65em; margin-top: 0.83em; margin-bottom: 0.83em; margin-left: 0; margin-right: 0; font-weight: bold;
@@ -42,7 +42,7 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 .links .group a.item .description h4 i { margin-right: .8em; }
 .links .group a.item:hover .description h4 { text-decoration: underline; }
 .links .group a.item h4 { color: #080802; text-decoration: none; }
-.links .group a.docs { background-color: #252526; color: #F9F9F9; position: absolute; right: 1rem; top: 1rem; width: calc(150px - 2rem); height: calc(150px - 2rem); transition: 0.5s ease-in-out; }
+.links .group a.docs { background-color: #252526; color: #F9F9F9; position: absolute; right: 1rem; top: 1rem; width: calc(150px - 2rem); height: calc(150px - 2rem); transition: 0.6s ease-in-out; }
 .links .group a.docs:hover { background-color: #F84F4F; color: #FFF; box-shadow: 0px 0px 0px 2.5px #E6E6E6 inset, 0px 0px 0px 7.5px #F84F4F;  }
 .links .group a.docs i { font-size: 2.5rem; white-space: pre; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 .links .group a.docs i::after { content: '\A docs'; font-size: 0.6rem; position: absolute; bottom: -1rem; left: 0.66rem; }
@@ -56,7 +56,7 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 #about .cta a:nth-child(even), #explabox .cta a:nth-child(even) { background-color: #6F6F6F; }
 .doc + .cta a:hover, #about .cta a:hover, #explabox .cta a:hover { background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px #FDFDFD inset, 0px 0px 0px 5px #FF1112; }
 section:has(img.bg-img) { position: relative; overflow: hidden; }
-section > img.bg-img { width: 512px; height: 512px; top: 50%; position: absolute; opacity: 0.13; transition: none; z-index: -1; }
+section > img.bg-img, section > img.bg-img.in-view[data-animate] { width: 512px; height: 512px; top: 50%; position: absolute; opacity: 0.13; z-index: -1; }
 section > img.bg-img-left { left: -100px; transform: rotate(12deg) translateY(-50%); }
 section > img.bg-img-right { right: -100px;  transform: rotate(-12deg) translateY(-50%); }
 p { color: #1E1E1E; line-height: 1.5em; }
@@ -76,7 +76,7 @@ footer .wrapper > span { position: absolute; right: 0; }
 .fade-right { animation: fadeRight ease-out 1.2s; }
 .fade-in > a { animation: fadeIn ease-out 1.8s; }
 .fade-in a:nth-child(2) { animation: fadeIn2 ease-out 2.2s; }
-[data-animate] { opacity: 0; transition: 0.6s ease-in-out;}
+[data-animate] { opacity: 0; transition: 0.6s ease-in-out; }
 :not(.in-view, .in-view-first)[data-animate="fade-up"] { transform: translateY(20px); }
 :not(.in-view, .in-view-first)[data-animate="fade-left"] { transform: translateX(-80px); }
 :not(.in-view, .in-view-first)[data-animate="fade-right"] { transform: translateX(80px); }
@@ -96,7 +96,7 @@ footer .wrapper > span { position: absolute; right: 0; }
     footer .wrapper { position: relative; height: 3rem; }
     footer .wrapper > span { position: absolute; right: 0; bottom: 0; }
     .wrapper { max-width: 700px; min-width: 420px; margin: 0 auto; }
-    .links .group a.item:not(:only-child) > .description { margin-right: calc(150px + 0.6rem); }
+    .links .group a.item:not(:only-child) > .description { margin-right: calc(150px + 1.2rem); }
 }
 @media only screen and (max-width: 768px) {
     body { margin: 0px; width: 100vw; height: 100vh; overflow: auto; }
@@ -104,10 +104,13 @@ footer .wrapper > span { position: absolute; right: 0; }
     .halftone { aspect-ratio: 0.5; }
     .bg-animated h1, .bg-dark h1 { font-size: 2.4rem; line-height: 2.6rem; }
     .bg-animated h2, .bg-dark h1 { font-size: 4.6rem; line-height: 4.8rem; }
-    .links .group a.item:not(:only-child) > .description { margin-right: calc(80px + 0.6rem); }
+    .links .group a.item:not(:only-child) > .description { margin-right: calc(80px + 1.2rem); }
     .links .group a.docs { width: 80px; height: 80px; }
     .links .group a.docs i { font-size: 1.5rem; }
     .links .group a.docs i::after { left: 0.1rem; }
+    .links .group a.item img { width: 128px; }
+    .links .group a.item .description h4 { font-size: 1.1em; }
+    .links .group a.item .description p { font-size: 0.75rem; }      
     .links .item .description a { font-size: 1.5em; }
     .links .item .description p { font-size: 0.9rem; }
     .bg-animated .wrapper, .bg-dark .wrapper { margin: 0; }

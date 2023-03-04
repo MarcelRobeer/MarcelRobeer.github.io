@@ -20,7 +20,7 @@ function scrolledInView( entries ) {
             if ( entry.isIntersecting ) {
                 entry.target.classList.add('in-view');
                 entry.target.classList.add('in-view-first');
-                entry.target.setAttribute('data-delay', (itemLoad * 120).toString() + "ms");
+                entry.target.setAttribute('data-delay', (itemLoad * 100).toString() + "ms");
                 entry.target.style.transitionDelay = entry.target.getAttribute('data-delay');
                 itemLoad++;
             } else {
