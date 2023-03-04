@@ -56,7 +56,8 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida San
 #about .cta a:nth-child(even), #explabox .cta a:nth-child(even) { background-color: #6F6F6F; }
 .doc + .cta a:hover, #about .cta a:hover, #explabox .cta a:hover { background-color: #FF1112; box-shadow: 0px 0px 0px 2.5px #FDFDFD inset, 0px 0px 0px 5px #FF1112; }
 section:has(img.bg-img) { position: relative; overflow: hidden; }
-section > img.bg-img, section > img.bg-img.in-view[data-animate] { width: 512px; height: 512px; top: 50%; position: absolute; opacity: 0.13; z-index: -1; }
+section > img.bg-img { width: 512px; height: 512px; top: 50%; position: absolute; opacity: 0; z-index: -1; }
+section > img.bg-img.in-view-first[data-animate] { opacity: 0.13; }
 section > img.bg-img-left { left: -100px; transform: rotate(12deg) translateY(-50%); }
 section > img.bg-img-right { right: -100px;  transform: rotate(-12deg) translateY(-50%); }
 p { color: #1E1E1E; line-height: 1.5em; }
