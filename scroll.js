@@ -20,7 +20,11 @@ function scrolledInView( entries ) {
             if ( entry.isIntersecting ) {
                 entry.target.classList.add('in-view');
                 entry.target.classList.add('in-view-first');
-                delayTime = parseInt(entry.target.getAttribute('data-delaytime', '100'));
+                if ( entry.target.hasAttribute('data-delaytime') ) {
+                    delayTime = parseInt(entry.target.getAttribute('data-delaytime'));
+                } else {
+                    delayTime = 120;
+                }
                 entry.target.setAttribute('data-delay', (itemLoad * delayTime).toString() + "ms");
                 entry.target.style.transitionDelay = entry.target.getAttribute('data-delay');
                 itemLoad++;
